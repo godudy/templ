@@ -101,16 +101,16 @@
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [x] | 2.2 | **Escape hatch lesson: `asChild` ↔ `*Classes()`** | Medium | Button `ButtonClasses` on manual `<a>`; Card `CardClasses` on manual `<section>` — include LayerTable pattern in Card lesson. [`components/card/card.spec.md`](../components/card/card.spec.md):252–289, coming-from-shadcn:158–174. Frame `*Classes()`-on-manual-wrapper as the universal pattern (works for Go today, Svelte/Vue/PHP tomorrow); `asChild`+`Slot` is the React-only exception because only React has `cloneElement` — do not teach it as "Templ is missing asChild" (see **M7**). |
-| [x] | 2.3 | **@ui8kit/aria diagram in Sheet lesson** | Medium | “markup only → app runtime owns behavior”. Sheet lesson is good but needs a diagram for `behavior="ui8kit"` mental model. |
-| [x] | 2.4 | **Lessons for remaining home blocks** | Medium | E2: [`showcase.tsx`](../examples/vite/src/blocks/home/showcase.tsx), `tools.tsx`, `notice.tsx` — no lessons; trail ends after 4 lessons. |
-| [x] | 2.5 | **Split `primitives.smoke.test.tsx`** | Medium | E3/G10: one file 67–300+ lines, 30+ `describe("ui/...")` — good for CI, bad for “how to test one brick”. Per-brick test next to `button.tsx` or `targets.react.test` in spec. |
+| [x] | 2.2 | **Escape hatch lesson: `asChild` ↔ `*Classes()`** | Medium | Done: reusable `asChild`/`*Classes()` framing added to [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) and cross-linked from Button/Card lessons. |
+| [x] | 2.3 | **@ui8kit/aria diagram in Sheet lesson** | Medium | Done: [`docs/learn/03-sheet/README.md`](../docs/learn/03-sheet/README.md) now shows static markup → `data-ui8kit-*` hooks → app runtime → DOM mutations and references the sheet contract validator. |
+| [x] | 2.4 | **Lessons for remaining home blocks** | Medium | Done: added [`08-showcase`](../docs/learn/08-showcase/), [`09-tools`](../docs/learn/09-tools/), and [`10-notice`](../docs/learn/10-notice/) and updated the learn index. |
+| [x] | 2.5 | **Split `primitives.smoke.test.tsx`** | Medium | Done: primitive smoke tests split into per-brick files under [`examples/vite/tests/ui/`](../examples/vite/tests/ui/); specs and `test:primitives-smoke` point at the new targets. |
 
 #### P2 — medium / documentation
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [x] | 2.6 | **“Why no asChild in templ?” — dedicated section** | Low | G7: in coming-from-shadcn + 3 examples (Button, Card, SheetTrigger). |
+| [x] | 2.6 | **“Why no asChild in templ?” — dedicated section** | Low | Done via P2.2: [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) now explains why `asChild` is React-only and shows Button, Card, and SheetTrigger framing. |
 | [ ] | 2.7 | **F2: Form “verbs-y” perception** | Low | [`ui/form/form.templ`](../ui/form/form.templ):13–24 — 9 explicit fields vs TSX `FormHTMLAttributes`. Short note in docs. |
 | [ ] | 2.8 | **C2: Breadcrumb — documented exception** | Low | [`components/breadcrumb/breadcrumb.templ`](../components/breadcrumb/breadcrumb.templ) — only composite with `Items []BreadcrumbItem`, not children/slots. |
 | [~] | 2.9 | **D3: coming-from-shadcn — 5-minute onboarding** | Low | 240 lines, 11 H2. Heading renamed to “5-Minute Example: Button on Both Ports” as part of **1.15**'s vocabulary sweep, but the section still needs to **move above** “Main Differences” — not done yet. |
