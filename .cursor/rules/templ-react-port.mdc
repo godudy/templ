@@ -32,7 +32,8 @@ The Templ layout grammar is binding on the React side as well. See
   not duplicate recipes in TS.
 - `cn` = `clsx + tailwind-merge`; caller `className` wins over recipe classes.
 - Empty-string variant keys are forbidden. `defaults[k]` must reference a real
-  key in `byKey[k]`.
+  key in `byKey[k]`; never model a default as `""` even in temporary or
+  incremental edits.
 
 ## Composition primitives
 
@@ -89,6 +90,9 @@ The Templ layout grammar is binding on the React side as well. See
 Bricks in `ui/` and `components/` must accept content via `{ children... }`,
 never through a positional `value string` parameter. This keeps split-screen
 parity with the React-TSX runtime.
+
+`validate-spec` checks target file presence, not children-vs-positional API
+parity. Verify this contract manually whenever porting or refactoring a brick.
 
 ```templ
 @ui.Text(ui.TextProps{Class: "text-sm"}) {

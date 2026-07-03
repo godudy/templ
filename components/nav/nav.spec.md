@@ -59,6 +59,8 @@ showcase:
     props: { AriaLabel: "Primary navigation" }
   - id: state.active
     props: { Active: true }
+  - id: state.disabled
+    props: { Disabled: true }
 semantics:
   root: nav
   list-root: ul
@@ -80,7 +82,20 @@ Nav composes labeled navigation lists with active and disabled links.
 
 - Nav root accepts an explicit AriaLabel
 - Active links default aria-current to page
-- Disabled or empty links render span with aria-disabled
+- Enabled links with non-empty Href render semantic anchor tags
+- Disabled links or links with empty Href render span with aria-disabled
+- This root switch is semantic/accessibility behavior, not `asChild` composition
+
+## Why NavLink is polymorphic (a | span)
+
+`NavLink` intentionally controls its own root element:
+
+- `<a>` for interactive navigation (`Href` present and not disabled)
+- `<span>` for non-interactive states (`Disabled` true or missing/empty `Href`)
+
+This keeps disabled nav items non-navigable and avoids invalid "disabled link"
+patterns. Unlike `asChild`, this is not caller-driven root delegation; it is
+a built-in semantic rule of the navigation contract.
 
 ## Example layout.vertical
 
@@ -105,5 +120,15 @@ import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
 	@cmp.NavLink(cmp.NavLinkProps{Href: "/docs", Active: true}) { Docs }
+}
+```
+
+## Example state.disabled
+
+```templ
+import cmp "github.com/fastygo/templ/components"
+
+templ Example() {
+	@cmp.NavLink(cmp.NavLinkProps{Disabled: true}) { Disabled item }
 }
 ```

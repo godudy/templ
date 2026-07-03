@@ -8,16 +8,6 @@ specifically because it targets developers coming from React/shadcn.
 
 For a one-page syntax map see [`cheatsheet-react-to-templ.md`](cheatsheet-react-to-templ.md).
 
-## Main Differences
-
-| shadcn habit | Registry rule |
-|--------------|---------------|
-| Components are React-only | Every brick has a runtime-neutral spec |
-| Variants live in TS | Variants live in colocated `*.variants.json` |
-| `className` can do everything | `Class` / `className` is additive; named variants carry design intent |
-| Raw `<div>` layout is common | Use `Block`, `Box`, `Stack`, `Group` |
-| Client behavior often lives in React | APG behavior lives in `@ui8kit/aria` and is opt-in |
-
 ## 5-Minute Example: Button In Current Ports
 
 Open this section side by side with [`ui/button/button.tsx`](../ui/button/button.tsx)
@@ -52,6 +42,16 @@ Six deltas to remember (see [Naming Conversion](#naming-conversion) for the rule
 Open [`ui/button/button.tsx`](../ui/button/button.tsx) and
 [`ui/button/button.templ`](../ui/button/button.templ) in a split editor to see
 the full contract.
+
+## Main Differences
+
+| shadcn habit | Registry rule |
+|--------------|---------------|
+| Components are React-only | Every brick has a runtime-neutral spec |
+| Variants live in TS | Variants live in colocated `*.variants.json` |
+| `className` can do everything | `Class` / `className` is additive; named variants carry design intent |
+| Raw `<div>` layout is common | Use `Block`, `Box`, `Stack`, `Group` |
+| Client behavior often lives in React | APG behavior lives in `@ui8kit/aria` and is opt-in |
 
 ## Why Go Templ And React First?
 
@@ -109,6 +109,46 @@ When comparing stacks, count only the **registry-specific** rows (`Variant`,
 `Size`, `Class`, `asChild`) — not every HTML attribute the React type
 inherits. The other 7 Go fields exist only because Go has no `HTMLAttributes`
 analogue to inherit from; they are not extra registry surface.
+
+## Explicit Fields on Templ Form
+
+React `Form` uses `FormProps = FormHTMLAttributes<HTMLFormElement>`, so fields
+like `action`, `method`, `encType`, `autoComplete`, `name`, `target`, and
+`noValidate` come from DOM type inheritance.
+
+Go Templ names the same contract explicitly in
+[`ui/form/form.templ`](../ui/form/form.templ): `Action`, `Method`, `Enctype`,
+`Autocomplete`, `Name`, `Target`, `NoValidate`, plus `ID`/`Class`, with
+`Attrs` as the catch-all for uncommon attributes.
+
+```templ
+@ui.Form(ui.FormProps{
+    Method: "post",
+    Action: "/signup",
+    Attrs: templ.Attributes{"data-testid": "signup-form"},
+}) {
+    ...
+}
+```
+
+As with `ButtonProps`, these are mostly DOM attributes that React inherits by
+default and Go must list explicitly; they are not extra registry-specific API.
+
+## Breadcrumb Is A Documented Exception
+
+Most composites in this registry use children/parts composition, but
+`Breadcrumb` intentionally uses data items: `items` (React) and
+`Items []BreadcrumbItem` (Go).
+
+This shape is deliberate: breadcrumb trails are ordered navigation data with
+stateful per-item semantics (`Current`, `Disabled`, `Href`) and
+`aria-current="page"` rules, not arbitrary nested content slots.
+
+References:
+
+- [`components/breadcrumb/breadcrumb.spec.md`](../components/breadcrumb/breadcrumb.spec.md)
+- [`components/breadcrumb/breadcrumb.tsx`](../components/breadcrumb/breadcrumb.tsx)
+- [`components/breadcrumb/breadcrumb.templ`](../components/breadcrumb/breadcrumb.templ)
 
 ## Where Fixtures Live
 

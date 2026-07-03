@@ -22,7 +22,9 @@ For substantial work, proceed as:
 4. Implement only what the spec requires.
 5. Run the relevant verification and report the result.
 
-For tiny mechanical edits, an inline one-sentence spec is enough.
+For tiny mechanical edits, an inline one-sentence spec is enough, but still
+perform a quick contract check: if the touch implies spec/variant/rule/docs
+updates, include those updates in the same change.
 
 ## Spec Inputs
 
@@ -63,6 +65,8 @@ Before implementation, check whether the spec requires:
 
 - `*.spec.md` updates (full `api` enums, `semantics`, showcase);
 - `*.variants.json` sync with `allow-list-source` and Go/React class maps;
+- empty-string variant keys/defaults issues (`defaults[k]` must point to a
+  named non-empty key in `byKey[k]`);
 - `*.data.json` showcase payloads when adding examples;
 - typed `Aria*` props vs `Attrs` escape hatch — see [`docs/aria.md`](../../docs/aria.md);
 - `go tool templ generate` for touched packages;

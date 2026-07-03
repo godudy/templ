@@ -48,6 +48,17 @@ also expose native React ergonomics (`htmlFor`, `onClick`, `ref`) where Templ
 uses Go field names (`HTMLFor`, `Attrs`), but the rendered semantics and
 variant choices must remain aligned across every port.
 
+Quick ergonomics examples (syntax differs, contract does not):
+
+- Styling extension: `<Button className="w-full" />` (React) vs
+  `@ui.Button(ui.ButtonProps{Class: "w-full"})` (Templ).
+- Label association: `<Label htmlFor="email">` (React) vs
+  `@ui.Label(ui.LabelProps{HTMLFor: "email"})` (Templ).
+- Events and refs: React can pass `onClick` and `ref`; SSR-first ports render
+  static HTML and do not expose runtime refs/events in brick APIs.
+- Rare attributes: React usually spreads `...rest`; Go uses
+  `Attrs: templ.Attributes{"data-testid": "email-input"}`.
+
 ## Variants
 
 Variant class strings live only in `*.variants.json`.

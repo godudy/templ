@@ -13,13 +13,21 @@ Shared assets (CSS tokens, Tailwind output, UI8Kit ARIA bundle) live in [`web/st
 
 `examples/` is a Bun workspace member of the repository root — dependencies
 are installed **once** from the repository root (`bun install` in
-[`../`](../)), not from inside `examples/`. The commands below can be run
-either from `examples/` directly or as `bun run dev:templ` / `bun run
-dev:vite` from the repository root.
+[`../`](../)), not from inside `examples/`.
+
+Recommended workflow: run preview commands from the repository root
+(`bun run dev:templ`, `bun run dev:vite`). Equivalent commands from inside
+`examples/` are optional.
 
 ## Templ preview
 
-From **`examples/`** (or the repository root, after the root `bun install`):
+Recommended from repository root:
+
+```bash
+bun run dev:templ
+```
+
+Equivalent inside `examples/`:
 
 ```bash
 bun run dev:templ
@@ -31,13 +39,24 @@ The server lives at [`templ/cmd/server/main.go`](templ/cmd/server/main.go).
 
 ## Vite preview
 
-From **`examples/`** (or the repository root, after the root `bun install`):
+Recommended from repository root:
+
+```bash
+bun run dev:vite
+```
+
+Equivalent inside `examples/`:
 
 ```bash
 bun run dev:vite
 ```
 
 Open http://127.0.0.1:5173/ and http://127.0.0.1:5173/home/
+
+The Vite preview app uses [`react-router-dom`](https://www.npmjs.com/package/react-router-dom)
+for local route switching in [`vite/src/main.tsx`](vite/src/main.tsx) and
+[`vite/src/app.tsx`](vite/src/app.tsx). This dependency is preview-only and is
+not a peer/runtime requirement of registry bricks.
 
 ```bash
 bun run build:vite

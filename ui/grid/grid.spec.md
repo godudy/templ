@@ -59,13 +59,11 @@ semantics:
 showcase:
     - id: layout.two-col
       props:
-        Class: gap-4
-        Cols: "2"
+        Class: gap-4 md:grid-cols-2
       ref: layout.two-col
     - id: layout.three-col
       props:
-        Class: gap-4
-        Cols: "3"
+        Class: gap-4 md:grid-cols-2 xl:grid-cols-3
       ref: layout.three-col
 targets:
     react:
@@ -84,6 +82,7 @@ variants: grid.variants.json
 
 Grid lays out children in a CSS grid container.
 GridCol wraps one column cell inside Grid.
+Cols/Span/Start/End/Order remain for compatibility but are legacy convenience props.
 
 ## Use Cases
 
@@ -94,7 +93,8 @@ GridCol wraps one column cell inside Grid.
 
 - Grid root is div with grid class from grid.variants.json
 - GridCol root is div without default grid class
-- Cols, Span, Start, End, and Order are legacy convenience props; prefer Class for layout utilities per UI8Kit contract
+- Cols, Span, Start, End, and Order are legacy convenience props kept for backward compatibility
+- New code should prefer explicit layout utilities in Class (for example `md:grid-cols-2`, `col-span-6`, `col-start-2`)
 
 ## Example layout.two-col
 
@@ -102,7 +102,7 @@ GridCol wraps one column cell inside Grid.
 import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@ui.Grid(ui.GridProps{Cols: "2", Class: "gap-4"}) {
+	@ui.Grid(ui.GridProps{Class: "gap-4 md:grid-cols-2"}) {
 		@ui.GridCol(ui.GridColProps{}) {
 			@ui.Text(ui.TextProps{}) { { "Column A" } }
 		}
@@ -119,10 +119,16 @@ templ Example() {
 import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@ui.Grid(ui.GridProps{Cols: "3", Class: "gap-4"}) {
+	@ui.Grid(ui.GridProps{Class: "gap-4 md:grid-cols-2 xl:grid-cols-3"}) {
 		@ui.GridCol(ui.GridColProps{}) { A }
 		@ui.GridCol(ui.GridColProps{}) { B }
 		@ui.GridCol(ui.GridColProps{}) { C }
 	}
 }
 ```
+
+## Legacy compatibility note
+
+`GridProps.Cols` and `GridColProps` numeric helpers (`Span`, `Start`, `End`, `Order`)
+are still accepted in existing code paths. Prefer `Class` utilities in new code,
+and keep legacy props only when touching older scaffolds incrementally.

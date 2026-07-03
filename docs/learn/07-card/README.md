@@ -65,6 +65,19 @@ The inner parts still use `@cmp.CardHeader`, `@cmp.CardContent`, etc. Only the
 This is not a hack — it is the documented composition pattern for every runtime
 that lacks `cloneElement`.
 
+### Real block example: dashboard LayerTable
+
+See the current dashboard pair:
+
+- React: [`examples/vite/src/blocks/dashboard/layer-table.tsx`](../../../examples/vite/src/blocks/dashboard/layer-table.tsx)
+- Go Templ: [`examples/templ/ui/blocks/dashboard/layer-table.templ`](../../../examples/templ/ui/blocks/dashboard/layer-table.templ)
+
+`LayerTable` is the same escape hatch in production-shaped block code:
+React uses `<Card asChild><section>...`, while Go uses
+`<section class={ cmp.CardClasses(...) }>...`.
+Both are legitimate because the semantic wrapper still carries Card recipe
+classes and composes Card parts inside the surface.
+
 ## Try it yourself
 
 ### Exercise A — Compose a KPI card

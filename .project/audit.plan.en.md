@@ -111,17 +111,17 @@
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
 | [x] | 2.6 | **“Why no asChild in templ?” — dedicated section** | Low | Done via P2.2: [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) now explains why `asChild` is React-only and shows Button, Card, and SheetTrigger framing. |
-| [ ] | 2.7 | **F2: Form “verbs-y” perception** | Low | [`ui/form/form.templ`](../ui/form/form.templ):13–24 — 9 explicit fields vs TSX `FormHTMLAttributes`. Short note in docs. |
-| [ ] | 2.8 | **C2: Breadcrumb — documented exception** | Low | [`components/breadcrumb/breadcrumb.templ`](../components/breadcrumb/breadcrumb.templ) — only composite with `Items []BreadcrumbItem`, not children/slots. |
-| [~] | 2.9 | **D3: coming-from-shadcn — 5-minute onboarding** | Low | 240 lines, 11 H2. Heading renamed to “5-Minute Example: Button on Both Ports” as part of **1.15**'s vocabulary sweep, but the section still needs to **move above** “Main Differences” — not done yet. |
-| [ ] | 2.10 | **D4: architecture.md — React/Templ ergonomics** | Low | [`docs/architecture.md`](../docs/architecture.md):38–40 — `htmlFor`/`onClick`/`ref` vs `HTMLFor`/`Attrs`; one sentence, needs examples. |
-| [ ] | 2.11 | **`react-router-dom` in examples/README** | Low | Only dep outside peers; [`examples/vite/src/main.tsx`](../examples/vite/src/main.tsx):3 imports `BrowserRouter`. One line in [`examples/README.md`](../examples/README.md). |
+| [x] | 2.7 | **F2: Form “verbs-y” perception** | Low | Done: [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) now explains Form explicit fields vs React `FormHTMLAttributes` and `Attrs` as catch-all. |
+| [x] | 2.8 | **C2: Breadcrumb — documented exception** | Low | Done: [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) documents `items` / `Items []BreadcrumbItem` as an intentional data-driven composite shape with links to spec and ports. |
+| [x] | 2.9 | **D3: coming-from-shadcn — 5-minute onboarding** | Low | Done: the `5-Minute Example` section in [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md) is now placed above `Main Differences`. |
+| [x] | 2.10 | **D4: architecture.md — React/Templ ergonomics** | Low | Done: [`docs/architecture.md`](../docs/architecture.md) `Runtime Parity` now includes concrete examples for `className`/`Class`, `htmlFor`/`HTMLFor`, events/refs, and `Attrs`. |
+| [x] | 2.11 | **`react-router-dom` in examples/README** | Low | Done: [`examples/README.md`](../examples/README.md) now documents `react-router-dom` as Vite preview infrastructure only. |
 
 #### P2 — quick
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 2.12 | **Card lesson: LayerTable escape hatch** | Low | §6: manual `<section class={ CardClasses(...) }>` / `<Card asChild><section>` — legitimate pattern; without explicit mention junior sees “raw section” and gets confused. |
+| [x] | 2.12 | **Card lesson: LayerTable escape hatch** | Low | Done: [`docs/learn/07-card/README.md`](../docs/learn/07-card/README.md) now references dashboard `LayerTable` as the concrete `CardClasses` escape-hatch example across React and Templ. |
 
 ---
 
@@ -129,13 +129,13 @@
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 3.1 | **F3: Grid double API** | Medium | [`ui/grid/grid.templ`](../ui/grid/grid.templ):32–108 — 5 legacy maps `Cols/Span/Start/End/Order`. [`ui/grid/grid.spec.md`](../ui/grid/grid.spec.md):96: “prefer Class”. G8: deprecate with lint or remove. |
-| [ ] | 3.2 | **Twin helpers — codegen or review checklist** | Medium | `workflowStepLabel` in two files/languages; `sheet-ids.{ts,go}` too. As pairs grow, need codegen or review checklist. Execution task for the policy decided in **1.13**. |
-| [ ] | 3.3 | **G9/D5: `docs/contributing.md` for humans** | Medium | Human analogue of [`templ-registry-structure.mdc`](../.cursor/rules/templ-registry-structure.mdc):81–91 “how to add a brick”. Currently agent-facing rules only. |
-| [ ] | 3.4 | **F4: ListItem `Tag: "dt"/"dd"`** | Low | [`ui/list/list.templ`](../ui/list/list.templ):34–49 — `ResolveTag` for definition lists; one line in spec. |
-| [ ] | 3.5 | **C3: NavLink polymorphism** | Low | [`components/nav/nav.tsx`](../components/nav/nav.tsx) — `<a>` or `<span>` by `Disabled`/empty `Href`; in spec but no “why not asChild”. |
-| [ ] | 3.6 | **`examples/README.md:22` — single root command** | Low | “From examples/ (or the repository root…)” → unambiguous: root `bun install` + `bun run dev:vite`. |
-| [ ] | 3.7 | **LLM weak spots in rules** | Low | `templ-spec-driver.mdc:25` “tiny mechanical edits” — LLM may skip spec-step. `templ-react-port.mdc:89–99` positional value string — validate-spec doesn't catch children-API. Empty-string variant keys — variantcheck catches, LLM may not understand defaults. |
+| [x] | 3.1 | **F3: Grid double API** | Medium | Done: [`ui/grid/grid.spec.md`](../ui/grid/grid.spec.md) now marks `Cols`/`Span`/`Start`/`End`/`Order` as legacy compatibility props and moves examples to Class-first grid utilities. |
+| [x] | 3.2 | **Twin helpers — codegen or review checklist** | Medium | Done via checklist path: [`docs/contributing.md`](../docs/contributing.md) now includes a twin-helper review checklist for `sheet-ids` and algorithmic helper twins; no codegen in this pass. |
+| [x] | 3.3 | **G9/D5: `docs/contributing.md` for humans** | Medium | Done: added [`docs/contributing.md`](../docs/contributing.md) as human-facing guidance mirroring core registry workflow and validation steps. |
+| [x] | 3.4 | **F4: ListItem `Tag: "dt"/"dd"`** | Low | Done: [`ui/list/list.spec.md`](../ui/list/list.spec.md) now explicitly documents `ListItemProps{Tag: "dt"}` / `"dd"` semantics and includes a definition-list example. |
+| [x] | 3.5 | **C3: NavLink polymorphism** | Low | Done: [`components/nav/nav.spec.md`](../components/nav/nav.spec.md) now explains `<a>` vs `<span>` root selection and why it is semantic behavior (not `asChild`). |
+| [x] | 3.6 | **`examples/README.md:22` — single root command** | Low | Done: [`examples/README.md`](../examples/README.md) now uses root-first command wording and keeps `examples/` invocation as optional equivalent. |
+| [x] | 3.7 | **LLM weak spots in rules** | Low | Done: tightened [`.cursor/rules/templ-spec-driver.mdc`](../.cursor/rules/templ-spec-driver.mdc) and [`.cursor/rules/templ-react-port.mdc`](../.cursor/rules/templ-react-port.mdc) for spec-step checks, children API parity, and non-empty variant defaults guidance. |
 
 ---
 
