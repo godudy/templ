@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/tags.schema.json",
+  "$schema": "../schemas/tags.schema.json",
   "groups": [
     {
       "name": "Layout",

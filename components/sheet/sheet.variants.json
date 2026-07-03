@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/variant.schema.json",
+  "$schema": "../../schemas/variants.schema.json",
   "id": "components.sheet",
   "base": "fixed z-50 border-border bg-background text-foreground shadow-lg transition-transform",
   "keys": ["side", "size", "variant"],

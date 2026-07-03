@@ -29,7 +29,7 @@ Open both files in a split editor before reading the table below.
 | 1 | `export function HeroChat({ hero })` | `templ HeroChat(props HeroProps)` | Function name matches; props are a typed struct in Go. |
 | 2 | `<Block tag="section" className="...">` | `@ui.Block(ui.BlockProps{Tag: "section", Class: "..."})` | Both stacks use `Block` for section landmarks. |
 | 3 | `<H1 className="text-3xl ...">` | `@ui.Title(ui.TitleProps{As: 1, Class: "text-3xl ..."})` | React has `H1`–`H6` sugar; templ uses `Title` with `As: 1`–`6`. |
-| 4 | `className="gap-6"` | `Class: "gap-6"` | See [Naming Conversion](../coming-from-shadcn.md#naming-conversion). |
+| 4 | `className="gap-6"` | `Class: "gap-6"` | See [Naming Conversion](../../coming-from-shadcn.md#naming-conversion). |
 | 5 | `<Textarea rows={4} placeholder={hero.Prompt} />` | `@ui.Textarea(ui.TextareaProps{Rows: 4, Placeholder: props.Prompt})` | Self-closing in TSX; templ uses a struct literal. |
 | 6 | `aria-label={hero.AttachmentLabel}` | `AriaLabel: props.AttachmentLabel` | kebab-case prop → PascalCase Go field. |
 | 7 | `{hero.Suggestions.map((s) => <Badge>…</Badge>)}` | `for _, suggestion := range props.Suggestions { @ui.Badge(...) }` | List rendering syntax differs; children model is the same. |
@@ -53,8 +53,8 @@ Open both files in a split editor before reading the table below.
 
 ## Where to look next
 
-- [`docs/mental-model.md`](../mental-model.md) — five core ideas behind the dual-stack contract.
+- [`docs/mental-model.md`](../../mental-model.md) — five core ideas behind the dual-stack contract.
 - [`ui/button/`](../../../ui/button/) — smallest primitive; best first brick lesson.
 - [`ui/badge/`](../../../ui/badge/) — minimal props, good second brick.
 - [`components/card/`](../../../components/card/) — composite with named exports.
-- [`docs/coming-from-shadcn.md`](../coming-from-shadcn.md) — full migration guide.
+- [`docs/coming-from-shadcn.md`](../../coming-from-shadcn.md) — full migration guide.

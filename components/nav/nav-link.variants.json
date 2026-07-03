@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/variant.schema.json",
+  "$schema": "../../schemas/variants.schema.json",
   "id": "components.nav.link",
   "base": "inline-flex min-w-0 items-center gap-2 rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
   "keys": ["variant", "size"],

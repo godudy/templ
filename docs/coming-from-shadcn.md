@@ -16,8 +16,8 @@ React TSX from the same contract.
 
 ## 5-Minute Example: Button on Two Stacks
 
-Open this section side by side with [`ui/button/button.tsx`](../../ui/button/button.tsx)
-and [`ui/button/button.templ`](../../ui/button/button.templ).
+Open this section side by side with [`ui/button/button.tsx`](../ui/button/button.tsx)
+and [`ui/button/button.templ`](../ui/button/button.templ).
 
 | React (TSX) | Go Templ |
 |-------------|----------|
@@ -45,8 +45,8 @@ Six deltas to remember (see [Naming Conversion](#naming-conversion) for the rule
    templ uses `ButtonClasses(p)` on a manual wrapper:
    `<a href="..." class={ ui.ButtonClasses(p) }>Save</a>`.
 
-Open [`ui/button/button.tsx`](../../ui/button/button.tsx) and
-[`ui/button/button.templ`](../../ui/button/button.templ) in a split editor to see
+Open [`ui/button/button.tsx`](../ui/button/button.tsx) and
+[`ui/button/button.templ`](../ui/button/button.templ) in a split editor to see
 the full contract.
 
 ## Why Two Stacks?
@@ -102,12 +102,12 @@ the generated `page_gen.go` in the same Go package.
 
 The Vite example imports through thin re-exporters so a future move is easy:
 
-- [`examples/vite/src/data/home.ts`](../../examples/vite/src/data/home.ts)
-- [`examples/vite/src/data/dashboard.ts`](../../examples/vite/src/data/dashboard.ts)
+- [`examples/vite/src/data/home.ts`](../examples/vite/src/data/home.ts)
+- [`examples/vite/src/data/dashboard.ts`](../examples/vite/src/data/dashboard.ts)
 
 Block-level presentation helpers (`navIconLetter`, `workflowStepLabel`, …) also
 exist as **twin files** — see
-[`examples/vite/src/lib/helpers.ts`](../../examples/vite/src/lib/helpers.ts) and
+[`examples/vite/src/lib/helpers.ts`](../examples/vite/src/lib/helpers.ts) and
 `examples/templ/ui/blocks/{home,dashboard}/helpers.go`. Edit both when you
 change logic.
 
@@ -231,7 +231,7 @@ targets:
   react:
     component: Sheet
     facade: '@fastygo/templ-react'
-    test: ../../examples/vite/tests/sheet-ui8kit-contract.test.tsx
+    test: ../examples/vite/tests/sheet-ui8kit-contract.test.tsx
 ```
 
 `validate-spec` verifies that the referenced test exists.

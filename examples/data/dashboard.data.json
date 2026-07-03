@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../schemas/data.schema.json",
+  "$schema": "../../schemas/data.schema.json",
   "id": "blocks.dashboard",
   "showcase": {
     "default": {

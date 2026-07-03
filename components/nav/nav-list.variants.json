@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/variant.schema.json",
+  "$schema": "../../schemas/variants.schema.json",
   "id": "components.nav.list",
   "base": "flex",
   "keys": ["orientation", "gap"],

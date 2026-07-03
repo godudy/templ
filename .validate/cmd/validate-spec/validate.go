@@ -75,7 +75,7 @@ func loadSpec(path string) (*specDoc, error) {
 
 func discoverSpecs(repoRoot string) ([]string, error) {
 	var paths []string
-	roots := []string{"ui", "components", "utils", filepath.Join("examples", "ui", "blocks")}
+	roots := []string{"ui", "components", "utils", filepath.Join("examples", "templ", "ui", "blocks")}
 	for _, root := range roots {
 		rootPath := filepath.Join(repoRoot, root)
 		err := filepath.WalkDir(rootPath, func(path string, d os.DirEntry, err error) error {

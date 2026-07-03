@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/variant.schema.json",
+  "$schema": "../../schemas/variants.schema.json",
   "id": "components.alert",
   "base": "rounded-lg border px-4 py-3 shadow-sm outline-none ring-offset-background gap-6",
   "keys": ["variant"],
