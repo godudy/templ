@@ -41,9 +41,9 @@
 | [x] | M4 | Twin-helpers pattern (`workflowStepLabel`, `sheet-ids`) has no scaling story | `examples/vite/src/lib/helpers.ts` ↔ `examples/templ/ui/blocks/*/helpers.go` | Pure logic, not styling — the `*.variants.json` JSON-compiler trick does not cover it. At 5 runtimes this is 5 hand-synced copies with nothing catching drift. Currently filed as P3 "write a checklist," which under-rates the risk. | **Policy decided** via **1.13** (`docs/architecture.md` Twin-Helper Policy); **3.2** remains the P3 follow-up for codegen/fixture-test tooling |
 | [x] | M5 | Task 1.3 modeled the fix as replicating a React hook (`useFrozenOpen`) per runtime | `components/sheet/sheet.tsx`:92 | A hook-shaped enforcement mechanism is, by construction, a fresh implementation per runtime (React hook, Svelte rune guard, Vue watcher, Go test). That's the same "edit N files by hand" failure mode called out for styling — it applies equally to behavioral contracts. | Wording fixed (part of **1.15**); **`validate-spec` lint implemented** — see **1.3** |
 | [x] | M7 | Escape-hatch framing implies Templ is "missing" `asChild` | `coming-from-shadcn.md` Feature Parity table, plan **2.2**, Reference parity table | `*Classes()` on a manual wrapper is the pattern every non-React runtime will use (Go today, Svelte/Vue/PHP tomorrow) — React's `asChild`+`Slot` is the outlier because only React has `cloneElement`. Framing it as "TSX has a feature Templ lacks" teaches the wrong mental model to the next runtime's author. | **Fixed** — `coming-from-shadcn.md`, `05-button`, `07-card` frame `asChild` as React-only sugar over the universal `*Classes()` pattern; confirmed via **1.10** |
-| [ ] | M8 | "Reference: parity on key bricks" table is structurally 2-column (TSX / Templ) | this plan, §Reference: parity | Fine as today's snapshot; needs to become per-runtime rows (not more columns) once runtime #3 ships. No action needed now — flagged so nobody treats the table shape as "the contract." | Footnote already present below the table |
+| [x] | M8 | "Reference: parity on key bricks" table is structurally 2-column (TSX / Templ) | this plan, §Reference: parity | Fine as today's snapshot; needs to become per-runtime rows (not more columns) once runtime #3 ships. No action needed now — flagged so nobody treats the table shape as "the contract." | **Closed as documented no-action context** — footnote already present below the table |
 
-`[x]` closed · `[~]` partially closed · `[ ]` open. M1/M2/M5 closed earlier this session; M3, M4, M7 closed via **1.10**/**1.13**.
+All multi-runtime findings are closed or explicitly documented as no-action context.
 
 ---
 
@@ -179,20 +179,20 @@
 
 ```
 README.md → mental-model / coming-from-shadcn / docs/learn / examples/README
-examples/README.md → bun install (root once) → dev:vite / dev:templ
-docs/learn/ → 01-hero, 04-layout-grammar, 02-sidebar, 03-sheet (✓)
-            → 05-button, 06-badge, 07-card (✗ todo)
-Build a screen → hero.tsx ↔ hero.templ + home.data.json + bun run generate
+examples/README.md → bun install (root once) → bun run dev:vite / bun run dev:templ
+docs/learn/ → 01-hero, 02-sidebar, 03-sheet, 04-layout-grammar
+            → 05-button, 06-badge, 07-card, 08-showcase, 09-tools, 10-notice
+Build a screen → React/Templ file pair + shared data/variants/spec + bun run generate when generated artifacts depend on it
 ```
 
-**Onboarding risk points:**
+**Closed onboarding risk points:**
 
 | Point | Risk | Comment |
 |-------|------|---------|
-| `docs/learn/` links | 🟢 | P0 closed — linkcheck OK |
-| `examples/vite/src/blocks/home/*` | 🟡 | 9 files — easy to get lost |
-| `bun run generate` | 🟡 | not in lesson README |
-| Button/Badge/Card without lessons | 🟡 | first bricks after the trail |
+| `docs/learn/` links | Closed | P0 fixed relative links and linkcheck passed. |
+| `examples/vite/src/blocks/home/*` | Closed | `page.tsx` router comment plus lessons guide readers through hero/sidebar/sheet/showcase/tools/notice. |
+| `bun run generate` | Closed | Lesson docs now explain when fixture/spec/variant edits require generation. |
+| Button/Badge/Card without lessons | Closed | Lessons 05, 06, and 07 are written and indexed. |
 
 ---
 
@@ -218,17 +218,15 @@ Build a screen → hero.tsx ↔ hero.templ + home.data.json + bun run generate
 
 All of P0 and P1 are closed.
 
-## Next priority queue (P2/P3, in this order)
+## Audit closure summary
 
-1. **2.5** — Split `primitives.smoke.test.tsx` into per-brick test files (test organization, not a lesson).
-2. **2.7** — Form "verbs-y" perception note (doc/reference).
-3. **2.8** — Breadcrumb documented exception (doc/reference).
-4. **2.9** — Finish moving the "5-Minute Example" section above "Main Differences" in `coming-from-shadcn.md` (doc reorg; already `[~]` partial from **1.15**).
-5. **2.10** — `architecture.md` React/Templ ergonomics examples (doc/reference).
-6. **2.11** — Document `react-router-dom` in `examples/README.md` (doc/reference).
-7. **3.1** — Deprecate Grid's legacy `Cols`/`Span`/`Start`/`End`/`Order` props (code debt).
-8. **3.2** — Twin-helpers codegen or review checklist — execution of the **1.13** policy (tooling).
+- [x] P0 — open-and-go blockers closed.
+- [x] P1 — onboarding and runtime-neutral contract risks closed.
+- [x] P2 — learning trail, docs/reference gaps, and primitive smoke-test split closed.
+- [x] P3.1–P3.7 — contributor-DX long tail closed with conservative docs/spec/rule updates.
 
-Everything else remaining in P2 (`2.2`, `2.3`, `2.4`, `2.6`, `2.12`) and P3 (`3.3`–`3.7`) comes after these eight, in table order.
+No remaining actionable audit items are tracked in this plan. Future work, such
+as runtime #3 or an interactive browser playground / split-view artifact, should
+start from a new plan.
 
 > An interactive browser playground / split-view lesson artifact is separate work and out of scope for this audit — it is not tracked in this plan.
