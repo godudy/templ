@@ -47,8 +47,8 @@ Open the sheet pair in a split editor before reading the table below.
 ## The `data-ui8kit-*` DOM contract
 
 `behavior="ui8kit"` does not add client JavaScript to the brick — it changes
-which attributes the brick emits. Both runtimes emit the identical contract,
-documented in [`docs/aria.md`](../../aria.md):
+which attributes the brick emits. Every runtime port must emit the same
+contract, documented in [`docs/aria.md`](../../aria.md):
 
 ```html
 <div id="panel-id" role="dialog" aria-modal="true"
@@ -159,7 +159,7 @@ bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
 Resize the browser to mobile width to see `CatalogMobileSheet` and compare
-`@ui8kit/aria` behavior on both ports.
+`@ui8kit/aria` behavior in the current React/Templ ports.
 
 ## Where to look next
 

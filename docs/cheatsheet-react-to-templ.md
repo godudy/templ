@@ -72,7 +72,7 @@ After JSON edits: `bun run generate` (Go codegen) + `bash .validate/scripts/vali
 | App state | `useState`, Svelte runes, Vue refs — **do not** bind registry `Open` for Sheet |
 | Registry bricks | Static markup + opt-in `data-ui8kit-*` hooks; no custom widget JS inside `ui/` |
 
-## Layout grammar (both ports)
+## Layout grammar (current ports)
 
 | Use | Primitive |
 |-----|-----------|

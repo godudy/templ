@@ -1,7 +1,7 @@
 # Multi-Runtime Component Architecture
 
 This repository is one design system shared across multiple runtime ports.
-Two ports ship today:
+Current shipped ports:
 
 - Go Templ for SSR.
 - React TSX for SPA/Vite usage.

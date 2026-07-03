@@ -1,8 +1,8 @@
 # Learn
 
 Split-view lessons for the FastyGo Templ registry. Each lesson mirrors a real
-`examples/` scaffold or brick so you can open the React and Go Templ files side
-by side and see one design contract expressed in two syntaxes.
+`examples/` scaffold or brick so you can open the current React and Go Templ
+files side by side and see one design contract expressed through runtime ports.
 
 ## Lessons
 
@@ -36,7 +36,7 @@ Or follow the original block-first path: 01 → 04 → 02 → 03, then 05–07.
 For onboarding context, start with [`coming-from-shadcn.md`](../coming-from-shadcn.md)
 or the one-page [`cheatsheet-react-to-templ.md`](../cheatsheet-react-to-templ.md).
 
-## Preview both runtimes
+## Preview Current Ports
 
 ```bash
 bun install          # once, repository root

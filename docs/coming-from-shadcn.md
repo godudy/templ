@@ -18,7 +18,7 @@ For a one-page syntax map see [`cheatsheet-react-to-templ.md`](cheatsheet-react-
 | Raw `<div>` layout is common | Use `Block`, `Box`, `Stack`, `Group` |
 | Client behavior often lives in React | APG behavior lives in `@ui8kit/aria` and is opt-in |
 
-## 5-Minute Example: Button on Both Ports
+## 5-Minute Example: Button In Current Ports
 
 Open this section side by side with [`ui/button/button.tsx`](../ui/button/button.tsx)
 and [`ui/button/button.templ`](../ui/button/button.templ).
@@ -171,7 +171,8 @@ React uses Radix-style `asChild` composition for roots and triggers:
 </Button>
 ```
 
-The Go side uses generated class helpers when a semantic wrapper is required:
+Every non-React port uses generated class helpers when a semantic wrapper is
+required; Go Templ is the current example:
 
 ```templ
 <article class={ cmp.CardClasses(cmp.CardProps{Variant: "default"}) }>
@@ -209,13 +210,13 @@ style is easier for junior developers, reviewers, and LLMs.
 Do not write custom React state logic for runtime open/close. `open` is only
 initial SSR state when `behavior="ui8kit"` is active.
 
-## Feature Parity TSX <-> Templ
+## React/Templ Parity Snapshot
 
-| Feature | TSX | Templ | Workaround |
-|---------|-----|-------|------------|
-| `asChild` / `Slot` | yes | no | use `XClasses(p)` on a manual semantic wrapper |
-| `forwardRef` | yes | n/a | SSR has no refs |
-| `onClick` / events | yes | n/a | SSR is event-free; use `ui8kit` ARIA hooks for behavior |
+| Feature | React TSX | Go Templ | Runtime-neutral framing |
+|---------|-----------|----------|-------------------------|
+| root delegation | `asChild` / `Slot` | `XClasses(p)` on a manual wrapper | `XClasses` is the portable pattern; React `Slot` is sugar |
+| refs | `forwardRef` | n/a | SSR ports do not expose refs |
+| events | `onClick` / events | n/a | SSR ports stay event-free; use `ui8kit` ARIA hooks for behavior |
 | children API | `{children}` | `{ children... }` | same model |
 
 ## Naming Conversion

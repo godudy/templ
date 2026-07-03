@@ -1,7 +1,7 @@
 # Lesson 05: Button brick
 
-Compare the smallest interactive primitive on React and Go Templ. Both ports
-read the same [`button.variants.json`](../../../ui/button/button.variants.json)
+Compare the smallest interactive primitive on React and Go Templ. These current
+ports read the same [`button.variants.json`](../../../ui/button/button.variants.json)
 recipe and the same [`button.spec.md`](../../../ui/button/button.spec.md)
 contract.
 
@@ -70,7 +70,7 @@ bypass the recipe with a one-off `className` hack in app code.
 3. Update `api.Variant.enum` in [`button.spec.md`](../../../ui/button/button.spec.md)
    to include `"accent"`.
 4. Run `bun run generate`, then `bash .validate/scripts/validate-spec.sh`.
-5. Use the new variant in both ports:
+5. Use the new variant in the current React/Templ ports:
 
    ```tsx
    <Button variant="accent">Accent</Button>
@@ -103,7 +103,8 @@ bun run dev:vite    # React — http://127.0.0.1:5173
 bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
-The registry demo page renders every Button showcase variant on both runtimes.
+The registry demo page renders every Button showcase variant in the current
+React/Templ ports.
 Open both URLs side by side and search for `variant.` labels in the page source.
 
 ## Where to look next

@@ -29,7 +29,7 @@ func TestValidateSheetOpenContractFlagsForbiddenPhrases(t *testing.T) {
 	if err := os.MkdirAll(filepath.Dir(docPath), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	bad := "With behavior=ui8kit, bind Open to React state for the mobile menu.\n"
+	bad := "With behavior=ui8kit, control `Open` with React state for the mobile menu.\n"
 	if err := os.WriteFile(docPath, []byte(bad), 0o644); err != nil {
 		t.Fatal(err)
 	}
@@ -40,18 +40,6 @@ func TestValidateSheetOpenContractFlagsForbiddenPhrases(t *testing.T) {
 	if err := os.WriteFile(specPath, []byte("---\nid: components.sheet\n---\n"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	for _, rel := range sheetOpenContractFiles {
-		if rel == "docs/learn/03-sheet/README.md" || rel == "components/sheet/sheet.spec.md" {
-			continue
-		}
-		p := filepath.Join(dir, filepath.FromSlash(rel))
-		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(p, []byte("ok\n"), 0o644); err != nil {
-			t.Fatal(err)
-		}
-	}
 
 	errs := validateSheetOpenContract(dir)
 	if len(errs) == 0 {
@@ -59,7 +47,7 @@ func TestValidateSheetOpenContractFlagsForbiddenPhrases(t *testing.T) {
 	}
 	found := false
 	for _, e := range errs {
-		if strings.Contains(e.message, "bind Open to React state") || strings.Contains(e.message, "bind\\s+open") {
+		if e.file == "docs/learn/03-sheet/README.md" && strings.Contains(e.message, "control") {
 			found = true
 			break
 		}
@@ -71,12 +59,16 @@ func TestValidateSheetOpenContractFlagsForbiddenPhrases(t *testing.T) {
 
 func TestValidateSheetOpenContractAllowsNegatedGuidance(t *testing.T) {
 	dir := t.TempDir()
-	for _, rel := range sheetOpenContractFiles {
+	for _, rel := range []string{
+		"components/sheet/sheet.spec.md",
+		"docs/learn/03-sheet/README.md",
+		"docs/cheatsheet-react-to-templ.md",
+	} {
 		p := filepath.Join(dir, filepath.FromSlash(rel))
 		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
 			t.Fatal(err)
 		}
-		body := "Open sets initial hidden only. With Behavior=ui8kit, do not bind Open to a runtime's own reactive component state (React state, Svelte runes, Vue refs, ...).\n"
+		body := "Open sets initial hidden only. With Behavior=ui8kit, do not bind `Open` to React state or a runtime's own reactive component state.\n"
 		if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
 			t.Fatal(err)
 		}

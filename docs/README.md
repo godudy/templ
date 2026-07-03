@@ -20,8 +20,8 @@ and [`learn/`](learn/) first.
 - [`coming-from-shadcn.md`](coming-from-shadcn.md) — onboarding notes for
   developers familiar with shadcn.
 - [`cheatsheet-react-to-templ.md`](cheatsheet-react-to-templ.md) — one-page
-  React ↔ Templ syntax and naming map.
-- [`learn/`](learn/) — split-view lessons (React ↔ Templ) for the examples scaffolds.
+  syntax and naming map for current React/Templ ports.
+- [`learn/`](learn/) — split-view lessons for current React/Templ example ports.
 - [`publishing.md`](publishing.md) — Go module vs future npm delivery model.
 
 ## Rule Files

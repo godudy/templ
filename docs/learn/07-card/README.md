@@ -94,7 +94,7 @@ bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
 Card variants appear in the registry demo and in dashboard/home block scaffolds
-on both ports.
+for the current React/Templ ports.
 
 ## Where to look next
 

@@ -24,7 +24,7 @@ the worked example that already applies every rule below in real code.
 | `Stack` | `<div>`, `<ul>`, or `<ol>` | column | Vertical rhythm: sections, form fields, list rows. Base classes: `flex flex-col items-start justify-start`. |
 | `Group` | `<div>`, `<fieldset>`, or `<dl>` | row | Horizontal flex grouping. Base classes: `flex min-w-0`. Use `tag="fieldset"` for related form controls. |
 
-Both runtimes resolve these tag restrictions from the same source of truth —
+Every runtime port resolves these tag restrictions from the same source of truth —
 `TagGroupLayout`, `TagGroupBoxAllowed`, `TagGroupStack`, and `TagGroupGroup`
 in [`utils/tags.go`](../../../utils/tags.go) (Go, generated) and
 [`utils/tags.ts`](../../../utils/tags.ts) (React). Passing a tag outside the
@@ -204,8 +204,8 @@ bun run dev:vite    # React — http://127.0.0.1:5173
 bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
-Open the home scaffolds on both ports and identify `Block`, `Box`, `Stack`, and
-`Group` in the rendered page using the rules above.
+Open the current React/Templ home scaffolds and identify `Block`, `Box`, `Stack`,
+and `Group` in the rendered page using the rules above.
 
 ## Where to look next
 

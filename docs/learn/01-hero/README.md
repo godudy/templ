@@ -33,7 +33,7 @@ Open both files in a split editor before reading the table below.
 | 5 | `<Textarea rows={4} placeholder={hero.Prompt} />` | `@ui.Textarea(ui.TextareaProps{Rows: 4, Placeholder: props.Prompt})` | Self-closing in TSX; templ uses a struct literal. |
 | 6 | `aria-label={hero.AttachmentLabel}` | `AriaLabel: props.AttachmentLabel` | kebab-case prop → PascalCase Go field. |
 | 7 | `{hero.Suggestions.map((s) => <Badge>…</Badge>)}` | `for _, suggestion := range props.Suggestions { @ui.Badge(...) }` | List rendering syntax differs; children model is the same. |
-| 8 | `workflowStepLabel(index)` in `helpers.ts` | `workflowStepLabel(index)` in `helpers.go` | Twin helpers: same function names in both runtimes; edit both when logic changes. |
+| 8 | `workflowStepLabel(index)` in `helpers.ts` | `workflowStepLabel(index)` in `helpers.go` | Current React/Templ helpers share names; edit both until P1.13 decides generation. |
 
 ## Try it yourself
 
@@ -61,7 +61,7 @@ bun run dev:vite    # React — http://127.0.0.1:5173
 bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
-The home page scaffolds use this lesson's `HeroChat` block on both ports.
+The current React/Templ home scaffolds use this lesson's `HeroChat` block.
 
 ## Where to look next
 

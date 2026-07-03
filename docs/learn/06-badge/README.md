@@ -73,7 +73,7 @@ bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
 The registry demo lists Badge variants on the default page. Compare the same
-labels on both ports.
+labels in the current React/Templ ports.
 
 ## Where to look next
 

@@ -75,7 +75,7 @@ bun run dev:vite    # React — http://127.0.0.1:5173
 bun run dev:templ   # Go Templ — http://127.0.0.1:8080
 ```
 
-The home page scaffolds use this lesson's `CatalogSidebar` block on both ports.
+The current React/Templ home scaffolds use this lesson's `CatalogSidebar` block.
 
 ## Where to look next
 

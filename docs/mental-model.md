@@ -13,8 +13,8 @@ source of truth for Tailwind class composition.
 - **Go Templ** — `uiutils.Compose()` reads the same JSON (often via generated
   `*_variants.go`).
 
-When you change a variant, update the JSON once. Both runtimes pick up the same
-classes. Do not duplicate variant maps in `.templ` or `.tsx` files.
+When you change a variant, update the JSON once. Every runtime port picks up the
+same classes. Do not duplicate variant maps in runtime files.
 
 ## 2. Spec-driven parts
 
@@ -83,8 +83,8 @@ Ports live side by side (`ui/button/button.templ` next to `button.tsx`).
 Differences between ports are documented in [`learn/`](learn/) and
 [`coming-from-shadcn.md`](coming-from-shadcn.md), not hidden in comments.
 
-When you add a brick, add both ports, both spec files, and a `_test.tsx` if
-the spec requires it.
+When you add a brick, add one spec, every shipped runtime port, and a `_test.tsx`
+if the spec requires it.
 
 ## Where to go next
 

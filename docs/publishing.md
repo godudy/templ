@@ -1,7 +1,7 @@
 # Publishing Model
 
 This repository is currently a Go module that also contains React TSX sources
-for dual-runtime authoring.
+for the first shipped runtime ports.
 
 ## Delivery Channels
 
@@ -11,7 +11,7 @@ for dual-runtime authoring.
 | React | future npm package or copy-paste | Uses TSX sources and JSON recipes |
 
 The shared contract files (`*.spec.md`, `*.variants.json`, `*.data.json`) live
-in git and are useful to both runtimes.
+in git and are useful to every runtime port.
 
 ## Go Module Zip
 
