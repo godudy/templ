@@ -75,7 +75,7 @@ slots:
 targets:
     react:
         component: Block
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/block.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/block'
     templ:

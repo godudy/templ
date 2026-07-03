@@ -79,9 +79,24 @@ four registry fields (`variant`, `size`, `asChild`, `className`). Every other
 HTML attribute (`disabled`, `type`, `aria-*`, `data-*`) comes from the DOM
 type for free.
 
-Go has no `HTMLAttributes` analogue. Templ `ButtonProps` lists the common
-fields explicitly (`Variant`, `Size`, `Disabled`, `Type`, `AriaLabel`, …) and
-routes everything else through `Attrs templ.Attributes`:
+Go has no `HTMLAttributes` analogue, so [`ui/button/button.templ`](../ui/button/button.templ)
+lists 11 fields explicitly. Only 4 of them are registry-specific — the rest
+are DOM attributes that React inherits for free and Go must name one by one:
+
+| Go field (`ButtonProps`) | Kind | React equivalent |
+|--------------------------|------|-------------------|
+| `Variant` | registry (`*.variants.json`) | `variant` |
+| `Size` | registry (`*.variants.json`) | `size` |
+| `Class` | registry (style extension) | `className` |
+| — | registry (composition) | `asChild` (React-only, see below) |
+| `Type` | DOM attribute, named explicitly | `type` (inherited) |
+| `Form` | DOM attribute, named explicitly | `form` (inherited) |
+| `Disabled` | DOM attribute, named explicitly | `disabled` (inherited) |
+| `ID` | DOM attribute, named explicitly | `id` (inherited) |
+| `Role` | DOM attribute, named explicitly | `role` (inherited) |
+| `TabIndex` | DOM attribute, named explicitly | `tabIndex` (inherited) |
+| `AriaLabel` | accessible-name, named explicitly | `aria-label` (inherited) |
+| `Attrs` | catch-all for everything else | `...rest` spread |
 
 ```templ
 @ui.Button(ui.ButtonProps{
@@ -90,8 +105,10 @@ routes everything else through `Attrs templ.Attributes`:
 }) { Save }
 ```
 
-When comparing stacks, count only the **registry-specific** fields — not every
-HTML attribute the React type inherits.
+When comparing stacks, count only the **registry-specific** rows (`Variant`,
+`Size`, `Class`, `asChild`) — not every HTML attribute the React type
+inherits. The other 7 Go fields exist only because Go has no `HTMLAttributes`
+analogue to inherit from; they are not extra registry surface.
 
 ## Where Fixtures Live
 
@@ -161,7 +178,56 @@ If an appearance does not fit:
 
 The first option is preferred because it keeps tokens and examples centralized.
 
-## `asChild`
+## Escape hatch: `asChild` vs `*Classes()`
+
+React shadcn/Radix uses `asChild` + `Slot` to **merge props and classes onto a
+child element** without an extra wrapper. That works because React can call
+`cloneElement` at runtime.
+
+Go Templ, Svelte, Vue, PHP/Latte, and every other non-React port render a
+**fixed element tree at compile time**. There is no runtime child merge — so
+the registry's portable escape hatch is always the same:
+
+```text
+Pick the semantic tag you need → apply *Classes(props) on it → compose inner parts as children.
+```
+
+| Need | React (React-only sugar) | Universal pattern (all ports) |
+|------|--------------------------|-------------------------------|
+| Link styled as button | `<Button asChild><a href="…">…</a></Button>` | `<a href="…" class={ ui.ButtonClasses(p) }>…</a>` |
+| Card as `<article>` landmark | `<Card asChild><article>…</article></Card>` | `<article class={ cmp.CardClasses(p) }>…</article>` |
+| Sheet trigger on custom control | `<SheetTrigger asChild panelId="…"><button>…</button></SheetTrigger>` | Emit trigger markup with `data-ui8kit-*` hooks + `panelId`/`PanelID`; apply trigger classes via `SheetTriggerClasses(p)` on the chosen element |
+
+`*Classes()` helpers are generated next to every brick that supports root
+delegation. They run the same `composeRecipe` path as the component — only the
+DOM wrapper is yours.
+
+### Why no `asChild` in Go Templ?
+
+Templ is not "missing" `asChild`. The feature depends on React's ability to
+inspect and clone a single child at runtime. SSR-first ports never had that
+mechanism, so they expose the **same visual and behavioral contract** through
+explicit wrappers:
+
+1. **Classes** — call `ButtonClasses`, `CardClasses`, `SheetTriggerClasses`, …
+   with the same props you would pass to the component.
+2. **Semantics** — choose `<a>`, `<section>`, `<button>`, or any other tag
+   yourself; the recipe does not force a default root when you use `*Classes`.
+3. **Behavior hooks** — for Sheet parts, the portable contract is the emitted
+   `data-ui8kit-*` attributes plus `panelId`/`PanelID`, not `asChild`.
+
+Do **not** drop a raw semantic tag without the recipe classes — that bypasses
+the design system. Do **not** teach "Templ is missing asChild" to junior
+developers; teach "React has convenience sugar; every port uses `*Classes()` on
+a manual wrapper."
+
+Deep dives with exercises:
+
+- [`docs/learn/05-button`](../docs/learn/05-button/) — `ButtonClasses` on `<a>`.
+- [`docs/learn/07-card`](../docs/learn/07-card/) — `CardClasses` on `<section>`.
+- [`docs/learn/03-sheet`](../docs/learn/03-sheet/) — trigger semantics without React state.
+
+## `asChild` (React-only quick reference)
 
 React uses Radix-style `asChild` composition for roots and triggers:
 
@@ -175,10 +241,15 @@ Every non-React port uses generated class helpers when a semantic wrapper is
 required; Go Templ is the current example:
 
 ```templ
-<article class={ cmp.CardClasses(cmp.CardProps{Variant: "default"}) }>
-  ...
-</article>
+<a href="/docs" class={ ui.ButtonClasses(ui.ButtonProps{Variant: "outline", Size: "sm"}) }>
+  Docs
+</a>
 ```
+
+For Card landmarks, see the full [`07-card`](../docs/learn/07-card/) lesson.
+For Sheet triggers, `asChild` is optional React sugar — the portable contract
+remains `panelId`/`PanelID`, `behavior="ui8kit"`, and the `data-ui8kit-*`
+attribute set documented in [`docs/aria.md`](aria.md).
 
 ## Card
 
@@ -202,10 +273,14 @@ style is easier for junior developers, reviewers, and LLMs.
 
 ```tsx
 <Sheet id="mobile-panel" behavior="ui8kit" aria-label="Navigation menu">
-  <SheetOverlay target="mobile-panel" behavior="ui8kit" />
+  <SheetOverlay panelId="mobile-panel" behavior="ui8kit" />
   <SheetContent>...</SheetContent>
 </Sheet>
 ```
+
+`SheetTrigger`, `SheetOverlay`, and `SheetClose` all take `panelId` (React) /
+`PanelID` (Go) — the same id-reference field, PascalCase-normalized like
+every other prop. There is no runtime-specific split here.
 
 Do not write custom React state logic for runtime open/close. `open` is only
 initial SSR state when `behavior="ui8kit"` is active.
@@ -228,6 +303,7 @@ initial SSR state when `behavior="ui8kit"` is active.
 | `htmlFor` | `HTMLFor` | acronym uppercased |
 | `aria-label` | `AriaLabel` | kebab -> PascalCase |
 | `data-ui8kit` | `DataUI8Kit` | kebab + acronym uppercased |
+| `panelId` | `PanelID` | Sheet id-reference (`SheetTrigger`/`SheetOverlay`/`SheetClose`); acronym uppercased |
 
 ## Test Contract
 

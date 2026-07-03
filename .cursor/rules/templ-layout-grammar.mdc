@@ -15,7 +15,7 @@ they are not "the same thing with different names". Use them correctly in
 | Primitive | Renders | Direction | Role |
 |-----------|---------|-----------|------|
 | `Block`   | semantic landmark (`tag`) | — | Opens every block exactly once per file. Carries the landmark `tag` (`aside`, `header`, `main`, `section`, `nav`, …). |
-| `Box`     | `<div>` (or other layout tag) | — | Free-form inner container. Lives **only** inside `Block` (or another layout primitive). Never opens a block. |
+| `Box`     | `<div>` only | — | Free-form inner container. Lives **only** inside `Block` (or another layout primitive). Never opens a block, never carries a landmark tag. |
 | `Stack`   | `<div>` (vertical flex) | column | Vertical rhythm: sections, form fields, list rows. Base: `flex flex-col items-start justify-start`. |
 | `Group`   | `<div>` or `<fieldset>` | row | Horizontal flex grouping. Base: `flex min-w-0`. Use `tag="fieldset"` for related form controls. |
 
@@ -66,9 +66,11 @@ Rules of thumb:
    `flex-row` overrides; if you need horizontal, switch to `Group`.
 5. **`Group` is horizontal.** Use `tag="fieldset"` only when grouping related
    form controls; otherwise default `<div>`.
-6. **`Block` appears at most once per file, and as the first JSX/templ node
-   the file returns.** Subsequent containers inside that root use `Box`,
-   `Stack`, or `Group`.
+6. **`Block` appears at most once per file.** In practice this means it is
+   the file's entry point, since a second `Block` is forbidden — but the
+   `blockonce` validator only counts occurrences; it does not check node
+   order. Subsequent containers inside that root use `Box`, `Stack`, or
+   `Group`.
 
 ## Examples
 
@@ -104,7 +106,8 @@ Incorrect (raw markup, nested `Block`, wrong direction):
 - `bun run lint:ui8px` scans `ui/`, `components/`, `utils/`, and `examples/`.
 - `bash .validate/scripts/validate-spec.sh --with-tests` enforces spec contracts.
 - `bun run typecheck:react` keeps the TSX side aligned.
-- `go run ./.validate/cmd/blockonce` enforces rule 6 (one `<Block>` per file).
+- `go run ./.validate/cmd/blockonce` enforces rule 6 by counting `<Block>`
+  occurrences per file (at most one); it does not verify node order.
 - A spec may declare `targets.react.test: <path>` (relative to the spec) — the
   referenced TSX test file must exist on disk.
 

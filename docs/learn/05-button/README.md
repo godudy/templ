@@ -15,7 +15,9 @@ understand how variant JSON drives every runtime port.
 - Registry fields (`variant`, `size`) vs DOM fields (`disabled`, `type`,
   `aria-*`) vs the `Attrs` escape hatch on Go.
 - React `asChild` as sugar over the universal `ButtonClasses` manual-wrapper
-  pattern used by Go and future ports (Svelte, Vue, PHP, …).
+  pattern used by Go and future ports (Svelte, Vue, PHP, …). See
+  [Escape hatch: `asChild` vs `*Classes()`](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes)
+  for the full mental model.
 
 ## The contract and ports
 
@@ -57,7 +59,7 @@ bypass the recipe with a one-off `className` hack in app code.
 | 2 | `composeRecipe(buttonRecipe, { variant, size }, className)` | `uiutils.Compose(ButtonVariants, map[string]string{"variant": p.Variant, "size": p.Size}, p.Class)` | Same selection keys; different helper names per language. |
 | 3 | `variant="outline"` | `Variant: "outline"` | PascalCase field in Go; see [cheat sheet](../../cheatsheet-react-to-templ.md). |
 | 4 | `disabled` (DOM attr) | `Disabled: true` | Registry state field on Go; React inherits from `ButtonHTMLAttributes`. |
-| 5 | `asChild` + `<Slot>` | `<a class={ ui.ButtonClasses(p) }>…</a>` | React-only sugar; universal pattern is `*Classes()` on a manual semantic wrapper. |
+| 5 | `asChild` + `<Slot>` | `<a class={ ui.ButtonClasses(p) }>…</a>` | React-only sugar; universal pattern is `*Classes()` on a manual semantic wrapper — see [escape hatch](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes). |
 | 6 | `aria-label="Save"` | `AriaLabel: "Save"` | Typed a11y field; other `aria-*` / `data-*` go in `Attrs` on Go. |
 
 ## Try it yourself
@@ -112,4 +114,6 @@ Open both URLs side by side and search for `variant.` labels in the page source.
 - [`06-badge`](../06-badge/) — same JSON pattern, no interaction state.
 - [`07-card`](../07-card/) — composite with named part exports.
 - [`cheatsheet-react-to-templ.md`](../../cheatsheet-react-to-templ.md) — one-page naming and syntax map.
-- [`docs/coming-from-shadcn.md`](../../coming-from-shadcn.md) — full migration guide.
+- [`docs/coming-from-shadcn.md`](../../coming-from-shadcn.md) — full migration guide;
+  [`Escape hatch: asChild vs *Classes()`](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes)
+  for the reusable pattern beyond Button.

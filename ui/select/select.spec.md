@@ -114,7 +114,7 @@ showcase:
 targets:
     react:
         component: Select
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/select.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/select'
     templ:

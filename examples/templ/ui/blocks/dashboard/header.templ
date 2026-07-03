@@ -10,7 +10,7 @@ templ DashboardHeader(props PageProps) {
 		@ui.Group(ui.GroupProps{Class: "col-start-1 items-center gap-2 justify-self-start"}) {
 			@cmp.SheetTrigger(cmp.SheetTriggerProps{
 				ID:        dashboardSheetTriggerID,
-				For:       dashboardSheetPanelID,
+				PanelID:   dashboardSheetPanelID,
 				Behavior:  "ui8kit",
 				Variant:   "outline",
 				Size:      "icon",

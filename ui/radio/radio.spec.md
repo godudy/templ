@@ -68,7 +68,7 @@ showcase:
 targets:
     react:
         component: Radio
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/radio.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/radio'
     templ:

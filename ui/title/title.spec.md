@@ -45,7 +45,7 @@ showcase:
 targets:
     react:
         component: Title
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/title.smoke.test.tsx
         facade: '@fastygo/templ-react'
         notes:
           - "as?: 1 | 2 | 3 | 4 | 5 | 6 (defaults to 2). H1–H6 shortcut exports are available."

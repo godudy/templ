@@ -123,7 +123,7 @@ export function ComponentExamples() {
                 <IconBadge size="default" variant="destructive">!</IconBadge>
                 <SheetTrigger
                   id={demoSheetTriggerID}
-                  target={demoSheetID}
+                  panelId={demoSheetID}
                   behavior="ui8kit"
                   variant="outline"
                   size="sm"
@@ -139,11 +139,11 @@ export function ComponentExamples() {
                 aria-label="Demo sheet"
                 aria-labelledby={demoSheetTitleID}
               >
-                <SheetOverlay target={demoSheetID} behavior="ui8kit" />
+                <SheetOverlay panelId={demoSheetID} behavior="ui8kit" />
                 <SheetContent>
                   <SheetHeader>
                     <SheetTitle id={demoSheetTitleID}>Sheet panel</SheetTitle>
-                    <SheetClose target={demoSheetID} behavior="ui8kit" aria-label="Close demo sheet">
+                    <SheetClose panelId={demoSheetID} behavior="ui8kit" aria-label="Close demo sheet">
                       Close
                     </SheetClose>
                   </SheetHeader>

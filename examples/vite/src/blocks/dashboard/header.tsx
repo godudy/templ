@@ -12,7 +12,7 @@ export function DashboardHeader({ props }: { props: DashboardPageProps }) {
       <Group className="col-start-1 items-center gap-2 justify-self-start">
         <SheetTrigger
           id={dashboardSheetTriggerID}
-          target={dashboardSheetPanelID}
+          panelId={dashboardSheetPanelID}
           behavior="ui8kit"
           variant="outline"
           size="icon"

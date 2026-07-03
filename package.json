@@ -18,7 +18,7 @@
     "test:sheet-contract": "bun test examples/vite/tests/sheet-ui8kit-contract.test.tsx",
     "test:compose": "bun test examples/vite/tests/compose-invariants.test.ts",
     "test:layout-primitives": "bun test examples/vite/tests/layout-primitives.test.tsx",
-    "test:primitives-smoke": "bun test examples/vite/tests/primitives.smoke.test.tsx",
+    "test:primitives-smoke": "bun test examples/vite/tests/ui",
     "test:components-smoke": "bun test examples/vite/tests/components.smoke.test.tsx",
     "validate:aria": "ui8px validate aria examples --manifest examples/web/static/js/manifest.json",
     "verify": "go run ./.validate/cmd/variantcheck && go run ./.validate/cmd/blockonce && bash .validate/scripts/validate-spec.sh --with-tests && bun run typecheck:react && bun run lint:ui8px && bun run validate:aria && bun run test:home-snapshot && bun run test:sheet-contract && bun run test:compose && bun run test:layout-primitives && bun run test:primitives-smoke && bun run test:components-smoke && go test ./...",

@@ -15,7 +15,7 @@ targets:
     package: "@fastygo/templ-react/ui/form"
     facade: "@fastygo/templ-react"
     component: Fieldset
-    test: ../../examples/vite/tests/primitives.smoke.test.tsx
+    test: ../../examples/vite/tests/ui/form-controls.smoke.test.tsx
 
 variants: fieldset.variants.json
 variant_recipes:

@@ -14,8 +14,10 @@ first if you have not already.
 - `behavior="ui8kit"` / `Behavior: "ui8kit"` — the opt-in flag that switches a
   brick from static markup to a `data-ui8kit-*` DOM contract owned by
   `@ui8kit/aria` at runtime.
-- `target` (React) vs. `For` (Go) — the id-reference prop that wires
-  `SheetOverlay` and `SheetClose` to the panel they control.
+- `panelId` (React) / `PanelID` (Go) — the shared id-reference prop that
+  wires `SheetTrigger`, `SheetOverlay`, and `SheetClose` to the panel they
+  control. Same field name on every port, PascalCase-normalized like every
+  other prop — not a runtime-specific split.
 - The twin id-constants file pattern: one `.ts` file and one `.go` file,
   same constant names, edited together.
 - Why `open` / `Open` is **initial SSR state only** once `behavior="ui8kit"`
@@ -37,10 +39,10 @@ Open the sheet pair in a split editor before reading the table below.
 | # | React (TSX) | Go Templ | Rule |
 |---|-------------|----------|------|
 | 1 | `<Sheet id={homeSheetPanelID} side="left" size="default" variant="card" behavior="ui8kit" ...>` | `@cmp.Sheet(cmp.SheetProps{ID: homeSheetPanelID, Side: "left", Size: "default", Variant: "card", Behavior: "ui8kit", ...})` | Same variant/side/size recipe keys on both sides; `behavior`/`Behavior` opts into the `@ui8kit/aria` DOM contract. |
-| 2 | `<SheetOverlay target={homeSheetPanelID} behavior="ui8kit" .../>` | `@cmp.SheetOverlay(cmp.SheetOverlayProps{For: homeSheetPanelID, Behavior: "ui8kit", ...})` | `target` (React) and `For` (Go) both mean "id of the panel this part controls." See the naming table in [`coming-from-shadcn.md`](../../coming-from-shadcn.md#naming-conversion). |
+| 2 | `<SheetOverlay panelId={homeSheetPanelID} behavior="ui8kit" .../>` | `@cmp.SheetOverlay(cmp.SheetOverlayProps{PanelID: homeSheetPanelID, Behavior: "ui8kit", ...})` | `panelId` / `PanelID` — same field name, id of the panel this part controls. See the naming table in [`coming-from-shadcn.md`](../../coming-from-shadcn.md#naming-conversion). |
 | 3 | `<SheetContent className="p-4">` | `@cmp.SheetContent(cmp.SheetContentProps{Class: "p-4"})` | Plain content wrapper — no behavior hooks here. |
 | 4 | `<SheetTitle id={homeSheetTitleID} className="text-sm font-medium">{props.Brand}</SheetTitle>` | `@cmp.SheetTitle(cmp.SheetTitleProps{ID: homeSheetTitleID, Class: "text-sm font-medium"}) { { props.Brand } }` | Content via children on both sides — no positional string argument. |
-| 5 | `<SheetClose target={homeSheetPanelID} behavior="ui8kit" variant="outline" size="icon" aria-label="Close navigation menu">×</SheetClose>` | `@cmp.SheetClose(cmp.SheetCloseProps{For: homeSheetPanelID, Behavior: "ui8kit", Variant: "outline", Size: "icon", AriaLabel: "Close navigation menu"}) { × }` | `SheetClose` renders a `Button` internally on every runtime port — same variant/size vocabulary as [`ui/button`](../../../ui/button/). |
+| 5 | `<SheetClose panelId={homeSheetPanelID} behavior="ui8kit" variant="outline" size="icon" aria-label="Close navigation menu">×</SheetClose>` | `@cmp.SheetClose(cmp.SheetCloseProps{PanelID: homeSheetPanelID, Behavior: "ui8kit", Variant: "outline", Size: "icon", AriaLabel: "Close navigation menu"}) { × }` | `SheetClose` renders a `Button` internally on every runtime port — same variant/size vocabulary as [`ui/button`](../../../ui/button/). |
 | 6 | `<CatalogPrimaryNav items={props.Sidebar} className="mt-4" />` | `@CatalogPrimaryNav(props.Sidebar, "mt-4")` | Reuses the exact sub-brick from [Lesson 02](../02-sidebar/) — the mobile sheet and the desktop sidebar share one navigation component. |
 | 7 | `<CatalogHeaderNav items={props.HeaderNav} className="mt-4 border-t border-border pt-4" />` | `@CatalogHeaderNav(props.HeaderNav, "mt-4 border-t border-border pt-4")` | Second nav block, same sub-brick family. |
 
@@ -63,6 +65,50 @@ see [`examples/scripts/ui8kit-entry.mjs`](../../../examples/scripts/ui8kit-entry
 reads these attributes to open, close, and manage focus. Neither
 `mobile-sheet.tsx` nor `mobile-sheet.templ` contains any `onClick` handler or
 `useState` — all interactivity is attribute-driven.
+
+### Behavior flow (`behavior="ui8kit"`)
+
+Runtime-neutral view — no React hooks, no Go handlers in the block files:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 1. Static registry markup (SSR / first paint)                           │
+│    Sheet, SheetTrigger, SheetOverlay, SheetClose emit:                  │
+│    • id / panelId (PanelID) wiring                                      │
+│    • data-ui8kit="sheet" | "sheet-trigger" | "sheet-overlay" | …      │
+│    • data-state="closed" (initial) + hidden on the panel                │
+│    • role="dialog", aria-modal, aria-labelledby, …                      │
+└───────────────────────────────┬─────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 2. App loads @ui8kit/aria once (examples/scripts/ui8kit-entry.mjs)      │
+│    Registry scans data-ui8kit-* hooks; binds triggers ↔ panels by id.   │
+└───────────────────────────────┬─────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 3. Runtime DOM mutations (owned by @ui8kit/aria, not block code)        │
+│    • toggle hidden on the panel                                         │
+│    • flip data-state open ↔ closed                                      │
+│    • update aria-expanded on triggers, focus trap inside dialog         │
+│    • overlay click / Escape → close                                     │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The block author writes **declarative markup only**. Do not add controlled
+`open` state in React or live `Open` toggles in Go handlers — `open`/`Open` is
+initial SSR visibility when `behavior="ui8kit"` is set.
+
+The contract validator
+[`.validate/cmd/validate-spec/sheet_contract_validate.go`](../../../.validate/cmd/validate-spec/sheet_contract_validate.go)
+guards specs and docs against drifting back toward controlled-open guidance.
+
+`SheetTrigger asChild` on React is optional sugar for merging trigger classes
+onto a custom element; the portable contract is still `panelId`/`PanelID`,
+`behavior="ui8kit"`, and the `data-ui8kit-*` attribute set above — not
+`cloneElement` itself. See
+[Escape hatch: `asChild` vs `*Classes()`](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes).
 
 ## Twin id-constants files
 

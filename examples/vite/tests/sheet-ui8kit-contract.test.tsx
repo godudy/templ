@@ -11,12 +11,12 @@ describe("Sheet ui8kit markup contract", () => {
   test("emits ui8kit dialog hooks when behavior is ui8kit", () => {
     const markup = renderToStaticMarkup(
       <>
-        <SheetTrigger id="trigger" target="panel" behavior="ui8kit" aria-label="Open">
+        <SheetTrigger id="trigger" panelId="panel" behavior="ui8kit" aria-label="Open">
           Open
         </SheetTrigger>
         <Sheet id="panel" behavior="ui8kit" aria-label="Panel">
-          <SheetOverlay target="panel" behavior="ui8kit" />
-          <SheetClose target="panel" behavior="ui8kit">
+          <SheetOverlay panelId="panel" behavior="ui8kit" />
+          <SheetClose panelId="panel" behavior="ui8kit">
             Close
           </SheetClose>
         </Sheet>

@@ -23,7 +23,7 @@ export function DashboardMobileSheet({ props }: { props: DashboardPageProps }) {
       className="md:hidden max-h-dvh overflow-y-auto p-0"
     >
       <SheetOverlay
-        target={dashboardSheetPanelID}
+        panelId={dashboardSheetPanelID}
         behavior="ui8kit"
         className="cursor-pointer bg-background/80"
       />
@@ -33,7 +33,7 @@ export function DashboardMobileSheet({ props }: { props: DashboardPageProps }) {
             {props.Brand}
           </SheetTitle>
           <SheetClose
-            target={dashboardSheetPanelID}
+            panelId={dashboardSheetPanelID}
             behavior="ui8kit"
             variant="outline"
             size="icon"

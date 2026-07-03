@@ -35,7 +35,7 @@ showcase:
 targets:
     react:
         component: Break
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/linebreak.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/linebreak'
     templ:

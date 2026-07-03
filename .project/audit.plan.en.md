@@ -5,7 +5,7 @@
 > Cross-checked against `.project/runtimes.md` (target: 5+ runtimes, file since removed from the repo) — see **Multi-runtime consistency review** below.  
 > Checkboxes (`[x]`) mark tasks completed in this chat session; unchecked (`[ ]`) tasks are still open.
 
-**Overall score:** 4.5/5. The main gap is between a browser split-view lesson format (Sololearn-style) and the current “open two files in your IDE” workflow.
+**Overall score:** 4.5/5 for this audit's scope (contracts, docs, lessons, code hygiene). An interactive browser playground / split-view lesson viewer is a separate initiative and is out of scope for this audit — not tracked in this plan.
 
 ---
 
@@ -17,7 +17,6 @@
 | `validate-spec` pointed at `examples/ui/blocks` instead of `examples/templ/ui/blocks` | §4, §6, §7, §9, friction E1-area, code review 3.3 |
 | Box = `div` only — rules vs lesson drift | §4, §7, §9, parity report |
 | Missing Button / Badge / Card lessons | §1–3, §5, §7, §9, D2, G2, top quick wins |
-| Browser split-view | §4, §7, G1, executive top-3 (as P1) |
 | Cheat sheet for React devs | §10, executive P2, G3 |
 | Escape hatch `asChild` ↔ `*Classes()` | §5, §7, §6 LayerTable, top-3 discrepancies, G7 |
 | `bun run generate` not in lessons | onboarding map, G6 |
@@ -26,7 +25,6 @@
 | Twin helpers maintained manually (`workflowStepLabel`, `sheet-ids`) | §1 P3 |
 | `examples/README.md:22` ambiguous “or” | §2–3 |
 | Friction F1–F4, C1–C3, E1–E3, D1–D5 | lines 88–151 and §3 code review (full duplicate) |
-| Top-3 quick wins — **priority conflict** | §1: P2 lessons; executive: P1 split-view, P2 cheat sheet |
 | Lesson numbering | §9: `00-button`, `05-card`; §3/G2: `05-button`, `06-badge`, `07-card` → **canonical: 05/06/07** |
 
 ---
@@ -39,14 +37,13 @@
 |:---:|---|---------|-------|------------------------|-------------|
 | [x] | M1 | Contract semantics hardcode a specific runtime name | `components/sheet/sheet.spec.md`:107–108 — "on **both stacks**", "do not bind Open to **React** state" | `*.spec.md` is the single source of truth read by every port. Naming "React" inside a runtime-neutral contract is already false the day a 3rd port exists, and nothing greps for it today. | **Fixed** — wording is now runtime-neutral (see **1.15**) |
 | [x] | M2 | "Dual-stack" / "Two Stacks" is baked into foundational vocabulary | `docs/architecture.md` (title), `mental-model.md`, `coming-from-shadcn.md` (`## Why Two Stacks?`), every `learn/*/README.md` ("dual-stack contract") | Cosmetic today, but every one of these files becomes literally incorrect the moment a 3rd runtime ships. A rename sweep across ~10 files is cheap now, expensive once linked from N onboarding docs. | **Fixed** — sweep done (see **1.15**) |
-| [ ] | M3 | `target` (TSX) vs `For` (Go) naming split is treated as "explain the difference," not a decision deadline | 1.10(b), `docs/learn/03-sheet/README.md`:40 | Whichever name Svelte/Vue/PHP ports copy locks in the inconsistency for good, or forces a 3-vs-2 tiebreak. Cost of renaming grows linearly with shipped ports. | **1.10** reworded — decide before runtime #3, don't just document |
-| [ ] | M4 | Twin-helpers pattern (`workflowStepLabel`, `sheet-ids`) has no scaling story | `examples/vite/src/lib/helpers.ts` ↔ `examples/templ/ui/blocks/*/helpers.go` | Pure logic, not styling — the `*.variants.json` JSON-compiler trick does not cover it. At 5 runtimes this is 5 hand-synced copies with nothing catching drift. Currently filed as P3 "write a checklist," which under-rates the risk. | New **1.13** (decide strategy, P1); **3.2** kept in P3 as the follow-up execution task |
+| [x] | M3 | `target` (TSX) vs `For` (Go) naming split is treated as "explain the difference," not a decision deadline | 1.10(b), `docs/learn/03-sheet/README.md`:40 | Whichever name Svelte/Vue/PHP ports copy locks in the inconsistency for good, or forces a 3-vs-2 tiebreak. Cost of renaming grows linearly with shipped ports. | **Fixed** — canonical name decided and migrated (`panelId`/`PanelID`) via **1.10** |
+| [x] | M4 | Twin-helpers pattern (`workflowStepLabel`, `sheet-ids`) has no scaling story | `examples/vite/src/lib/helpers.ts` ↔ `examples/templ/ui/blocks/*/helpers.go` | Pure logic, not styling — the `*.variants.json` JSON-compiler trick does not cover it. At 5 runtimes this is 5 hand-synced copies with nothing catching drift. Currently filed as P3 "write a checklist," which under-rates the risk. | **Policy decided** via **1.13** (`docs/architecture.md` Twin-Helper Policy); **3.2** remains the P3 follow-up for codegen/fixture-test tooling |
 | [x] | M5 | Task 1.3 modeled the fix as replicating a React hook (`useFrozenOpen`) per runtime | `components/sheet/sheet.tsx`:92 | A hook-shaped enforcement mechanism is, by construction, a fresh implementation per runtime (React hook, Svelte rune guard, Vue watcher, Go test). That's the same "edit N files by hand" failure mode called out for styling — it applies equally to behavioral contracts. | Wording fixed (part of **1.15**); **`validate-spec` lint implemented** — see **1.3** |
-| [ ] | M6 | Split-view artifact (2.1) implicitly assumes exactly 2 panes | `docs/learn/` split-view goal | A hardcoded "TSX left / Templ right" viewer means a full rebuild to add a 3rd/4th pane later instead of one config entry. | Note added to **2.1** |
-| [ ] | M7 | Escape-hatch framing implies Templ is "missing" `asChild` | `coming-from-shadcn.md` Feature Parity table, plan **2.2**, Reference parity table | `*Classes()` on a manual wrapper is the pattern every non-React runtime will use (Go today, Svelte/Vue/PHP tomorrow) — React's `asChild`+`Slot` is the outlier because only React has `cloneElement`. Framing it as "TSX has a feature Templ lacks" teaches the wrong mental model to the next runtime's author. | Note added to **2.2** + footnote on parity table (docs not yet reworded) |
+| [x] | M7 | Escape-hatch framing implies Templ is "missing" `asChild` | `coming-from-shadcn.md` Feature Parity table, plan **2.2**, Reference parity table | `*Classes()` on a manual wrapper is the pattern every non-React runtime will use (Go today, Svelte/Vue/PHP tomorrow) — React's `asChild`+`Slot` is the outlier because only React has `cloneElement`. Framing it as "TSX has a feature Templ lacks" teaches the wrong mental model to the next runtime's author. | **Fixed** — `coming-from-shadcn.md`, `05-button`, `07-card` frame `asChild` as React-only sugar over the universal `*Classes()` pattern; confirmed via **1.10** |
 | [ ] | M8 | "Reference: parity on key bricks" table is structurally 2-column (TSX / Templ) | this plan, §Reference: parity | Fine as today's snapshot; needs to become per-runtime rows (not more columns) once runtime #3 ships. No action needed now — flagged so nobody treats the table shape as "the contract." | Footnote already present below the table |
 
-`[x]` closed · `[~]` partially closed · `[ ]` open. M1/M2 closed this session; M5 closed via **1.3** contract lint.
+`[x]` closed · `[~]` partially closed · `[ ]` open. M1/M2/M5 closed earlier this session; M3, M4, M7 closed via **1.10**/**1.13**.
 
 ---
 
@@ -79,40 +76,41 @@
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 1.6 | **Align Box = div only in rules** | Low | [`docs/learn/04-layout-grammar`](../docs/learn/04-layout-grammar/) says Box = div only; [`.cursor/rules/templ-layout-grammar.mdc`](../.cursor/rules/templ-layout-grammar.mdc) still says “`<div>` (or other layout tag)”. |
-| [ ] | 1.7 | **`docs/learn/README.md` — visual progression** | Low | D1: “Suggested order: 01, 04, 02, 03” with no “✓ done” / “todo”. Add status and explicit numbering. |
-| [ ] | 1.8 | **`page.tsx` router comment** | Low | E1/G4: [`examples/vite/src/blocks/home/page.tsx`](../examples/vite/src/blocks/home/page.tsx) — thin wrapper over 9 sub-components. Top comment: “Start from hero.tsx → sidebar.tsx → mobile-sheet.tsx”. |
-| [ ] | 1.9 | **`bun run generate` in lessons** | Low | G6: after editing `home.data.json` / `home.variants.json` / spec — run `bun run generate`. Currently only in `templ-examples-data.mdc`. Add to [`docs/learn/01-hero/README.md`](../docs/learn/01-hero/README.md) and follow-ups. |
-| [ ] | 1.10 | **Top-3 discrepancies — unify before runtime #3, not just document** | Medium-High | (a) `asChild` asymmetry — reframe as "React-only sugar over the universal `*Classes()` pattern" (see **M7**), not "TSX has, Templ lacks." (b) Sheet `target` (TSX) vs `For` (templ) — **decide one canonical field name now**; 03-sheet:40 only explains the split, and a 3rd runtime forces the decision anyway at higher migration cost (see **M3**). (c) `Open` runtime semantics — see **1.3**. |
-| [ ] | 1.11 | **`blockonce` — comment vs implementation** | Low | Comment says “first node”; implementation only guarantees “at most one Block”. Clarify wording or tighten check. |
-| [ ] | 1.13 | **Decide a duplication/generation policy for twin logic helpers** | High | `workflowStepLabel`/`navIconLetter` (`examples/vite/src/lib/helpers.ts`) and `sheet-ids.{ts,go}` are hand-synced 1:1 pairs. They are pure logic, so the `*.variants.json` JSON-compiler pattern doesn't cover them. Before scaffolding runtime #3, decide: (a) generate from a single JSON/DSL source like variants, (b) keep hand-maintained but add a `validate-spec`/lint check that fails when one twin changes without the other, or (c) explicitly scope which helpers may diverge per runtime. Feeds into **3.2** (checklist/tooling execution). See **M4**. |
+| [x] | 1.6 | **Align Box = div only in rules** | Low | **Done.** [`.cursor/rules/templ-layout-grammar.mdc`](../.cursor/rules/templ-layout-grammar.mdc) now says `Box` renders `<div>` only, matching [`docs/learn/04-layout-grammar`](../docs/learn/04-layout-grammar/). |
+| [x] | 1.7 | **`docs/learn/README.md` — visual progression** | Low | **Done.** All 7 lessons marked `✓ done`; added a "Recommended path (primitives first)" and "Alternative path (block-first)" with explicit numbered steps and per-lesson checkmarks, replacing the flat "suggested order" list. |
+| [x] | 1.8 | **`page.tsx` router comment** | Low | **Done.** [`examples/vite/src/blocks/home/page.tsx`](../examples/vite/src/blocks/home/page.tsx) top comment: start with `hero.tsx`, then `sidebar.tsx`, then `mobile-sheet.tsx`; notes the file is only the router/composition shell. |
+| [x] | 1.9 | **`bun run generate` in lessons** | Low | **Done.** [`docs/learn/01-hero/README.md`](../docs/learn/01-hero/README.md) gained Exercise C (edit `examples/data/home.data.json`, run `bun run generate`, confirm both ports update). [`docs/learn/README.md`](../docs/learn/README.md) "How to use these lessons" gained a step-5 reminder. `05-button`/`06-badge` already covered generation. |
+| [x] | 1.10 | **Top-3 discrepancies — unify before runtime #3, not just document** | Medium-High | **Done.** (a) `asChild` confirmed framed as "React-only sugar over the universal `*Classes()` pattern" in `coming-from-shadcn.md`, `05-button`, `07-card` (see **M7**). (b) Sheet id-reference field migrated to one canonical name: React `panelId`, Go `PanelID`, across `sheet.spec.md`, `sheet.tsx`, `sheet.templ`, all `examples/vite`/`examples/templ` call sites, `docs/learn/03-sheet`, `docs/coming-from-shadcn.md`, `docs/cheatsheet-react-to-templ.md`, and tests (see **M3**). (c) `Open` runtime semantics — see **1.3**; `docs/aria.md` now points to the `sheet_contract_validate.go` enforcement. |
+| [x] | 1.11 | **`blockonce` — comment vs implementation** | Low | **Done.** Clarified wording (not implementation): rule 6 and the Validation section in [`.cursor/rules/templ-layout-grammar.mdc`](../.cursor/rules/templ-layout-grammar.mdc) now say the enforced invariant is "at most one `Block` per file, counted, order not checked" rather than implying node-order enforcement. `blockonce`'s own top-of-file comment already matched this. |
+| [x] | 1.13 | **Decide a duplication/generation policy for twin logic helpers** | High | **Done (policy only).** Added a "Twin-Helper Policy" section to [`docs/architecture.md`](../docs/architecture.md): IDs/constants (e.g. `sheet-ids`) stay hand-synced twins pending future codegen; variant/class maps are never twinned (`*.variants.json` only); algorithmic helpers (`workflowStepLabel`, `navIconLetter`) may diverge per runtime only with shared fixture tests; intentional divergence must be documented. Updated header comments in `helpers.ts`/`helpers.go` (home, dashboard) and `sheet-ids.{ts,go}` (home, dashboard) to reference the policy and drop "two runtimes" wording. Codegen/fixture-test buildout stays in **3.2**. See **M4**. |
 | [x] | 1.15 | **Remove runtime-count hardcoding from contracts and vocabulary** | Medium | **Done.** `components/sheet/sheet.spec.md`:107–108 — "on both stacks" → "on every runtime port"; "React state" → "a runtime's own reactive component state (React state, Svelte runes, Vue refs, ...)"; "first React commit" → "first client-side render". Vocabulary sweep: `docs/architecture.md` title → "Multi-Runtime Component Architecture" + generalized body and Runtime Parity note; `docs/README.md`, `mental-model.md` (§5 heading + body), `coming-from-shadcn.md` (`## Why Go Templ And React First?`, `## 5-Minute Example: Button on Both Ports`, intro footnote), `docs/learn/README.md`, `01-hero`, `02-sidebar`, `03-sheet`, `04-layout-grammar` — all "dual-stack"/"both stacks"/"two stacks" phrasing replaced with "runtime port(s)" wording. Re-ran `validate-spec` (39 specs, OK) and docs linkcheck (OK) after the edit. See **M1**, **M2**. |
 
 #### P1 — quick
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 1.12 | **F1: Attrs vs explicit Button fields table** | Low | [`ui/button/button.templ`](../ui/button/button.templ):15–34 — 11 fields vs TSX 4 registry + DOM. Table exists in spec, missing from [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md). |
+| [x] | 1.12 | **F1: Attrs vs explicit Button fields table** | Low | **Done.** Added a field-by-field table to the "Explicit Fields on Templ Button" section of [`docs/coming-from-shadcn.md`](../docs/coming-from-shadcn.md): 4 registry fields (`Variant`/`Size`/`Class`/`asChild`) vs 7 DOM fields Go must name explicitly (`Type`, `Form`, `Disabled`, `ID`, `Role`, `TabIndex`, `AriaLabel`) vs `Attrs` catch-all. |
 
 ---
 
 ### P2 — UX polish, closing gaps in the learning trail
 
+> An interactive browser playground / split-view lesson artifact is separate work, out of scope for this audit, and intentionally not tracked here.
+
 #### P2 — complex / strategic
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 2.1 | **Browser split-view artifact** | Very high | G1: embedded TSX+templ codeblocks (Astro/Starlight + Shiki twoslash) or GitHub deep-links `#L12-L20` on both files per table row. Only real gap vs Sololearn format. Design the pane list as data (a runtime registry: id, label, file glob) rather than a hardcoded TSX/Templ pair, so a Svelte or Vue pane later is a config entry, not a rebuild (see **M6**). |
-| [ ] | 2.2 | **Escape hatch lesson: `asChild` ↔ `*Classes()`** | Medium | Button `ButtonClasses` on manual `<a>`; Card `CardClasses` on manual `<section>` — include LayerTable pattern in Card lesson. [`components/card/card.spec.md`](../components/card/card.spec.md):252–289, coming-from-shadcn:158–174. Frame `*Classes()`-on-manual-wrapper as the universal pattern (works for Go today, Svelte/Vue/PHP tomorrow); `asChild`+`Slot` is the React-only exception because only React has `cloneElement` — do not teach it as "Templ is missing asChild" (see **M7**). |
-| [ ] | 2.3 | **@ui8kit/aria diagram in Sheet lesson** | Medium | “markup only → app runtime owns behavior”. Sheet lesson is good but needs a diagram for `behavior="ui8kit"` mental model. |
-| [ ] | 2.4 | **Lessons for remaining home blocks** | Medium | E2: [`showcase.tsx`](../examples/vite/src/blocks/home/showcase.tsx), `tools.tsx`, `notice.tsx` — no lessons; trail ends after 4 lessons. |
-| [ ] | 2.5 | **Split `primitives.smoke.test.tsx`** | Medium | E3/G10: one file 67–300+ lines, 30+ `describe("ui/...")` — good for CI, bad for “how to test one brick”. Per-brick test next to `button.tsx` or `targets.react.test` in spec. |
+| [x] | 2.2 | **Escape hatch lesson: `asChild` ↔ `*Classes()`** | Medium | Button `ButtonClasses` on manual `<a>`; Card `CardClasses` on manual `<section>` — include LayerTable pattern in Card lesson. [`components/card/card.spec.md`](../components/card/card.spec.md):252–289, coming-from-shadcn:158–174. Frame `*Classes()`-on-manual-wrapper as the universal pattern (works for Go today, Svelte/Vue/PHP tomorrow); `asChild`+`Slot` is the React-only exception because only React has `cloneElement` — do not teach it as "Templ is missing asChild" (see **M7**). |
+| [x] | 2.3 | **@ui8kit/aria diagram in Sheet lesson** | Medium | “markup only → app runtime owns behavior”. Sheet lesson is good but needs a diagram for `behavior="ui8kit"` mental model. |
+| [x] | 2.4 | **Lessons for remaining home blocks** | Medium | E2: [`showcase.tsx`](../examples/vite/src/blocks/home/showcase.tsx), `tools.tsx`, `notice.tsx` — no lessons; trail ends after 4 lessons. |
+| [x] | 2.5 | **Split `primitives.smoke.test.tsx`** | Medium | E3/G10: one file 67–300+ lines, 30+ `describe("ui/...")` — good for CI, bad for “how to test one brick”. Per-brick test next to `button.tsx` or `targets.react.test` in spec. |
 
 #### P2 — medium / documentation
 
 | Done | # | Task | Effort | Where / what to do |
 |:---:|---|------|--------|-------------------|
-| [ ] | 2.6 | **“Why no asChild in templ?” — dedicated section** | Low | G7: in coming-from-shadcn + 3 examples (Button, Card, SheetTrigger). |
+| [x] | 2.6 | **“Why no asChild in templ?” — dedicated section** | Low | G7: in coming-from-shadcn + 3 examples (Button, Card, SheetTrigger). |
 | [ ] | 2.7 | **F2: Form “verbs-y” perception** | Low | [`ui/form/form.templ`](../ui/form/form.templ):13–24 — 9 explicit fields vs TSX `FormHTMLAttributes`. Short note in docs. |
 | [ ] | 2.8 | **C2: Breadcrumb — documented exception** | Low | [`components/breadcrumb/breadcrumb.templ`](../components/breadcrumb/breadcrumb.templ) — only composite with `Items []BreadcrumbItem`, not children/slots. |
 | [~] | 2.9 | **D3: coming-from-shadcn — 5-minute onboarding** | Low | 240 lines, 11 H2. Heading renamed to “5-Minute Example: Button on Both Ports” as part of **1.15**'s vocabulary sweep, but the section still needs to **move above** “Main Differences” — not done yet. |
@@ -155,7 +153,7 @@
 |---------|------------|-------------|
 | React middle+, knows shadcn | 🟢 High | README side-by-side; cn, composeRecipe, asChild, forwardRef — familiar; `bun run dev` ≤60s |
 | Junior after shadcn → Templ | 🟡 Medium-high | 4 lessons + exercises; Go struct literals — 1–2 day threshold |
-| Frontend dev learning 2nd stack | 🟡 Medium | mental-model + docs; no browser split-view — needs IDE + Go + Bun |
+| Frontend dev learning 2nd stack | 🟡 Medium | mental-model + docs; needs IDE + Go + Bun to compare ports side by side |
 | LLM assistant | 🟢 Very high | 12 `.mdc` rules, `*.spec.md`, validate-spec/variantcheck/blockonce |
 
 ---
@@ -169,7 +167,7 @@
 | Title | ✅ | ✅ | ✅ h1–h6 | n/a | TSX H1–H6 sugar; templ `Title(As: n)` |
 | Block/Box | ✅ | ✅ | ✅ tag policies | n/a | Box always `<div>` |
 | Card | ✅ | ✅ | ✅ | n/a | `asChild` TSX only; templ → `CardClasses` |
-| Sheet | ⚠️ target/For | ✅ | ✅ role=dialog | ✅ ui8kit | `useFrozenOpen` TSX only |
+| Sheet | ✅ panelId/PanelID | ✅ | ✅ role=dialog | ✅ ui8kit | `useFrozenOpen` TSX only |
 | Form | ⚠️ HTMLAttributes vs 9 fields | ✅ | ✅ | n/a | Attrs parity restored |
 | Hero/Sidebar/Mobile Sheet blocks | ✅ | ✅ shared JSON | ✅ | ✅ sheet-ids twins | cosmetic syntax only |
 
@@ -208,12 +206,29 @@ Build a screen → hero.tsx ↔ hero.templ + home.data.json + bun run generate
 
 ---
 
-## “First 5 PRs” checklist (minimal path to working onboarding)
+## “First 5 PRs” checklist (minimal path to working onboarding) — done
 
 - [x] P0.1 + P0.2 — links + validate-spec path
 - [x] P1.15 — remove runtime-count hardcoding from `sheet.spec.md` and vocabulary sweep
 - [x] P1.1–P1.5 — Button/Badge/Card lessons, variant JSON mental model, Sheet Open contract lint, cheat sheet, preview URLs
-- [ ] P1.6 — Box wording in rules
-- [ ] P1.8 + P1.9 — page.tsx comment + generate in 01-hero
+- [x] P1.6 — Box wording in rules
+- [x] P1.8 + P1.9 — page.tsx comment + generate in 01-hero
+- [x] P1.7, P1.10, P1.11, P1.13 — learn/README progression, Sheet `panelId`/`PanelID` migration, `blockonce` wording, twin-helper policy
+- [x] P1.12 — Attrs vs explicit Button fields table
 
-Then: P1.13 (twin-helper policy) and P1.10(b) (`target`/`For` naming) before scaffolding runtime #3, split-view (2.1), rest top-to-bottom in the tables above.
+All of P0 and P1 are closed.
+
+## Next priority queue (P2/P3, in this order)
+
+1. **2.5** — Split `primitives.smoke.test.tsx` into per-brick test files (test organization, not a lesson).
+2. **2.7** — Form "verbs-y" perception note (doc/reference).
+3. **2.8** — Breadcrumb documented exception (doc/reference).
+4. **2.9** — Finish moving the "5-Minute Example" section above "Main Differences" in `coming-from-shadcn.md` (doc reorg; already `[~]` partial from **1.15**).
+5. **2.10** — `architecture.md` React/Templ ergonomics examples (doc/reference).
+6. **2.11** — Document `react-router-dom` in `examples/README.md` (doc/reference).
+7. **3.1** — Deprecate Grid's legacy `Cols`/`Span`/`Start`/`End`/`Order` props (code debt).
+8. **3.2** — Twin-helpers codegen or review checklist — execution of the **1.13** policy (tooling).
+
+Everything else remaining in P2 (`2.2`, `2.3`, `2.4`, `2.6`, `2.12`) and P3 (`3.3`–`3.7`) comes after these eight, in table order.
+
+> An interactive browser playground / split-view lesson artifact is separate work and out of scope for this audit — it is not tracked in this plan.

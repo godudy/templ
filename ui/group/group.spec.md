@@ -48,7 +48,7 @@ slots:
 targets:
     react:
         component: Group
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/group.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/group'
     templ:

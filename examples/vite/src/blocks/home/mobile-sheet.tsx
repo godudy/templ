@@ -23,7 +23,7 @@ export function CatalogMobileSheet({ props }: { props: HomePageProps }) {
       className="md:hidden max-h-dvh overflow-y-auto p-0"
     >
       <SheetOverlay
-        target={homeSheetPanelID}
+        panelId={homeSheetPanelID}
         behavior="ui8kit"
         className="cursor-pointer bg-background/80"
       />
@@ -31,7 +31,7 @@ export function CatalogMobileSheet({ props }: { props: HomePageProps }) {
         <SheetHeader>
           <SheetTitle id={homeSheetTitleID} className="text-sm font-medium">{props.Brand}</SheetTitle>
           <SheetClose
-            target={homeSheetPanelID}
+            panelId={homeSheetPanelID}
             behavior="ui8kit"
             variant="outline"
             size="icon"

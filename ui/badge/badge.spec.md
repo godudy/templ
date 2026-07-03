@@ -78,7 +78,7 @@ slots:
 targets:
     react:
         component: Badge
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/badge.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/badge'
     templ:

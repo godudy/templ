@@ -96,6 +96,14 @@ When `behavior="ui8kit"` is active:
 
 Native centered `Dialog` remains separate and may use native `<dialog>` control.
 
+`bash .validate/scripts/validate-spec.sh` enforces this contract at the
+documentation level: it scans every `*.spec.md` and `docs/**/*.md` file for
+phrasing that would teach a runtime-specific controlled-`Open` pattern (a
+framework hook wired directly to the `Open` prop, described as owning it
+across re-renders) and fails the build if found, unless the guidance is
+explicitly negative (e.g. "do not ..."). See
+[`.validate/cmd/validate-spec/sheet_contract_validate.go`](../.validate/cmd/validate-spec/sheet_contract_validate.go).
+
 ## CSS-Only Scroll Lock
 
 Consuming apps can lock body scroll without custom JS by reacting to the Sheet

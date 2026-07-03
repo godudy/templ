@@ -125,7 +125,7 @@ showcase:
 targets:
     react:
         component: Image
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/image.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/image'
     templ:

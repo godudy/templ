@@ -19,6 +19,7 @@ split-view lessons see [`learn/`](learn/).
 | `aria-label` | `AriaLabel` | kebab → PascalCase |
 | `data-ui8kit` | `DataUI8Kit` | Behavior hook |
 | `behavior` | `Behavior` | Opt-in client layer |
+| `panelId` | `PanelID` | Sheet id-reference (trigger/overlay/close -> panel) |
 | `id` | `ID` | |
 | `disabled` | `Disabled` | |
 | other DOM attrs | `Attrs` | Go catch-all (`templ.Attributes`) |

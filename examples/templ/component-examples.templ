@@ -98,7 +98,7 @@ templ ComponentExamples() {
 							@cmp.IconBadge(cmp.IconBadgeProps{Size: "default", Variant: "destructive"}) { ! }
 							@cmp.SheetTrigger(cmp.SheetTriggerProps{
 								ID:        demoSheetTriggerID,
-								For:       demoSheetID,
+								PanelID:   demoSheetID,
 								Behavior:  "ui8kit",
 								Variant:   "outline",
 								Size:      "sm",
@@ -114,11 +114,11 @@ templ ComponentExamples() {
 							AriaLabel:      "Demo sheet",
 							AriaLabelledBy: demoSheetTitleID,
 						}) {
-							@cmp.SheetOverlay(cmp.SheetOverlayProps{For: demoSheetID, Behavior: "ui8kit"})
+							@cmp.SheetOverlay(cmp.SheetOverlayProps{PanelID: demoSheetID, Behavior: "ui8kit"})
 							@cmp.SheetContent(cmp.SheetContentProps{}) {
 								@cmp.SheetHeader(cmp.SheetHeaderProps{}) {
 									@cmp.SheetTitle(cmp.SheetTitleProps{ID: demoSheetTitleID}) { { "Sheet panel" } }
-									@cmp.SheetClose(cmp.SheetCloseProps{For: demoSheetID, Behavior: "ui8kit", AriaLabel: "Close demo sheet"}) {
+									@cmp.SheetClose(cmp.SheetCloseProps{PanelID: demoSheetID, Behavior: "ui8kit", AriaLabel: "Close demo sheet"}) {
 										Close
 									}
 								}

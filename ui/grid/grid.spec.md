@@ -70,7 +70,7 @@ showcase:
 targets:
     react:
         component: Grid
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/grid.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/grid'
     templ:

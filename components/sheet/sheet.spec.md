@@ -9,9 +9,9 @@ parts:
   - templ: Sheet
     props: [ID, Variant, Side, Size, Class, Open, AriaLabel, AriaLabelledBy, AriaDescribedBy, Behavior, Attrs]
   - templ: SheetTrigger
-    props: [ID, For, Class, Variant, Size, Open, Behavior, AriaLabel, Attrs]
+    props: [ID, PanelID, Class, Variant, Size, Open, Behavior, AriaLabel, Attrs]
   - templ: SheetOverlay
-    props: [For, Class, Open, Behavior, Attrs]
+    props: [PanelID, Class, Open, Behavior, Attrs]
   - templ: SheetContent
     props: [ID, Class, Attrs]
   - templ: SheetHeader
@@ -21,7 +21,7 @@ parts:
   - templ: SheetDescription
     props: [ID, Class, Attrs]
   - templ: SheetClose
-    props: [For, Class, Variant, Size, Behavior, AriaLabel, Attrs]
+    props: [PanelID, Class, Variant, Size, Behavior, AriaLabel, Attrs]
 api:
   Variant:
     role: appearance
@@ -56,12 +56,11 @@ api:
     cva: false
     default: false
     notes: 'Initial state for SSR + first client-side render. With Behavior=ui8kit runtime is owned by @ui8kit/aria.'
-  Target:
+  PanelID:
     role: id-reference
     type: string
     cva: false
-    react-only: true
-    notes: 'Replaces Go For on SheetTrigger, SheetOverlay, SheetClose.'
+    notes: 'ID of the Sheet panel this part controls on SheetTrigger, SheetOverlay, SheetClose. Emits aria-controls and, with Behavior=ui8kit, data-ui8kit-dialog-target. React prop: panelId.'
 showcase:
   - id: side.left
     props: { ID: demo-sheet, Side: left, Size: sm, AriaLabel: "Navigation" }
@@ -80,7 +79,7 @@ targets:
     package: '@fastygo/templ-react/components/sheet'
     notes:
       - 'Declarative open?: boolean sets initial hidden/data-state only; runtime uses @ui8kit/aria when behavior="ui8kit".'
-      - 'SheetTrigger, SheetOverlay, SheetClose use target (id reference) instead of Go For string.'
+      - 'SheetTrigger, SheetOverlay, SheetClose use panelId (React) / PanelID (Go) — same id-reference field, PascalCase-normalized like every other prop.'
       - 'behavior="ui8kit" emits data-ui8kit-* hooks matching Templ markup.'
       - 'SheetTrigger and SheetClose support asChild (Radix-style Slot) for anchor triggers.'
   templ:
@@ -113,7 +112,7 @@ Behavior hooks are opt-in through Behavior.
 import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
-	@cmp.SheetTrigger(cmp.SheetTriggerProps{For: "demo-sheet", AriaLabel: "Open navigation"}) { Menu }
+	@cmp.SheetTrigger(cmp.SheetTriggerProps{PanelID: "demo-sheet", AriaLabel: "Open navigation"}) { Menu }
 	@cmp.Sheet(cmp.SheetProps{ID: "demo-sheet", Side: "left", AriaLabel: "Navigation"}) {
 		@cmp.SheetContent(cmp.SheetContentProps{}) {
 			Navigation
@@ -128,9 +127,9 @@ templ Example() {
 import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
-	@cmp.SheetTrigger(cmp.SheetTriggerProps{For: "demo-sheet", Behavior: "ui8kit"}) { Open }
+	@cmp.SheetTrigger(cmp.SheetTriggerProps{PanelID: "demo-sheet", Behavior: "ui8kit"}) { Open }
 	@cmp.Sheet(cmp.SheetProps{ID: "demo-sheet", Behavior: "ui8kit", AriaLabel: "Panel"}) {
-		@cmp.SheetOverlay(cmp.SheetOverlayProps{For: "demo-sheet", Behavior: "ui8kit"})
+		@cmp.SheetOverlay(cmp.SheetOverlayProps{PanelID: "demo-sheet", Behavior: "ui8kit"})
 		@cmp.SheetContent(cmp.SheetContentProps{}) { Panel }
 	}
 }

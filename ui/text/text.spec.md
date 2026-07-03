@@ -33,7 +33,7 @@ showcase:
 targets:
     react:
         component: Text
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/text.smoke.test.tsx
         facade: '@fastygo/templ-react'
         notes:
           - "Renders <p>. Use Inline for <span> copy, Title for headings."

@@ -87,7 +87,7 @@ showcase:
 targets:
     react:
         component: Disclosure
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/disclosure.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/disclosure'
     templ:

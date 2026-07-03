@@ -1,3 +1,6 @@
+// New reader? Start with hero.tsx, then sidebar.tsx, then mobile-sheet.tsx —
+// see docs/learn/01-hero, 02-sidebar, 03-sheet. This file is only the
+// router/composition shell that assembles those blocks into one page.
 import { Block, Box, Group } from "@registry/ui";
 import { defaultHomePage } from "../../data/home";
 import type { HomePageProps } from "../../types/home";

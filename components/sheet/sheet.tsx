@@ -38,7 +38,7 @@ export type SheetProps = Omit<HTMLAttributes<HTMLDivElement>, "className" | "rol
 
 export type SheetTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   id?: string;
-  target?: string;
+  panelId?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   /**
@@ -52,7 +52,7 @@ export type SheetTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export type SheetOverlayProps = HTMLAttributes<HTMLDivElement> & {
-  target?: string;
+  panelId?: string;
   /**
    * Initial visibility only. When `behavior="ui8kit"`, `@ui8kit/aria` owns
    * `hidden` after the first commit; do not bind to React state.
@@ -67,7 +67,7 @@ export type SheetTitleProps = HTMLAttributes<HTMLHeadingElement>;
 export type SheetDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 
 export type SheetCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  target?: string;
+  panelId?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   behavior?: BehaviorMode;
@@ -137,31 +137,31 @@ function sheetRootAttrs(
 }
 
 function sheetTriggerAttrs(
-  targetId: string | undefined,
+  panelId: string | undefined,
   open: boolean | undefined,
   behavior: BehaviorMode | undefined,
   rest: ButtonHTMLAttributes<HTMLButtonElement> | undefined
 ): Record<string, unknown> {
   const attrs: Record<string, unknown> = { ...(rest ?? {}) };
-  if (targetId?.trim()) attrs["aria-controls"] = targetId.trim();
+  if (panelId?.trim()) attrs["aria-controls"] = panelId.trim();
   attrs["aria-haspopup"] = "dialog";
   attrs["aria-expanded"] = open ?? false;
-  if (sheetBehavior(behavior) === "ui8kit" && targetId?.trim()) {
+  if (sheetBehavior(behavior) === "ui8kit" && panelId?.trim()) {
     attrs["data-ui8kit-dialog-open"] = true;
-    attrs["data-ui8kit-dialog-target"] = targetId.trim();
+    attrs["data-ui8kit-dialog-target"] = panelId.trim();
   }
   return attrs;
 }
 
 function sheetCloseAttrs(
-  targetId: string | undefined,
+  panelId: string | undefined,
   behavior: BehaviorMode | undefined,
   rest: HTMLAttributes<HTMLElement> | undefined
 ): Record<string, unknown> {
   const out: Record<string, unknown> = { ...(rest ?? {}) };
   if (sheetBehavior(behavior) === "ui8kit") {
     out["data-ui8kit-dialog-close"] = true;
-    if (targetId?.trim()) out["data-ui8kit-dialog-target"] = targetId.trim();
+    if (panelId?.trim()) out["data-ui8kit-dialog-target"] = panelId.trim();
   }
   return out;
 }
@@ -216,7 +216,7 @@ export const SheetTrigger = forwardRef<HTMLButtonElement, SheetTriggerProps>(
   function SheetTrigger(
     {
       id,
-      target,
+      panelId,
       variant,
       size,
       open,
@@ -241,7 +241,7 @@ export const SheetTrigger = forwardRef<HTMLButtonElement, SheetTriggerProps>(
         className={className}
         aria-label={ariaLabel}
         asChild={asChild}
-        {...sheetTriggerAttrs(target, resolvedOpen, behavior, rest)}
+        {...sheetTriggerAttrs(panelId, resolvedOpen, behavior, rest)}
       >
         {children}
       </Button>
@@ -251,7 +251,7 @@ export const SheetTrigger = forwardRef<HTMLButtonElement, SheetTriggerProps>(
 SheetTrigger.displayName = "SheetTrigger";
 
 export const SheetOverlay = forwardRef<HTMLDivElement, SheetOverlayProps>(function SheetOverlay(
-  { target, open = false, behavior, className, hidden, ...rest },
+  { panelId, open = false, behavior, className, hidden, ...rest },
   ref
 ) {
   const resolvedOpen = useFrozenOpen(open, behavior);
@@ -262,7 +262,7 @@ export const SheetOverlay = forwardRef<HTMLDivElement, SheetOverlayProps>(functi
       ref={ref}
       className={cn("fixed inset-0 z-40 bg-background/80", className)}
       hidden={isHidden ? true : undefined}
-      {...sheetCloseAttrs(target, behavior, rest)}
+      {...sheetCloseAttrs(panelId, behavior, rest)}
     />
   );
 });
@@ -327,7 +327,7 @@ SheetDescription.displayName = "SheetDescription";
 
 export const SheetClose = forwardRef<HTMLButtonElement, SheetCloseProps>(function SheetClose(
   {
-    target,
+    panelId,
     variant,
     size,
     behavior,
@@ -349,7 +349,7 @@ export const SheetClose = forwardRef<HTMLButtonElement, SheetCloseProps>(functio
       className={className}
       aria-label={ariaLabel}
       asChild={asChild}
-      {...sheetCloseAttrs(target, behavior, rest)}
+      {...sheetCloseAttrs(panelId, behavior, rest)}
     >
       {children}
     </Button>

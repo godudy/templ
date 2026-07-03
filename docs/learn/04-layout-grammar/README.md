@@ -30,7 +30,7 @@ in [`utils/tags.go`](../../../utils/tags.go) (Go, generated) and
 [`utils/tags.ts`](../../../utils/tags.ts) (React). Passing a tag outside the
 allowed set silently falls back to the primitive's default tag — it does not
 throw. `ui/box`'s smoke test in
-[`primitives.smoke.test.tsx`](../../../examples/vite/tests/primitives.smoke.test.tsx)
+[`examples/vite/tests/ui/`](../../../examples/vite/tests/ui/) (per-primitive smoke tests, e.g. [`stack.smoke.test.tsx`](../../../examples/vite/tests/ui/stack.smoke.test.tsx))
 pins this contract by asserting `<Box>` always renders `<div>`; `ui/block`'s
 smoke test in the same file asserts the opposite — every landmark tag you
 pass to `Block` (`main`, `header`, `aside`, `section`, `nav`, `footer`,

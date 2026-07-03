@@ -10,7 +10,7 @@ templ CatalogHeader(props PageProps) {
 		@ui.Group(ui.GroupProps{Class: "col-start-1 items-center gap-2 justify-self-start"}) {
 			@cmp.SheetTrigger(cmp.SheetTriggerProps{
 				ID:        homeSheetTriggerID,
-				For:       homeSheetPanelID,
+				PanelID:   homeSheetPanelID,
 				Behavior:  "ui8kit",
 				Variant:   "outline",
 				Size:      "icon",

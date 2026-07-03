@@ -12,7 +12,7 @@ export function CatalogHeader({ props }: { props: HomePageProps }) {
       <Group className="col-start-1 items-center gap-2 justify-self-start">
         <SheetTrigger
           id={homeSheetTriggerID}
-          target={homeSheetPanelID}
+          panelId={homeSheetPanelID}
           behavior="ui8kit"
           variant="outline"
           size="icon"

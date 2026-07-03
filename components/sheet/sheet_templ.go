@@ -47,7 +47,7 @@ type SheetProps struct {
 // SheetTriggerProps configures a button that opens a sheet.
 type SheetTriggerProps struct {
 	ID        string
-	For       string
+	PanelID   string
 	Class     string
 	Variant   string
 	Size      string
@@ -59,7 +59,7 @@ type SheetTriggerProps struct {
 
 // SheetOverlayProps configures the backdrop.
 type SheetOverlayProps struct {
-	For      string
+	PanelID  string
 	Class    string
 	Open     bool
 	Behavior string
@@ -95,7 +95,7 @@ type SheetDescriptionProps struct {
 
 // SheetCloseProps configures a button that closes a sheet.
 type SheetCloseProps struct {
-	For       string
+	PanelID   string
 	Class     string
 	Variant   string
 	Size      string
@@ -154,24 +154,24 @@ func sheetRootAttrs(p SheetProps) templ.Attributes {
 
 func sheetTriggerAttrs(p SheetTriggerProps) templ.Attributes {
 	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
-	if strings.TrimSpace(p.For) != "" {
-		attrs["aria-controls"] = p.For
+	if strings.TrimSpace(p.PanelID) != "" {
+		attrs["aria-controls"] = p.PanelID
 	}
 	attrs["aria-haspopup"] = "dialog"
 	attrs["aria-expanded"] = strconv.FormatBool(p.Open)
-	if sheetBehavior(p.Behavior) == "ui8kit" && strings.TrimSpace(p.For) != "" {
+	if sheetBehavior(p.Behavior) == "ui8kit" && strings.TrimSpace(p.PanelID) != "" {
 		attrs["data-ui8kit-dialog-open"] = true
-		attrs["data-ui8kit-dialog-target"] = p.For
+		attrs["data-ui8kit-dialog-target"] = p.PanelID
 	}
 	return attrs
 }
 
-func sheetCloseAttrs(forID, behavior string, attrs templ.Attributes) templ.Attributes {
+func sheetCloseAttrs(panelID, behavior string, attrs templ.Attributes) templ.Attributes {
 	out := uiutils.MergeAttrs(templ.Attributes{}, attrs)
 	if sheetBehavior(behavior) == "ui8kit" {
 		out["data-ui8kit-dialog-close"] = true
-		if strings.TrimSpace(forID) != "" {
-			out["data-ui8kit-dialog-target"] = forID
+		if strings.TrimSpace(panelID) != "" {
+			out["data-ui8kit-dialog-target"] = panelID
 		}
 	}
 	return out
@@ -352,7 +352,7 @@ func SheetOverlay(p SheetOverlayProps) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, sheetCloseAttrs(p.For, p.Behavior, p.Attrs))
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, sheetCloseAttrs(p.PanelID, p.Behavior, p.Attrs))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -734,7 +734,7 @@ func SheetClose(p SheetCloseProps) templ.Component {
 			Size:      p.Size,
 			Class:     p.Class,
 			AriaLabel: p.AriaLabel,
-			Attrs:     sheetCloseAttrs(p.For, p.Behavior, p.Attrs),
+			Attrs:     sheetCloseAttrs(p.PanelID, p.Behavior, p.Attrs),
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

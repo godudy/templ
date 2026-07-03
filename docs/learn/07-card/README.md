@@ -12,7 +12,8 @@ driven by [`card.variants.json`](../../../components/card/card.variants.json).
 - Named exports only — no `Card.Header` dot notation.
 - `CardTitle` heading level via `as` (React) / `As` (Go).
 - Semantic root delegation: React `asChild` vs universal `CardClasses` on a
-  manual `<section>` / `<article>` wrapper.
+  manual `<section>` / `<article>` wrapper — the canonical example of the
+  [escape hatch pattern](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes).
 - When a “raw” semantic tag is legitimate if it carries `CardClasses` classes.
 
 ## The contract and ports
@@ -101,3 +102,4 @@ for the current React/Templ ports.
 - [`04-layout-grammar`](../04-layout-grammar/) — `Block` / `Box` inside cards.
 - [`03-sheet`](../03-sheet/) — overlay composite with behavior hooks.
 - [`cheatsheet-react-to-templ.md`](../../cheatsheet-react-to-templ.md) — `asChild` ↔ `*Classes`.
+- [`coming-from-shadcn.md`](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes) — reusable escape hatch mental model (Button, Card, SheetTrigger).

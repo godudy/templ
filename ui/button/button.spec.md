@@ -148,7 +148,7 @@ slots:
 targets:
     react:
         component: Button
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/button.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/button'
     templ:

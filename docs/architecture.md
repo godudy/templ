@@ -67,6 +67,26 @@ go run ./.validate/cmd/variantcheck
 bash .validate/scripts/validate-spec.sh --with-tests
 ```
 
+## Twin-Helper Policy
+
+Some presentation logic exists as hand-synced pairs — one file per shipped
+runtime port, edited together, rather than one shared source. This policy
+defines when that is acceptable and how it must be documented:
+
+| Category | Rule |
+|----------|------|
+| IDs/constants (e.g. `sheet-ids`) | Hand-synced twin files (one per port, identical names and values) are the accepted interim shape. Source data plus generated per-runtime files is the target state, tracked as a future tooling task. |
+| Variant/class maps | Never twinned. Always `*.variants.json`, read by every runtime port — this is what P1.10-style migrations exist to protect. |
+| Algorithmic helpers (e.g. `workflowStepLabel`, `navIconLetter`) | Per-runtime implementation is allowed only when the twin files share the same function names/signatures and are covered by matching fixture cases (same inputs, same expected outputs) so drift is caught by tests, not by review. |
+| Intentional divergence | If a port's behavior differs from its twin on purpose, that difference must be documented in the relevant `*.spec.md` or `docs/` file. Undocumented divergence is a bug, not a feature. |
+
+Twin files should carry a short header comment naming their pair (see
+[`examples/vite/src/lib/helpers.ts`](../examples/vite/src/lib/helpers.ts) and
+its Go counterparts). Codegen for IDs/constants and shared fixture-test
+buildout for algorithmic helpers are follow-up work
+(`.project/audit.plan.en.md` P3.2) — this section fixes the policy, not the
+tooling.
+
 ## Layout Grammar
 
 All runtimes follow the same layout grammar:

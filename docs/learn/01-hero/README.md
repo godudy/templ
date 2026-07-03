@@ -51,6 +51,17 @@ Open both files in a split editor before reading the table below.
 2. Translate it to a `HeroChat` function component using `@registry/ui` imports.
 3. Compare with [`hero.tsx`](../../../examples/vite/src/blocks/home/hero.tsx).
 
+### Exercise C — Edit the fixture and regenerate
+
+1. Open [`home.data.json`](../../../examples/data/home.data.json)
+   and change the hero prompt copy or a suggestion label under
+   `showcase.default.props`.
+2. Run `bun run generate` — this refreshes the Go-embedded fixture and any
+   generated `*_variants.go` files that depend on it.
+3. Reload both preview ports below and confirm the change appears on both.
+   Skipping `bun run generate` after a fixture/spec edit is the most common
+   "why isn't my change showing up on Go" mistake.
+
 ## Preview locally
 
 From the repository root:

@@ -113,7 +113,7 @@ showcase:
 targets:
     react:
         component: Table
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/table.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/table'
     templ:

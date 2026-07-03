@@ -52,7 +52,7 @@ func TestSheetUI8KitRoot(t *testing.T) {
 }
 
 func TestSheetUI8KitBehavior(t *testing.T) {
-	html := renderComponent(t, SheetTrigger(SheetTriggerProps{For: "demo-sheet", Behavior: "ui8kit"}))
+	html := renderComponent(t, SheetTrigger(SheetTriggerProps{PanelID: "demo-sheet", Behavior: "ui8kit"}))
 	for _, want := range []string{
 		`data-ui8kit-dialog-open`,
 		`data-ui8kit-dialog-target="demo-sheet"`,

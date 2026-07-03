@@ -47,7 +47,7 @@ slots:
 targets:
     react:
         component: Container
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/container.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/container'
     templ:

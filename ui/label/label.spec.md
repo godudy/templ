@@ -35,7 +35,7 @@ slots:
 targets:
     react:
         component: Label
-        test: ../../examples/vite/tests/primitives.smoke.test.tsx
+        test: ../../examples/vite/tests/ui/label.smoke.test.tsx
         facade: '@fastygo/templ-react'
         package: '@fastygo/templ-react/ui/label'
     templ:
