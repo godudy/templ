@@ -65,6 +65,18 @@ other layout owner.
    `@registry/ui` and `@registry/components` imports.
 3. Compare with [`sidebar.tsx`](../../../examples/vite/src/blocks/home/sidebar.tsx).
 
+## Preview locally
+
+From the repository root:
+
+```bash
+bun install
+bun run dev:vite    # React — http://127.0.0.1:5173
+bun run dev:templ   # Go Templ — http://127.0.0.1:8080
+```
+
+The home page scaffolds use this lesson's `CatalogSidebar` block on both ports.
+
 ## Where to look next
 
 - [`04-layout-grammar`](../04-layout-grammar/) — the four layout primitives
@@ -72,5 +84,5 @@ other layout owner.
 - [`03-sheet`](../03-sheet/) — the mobile counterpart of this sidebar, using
   the same navigation sub-bricks inside a `Sheet`.
 - [`docs/mental-model.md`](../../mental-model.md) — five core ideas behind the
-  dual-stack contract.
+  shared runtime contract.
 - [`01-hero`](../01-hero/) — the previous lesson, if you have not done it yet.

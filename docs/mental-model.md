@@ -63,9 +63,9 @@ If you need open/close behavior, use the documented Sheet pattern with
 See [`learn/03-sheet/`](learn/03-sheet/) for a worked split-view lesson on the
 `data-ui8kit-*` contract and the mobile navigation `Sheet`.
 
-## 5. Two runtimes, one contract
+## 5. Every runtime, one contract
 
-The same design contract powers both stacks:
+The same design contract powers every runtime port:
 
 ```mermaid
 flowchart LR
@@ -80,7 +80,7 @@ flowchart LR
 - **React** — client-rendered components for SPA consumers and the Vite example.
 
 Ports live side by side (`ui/button/button.templ` next to `button.tsx`).
-Differences between stacks are documented in [`learn/`](learn/) and
+Differences between ports are documented in [`learn/`](learn/) and
 [`coming-from-shadcn.md`](coming-from-shadcn.md), not hidden in comments.
 
 When you add a brick, add both ports, both spec files, and a `_test.tsx` if
@@ -92,5 +92,5 @@ the spec requires it.
   registry rules.
 - [`learn/`](learn/) — split-view lessons (Hero, Sidebar, Sheet, Layout
   grammar).
-- [`architecture.md`](architecture.md) — deeper dual-stack contract details.
+- [`architecture.md`](architecture.md) — deeper runtime-contract details.
 - [`aria.md`](aria.md) — Sheet, Dialog, and ui8kit behavior hooks.

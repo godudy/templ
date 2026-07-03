@@ -194,6 +194,19 @@ go run ./.validate/cmd/blockonce            # enforces rule 6: one <Block> per f
 (TSX) or `@<pkg>.Block(` (Templ) invocation in a single file — which is the
 mistake most likely to slip past a quick read.
 
+## Preview locally
+
+From the repository root:
+
+```bash
+bun install
+bun run dev:vite    # React — http://127.0.0.1:5173
+bun run dev:templ   # Go Templ — http://127.0.0.1:8080
+```
+
+Open the home scaffolds on both ports and identify `Block`, `Box`, `Stack`, and
+`Group` in the rendered page using the rules above.
+
 ## Where to look next
 
 - [`02-sidebar`](../02-sidebar/) — a real file that applies `Block`, `Box`,
@@ -202,6 +215,6 @@ mistake most likely to slip past a quick read.
 - [`03-sheet`](../03-sheet/) — layout primitives combined with behavior
   hooks inside `SheetContent`.
 - [`docs/mental-model.md`](../../mental-model.md) — the five core ideas
-  behind the dual-stack contract, including the layout grammar summary.
+  behind the shared runtime contract, including the layout grammar summary.
 - [`.cursor/rules/templ-layout-grammar.mdc`](../../../.cursor/rules/templ-layout-grammar.mdc) —
   the authoritative rule file.

@@ -40,7 +40,7 @@ Open the sheet pair in a split editor before reading the table below.
 | 2 | `<SheetOverlay target={homeSheetPanelID} behavior="ui8kit" .../>` | `@cmp.SheetOverlay(cmp.SheetOverlayProps{For: homeSheetPanelID, Behavior: "ui8kit", ...})` | `target` (React) and `For` (Go) both mean "id of the panel this part controls." See the naming table in [`coming-from-shadcn.md`](../../coming-from-shadcn.md#naming-conversion). |
 | 3 | `<SheetContent className="p-4">` | `@cmp.SheetContent(cmp.SheetContentProps{Class: "p-4"})` | Plain content wrapper — no behavior hooks here. |
 | 4 | `<SheetTitle id={homeSheetTitleID} className="text-sm font-medium">{props.Brand}</SheetTitle>` | `@cmp.SheetTitle(cmp.SheetTitleProps{ID: homeSheetTitleID, Class: "text-sm font-medium"}) { { props.Brand } }` | Content via children on both sides — no positional string argument. |
-| 5 | `<SheetClose target={homeSheetPanelID} behavior="ui8kit" variant="outline" size="icon" aria-label="Close navigation menu">×</SheetClose>` | `@cmp.SheetClose(cmp.SheetCloseProps{For: homeSheetPanelID, Behavior: "ui8kit", Variant: "outline", Size: "icon", AriaLabel: "Close navigation menu"}) { × }` | `SheetClose` renders a `Button` internally on both stacks — same variant/size vocabulary as [`ui/button`](../../../ui/button/). |
+| 5 | `<SheetClose target={homeSheetPanelID} behavior="ui8kit" variant="outline" size="icon" aria-label="Close navigation menu">×</SheetClose>` | `@cmp.SheetClose(cmp.SheetCloseProps{For: homeSheetPanelID, Behavior: "ui8kit", Variant: "outline", Size: "icon", AriaLabel: "Close navigation menu"}) { × }` | `SheetClose` renders a `Button` internally on every runtime port — same variant/size vocabulary as [`ui/button`](../../../ui/button/). |
 | 6 | `<CatalogPrimaryNav items={props.Sidebar} className="mt-4" />` | `@CatalogPrimaryNav(props.Sidebar, "mt-4")` | Reuses the exact sub-brick from [Lesson 02](../02-sidebar/) — the mobile sheet and the desktop sidebar share one navigation component. |
 | 7 | `<CatalogHeaderNav items={props.HeaderNav} className="mt-4 border-t border-border pt-4" />` | `@CatalogHeaderNav(props.HeaderNav, "mt-4 border-t border-border pt-4")` | Second nav block, same sub-brick family. |
 
@@ -147,6 +147,19 @@ guard because Templ renders once per request; the same rule ("do not treat
    `sheet-ids.ts` file using `@registry/components` imports.
 3. Compare with [`mobile-sheet.tsx`](../../../examples/vite/src/blocks/home/mobile-sheet.tsx)
    and [`sheet-ids.ts`](../../../examples/vite/src/blocks/home/sheet-ids.ts).
+
+## Preview locally
+
+From the repository root:
+
+```bash
+bun install
+bun run dev:vite    # React — http://127.0.0.1:5173
+bun run dev:templ   # Go Templ — http://127.0.0.1:8080
+```
+
+Resize the browser to mobile width to see `CatalogMobileSheet` and compare
+`@ui8kit/aria` behavior on both ports.
 
 ## Where to look next
 

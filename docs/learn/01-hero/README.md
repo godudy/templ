@@ -27,7 +27,7 @@ Open both files in a split editor before reading the table below.
 | # | React (TSX) | Go Templ | Rule |
 |---|-------------|----------|------|
 | 1 | `export function HeroChat({ hero })` | `templ HeroChat(props HeroProps)` | Function name matches; props are a typed struct in Go. |
-| 2 | `<Block tag="section" className="...">` | `@ui.Block(ui.BlockProps{Tag: "section", Class: "..."})` | Both stacks use `Block` for section landmarks. |
+| 2 | `<Block tag="section" className="...">` | `@ui.Block(ui.BlockProps{Tag: "section", Class: "..."})` | Every runtime port uses `Block` for section landmarks. |
 | 3 | `<H1 className="text-3xl ...">` | `@ui.Title(ui.TitleProps{As: 1, Class: "text-3xl ..."})` | React has `H1`–`H6` sugar; templ uses `Title` with `As: 1`–`6`. |
 | 4 | `className="gap-6"` | `Class: "gap-6"` | See [Naming Conversion](../../coming-from-shadcn.md#naming-conversion). |
 | 5 | `<Textarea rows={4} placeholder={hero.Prompt} />` | `@ui.Textarea(ui.TextareaProps{Rows: 4, Placeholder: props.Prompt})` | Self-closing in TSX; templ uses a struct literal. |
@@ -51,10 +51,23 @@ Open both files in a split editor before reading the table below.
 2. Translate it to a `HeroChat` function component using `@registry/ui` imports.
 3. Compare with [`hero.tsx`](../../../examples/vite/src/blocks/home/hero.tsx).
 
+## Preview locally
+
+From the repository root:
+
+```bash
+bun install
+bun run dev:vite    # React — http://127.0.0.1:5173
+bun run dev:templ   # Go Templ — http://127.0.0.1:8080
+```
+
+The home page scaffolds use this lesson's `HeroChat` block on both ports.
+
 ## Where to look next
 
-- [`docs/mental-model.md`](../../mental-model.md) — five core ideas behind the dual-stack contract.
-- [`ui/button/`](../../../ui/button/) — smallest primitive; best first brick lesson.
-- [`ui/badge/`](../../../ui/badge/) — minimal props, good second brick.
-- [`components/card/`](../../../components/card/) — composite with named exports.
+- [`docs/mental-model.md`](../../mental-model.md) — five core ideas behind the shared runtime contract.
+- [`05-button`](../05-button/) — Button brick lesson.
+- [`06-badge`](../06-badge/) — Badge brick lesson.
+- [`07-card`](../07-card/) — Card composite lesson.
+- [`cheatsheet-react-to-templ.md`](../../cheatsheet-react-to-templ.md) — one-page syntax map.
 - [`docs/coming-from-shadcn.md`](../../coming-from-shadcn.md) — full migration guide.

@@ -55,7 +55,7 @@ api:
     type: bool
     cva: false
     default: false
-    notes: 'Initial state for SSR + first React commit. With Behavior=ui8kit runtime is owned by @ui8kit/aria.'
+    notes: 'Initial state for SSR + first client-side render. With Behavior=ui8kit runtime is owned by @ui8kit/aria.'
   Target:
     role: id-reference
     type: string
@@ -104,8 +104,8 @@ Behavior hooks are opt-in through Behavior.
 - Sheet root is a div with role dialog and aria-modal true (side panel semantics, not native dialog element)
 - For center modals use ui/dialog with native dialog element and showModal()
 - Trigger wires aria-haspopup, aria-controls, and aria-expanded
-- Behavior ui8kit adds data-ui8kit dialog hooks; @ui8kit/aria owns open/close runtime on both stacks
-- Open sets initial hidden/data-state/aria-expanded only. With Behavior=ui8kit, do not bind Open to React state — parent re-renders must not overwrite attributes that @ui8kit/aria toggles at runtime
+- Behavior ui8kit adds data-ui8kit dialog hooks; @ui8kit/aria owns open/close runtime on every runtime port
+- Open sets initial hidden/data-state/aria-expanded only. With Behavior=ui8kit, do not bind Open to a runtime's own reactive component state (React state, Svelte runes, Vue refs, ...) — re-renders must not overwrite attributes that @ui8kit/aria toggles at runtime
 
 ## Example side.left
 

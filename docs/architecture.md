@@ -1,11 +1,15 @@
-# Dual-Stack Component Architecture
+# Multi-Runtime Component Architecture
 
-This repository is one design system with two runtimes:
+This repository is one design system shared across multiple runtime ports.
+Two ports ship today:
 
 - Go Templ for SSR.
 - React TSX for SPA/Vite usage.
 
-The design contract is shared. Runtime files are thin implementations of the
+The contract (`*.spec.md` + `*.variants.json`) is designed to scale to
+additional ports (Svelte, Vue, PHP/Blazor, ...) without per-runtime rewrites —
+each port reads the same JSON recipe instead of hand-porting class strings.
+The design contract is shared; runtime files are thin implementations of the
 same contract.
 
 ## Source Of Truth
@@ -25,7 +29,9 @@ spec and variant files, it is not part of the public contract.
 
 ## Runtime Parity
 
-Templ and React use different syntax but the same concepts:
+Templ and React use different syntax but the same concepts. This table
+reflects the 2 ports shipped today, not the target contract shape — a 3rd
+port adds a row of ported concepts, not a 3rd column glued onto this table:
 
 | Contract | Templ | React |
 |----------|-------|-------|
@@ -35,9 +41,12 @@ Templ and React use different syntax but the same concepts:
 | Root delegation | `CardClasses(...)` on manual wrapper | `asChild` + `Slot` |
 | Behavior hooks | `Behavior: "ui8kit"` | `behavior="ui8kit"` |
 
-React may expose native React ergonomics (`htmlFor`, `onClick`, `ref`) where
-Templ uses Go field names (`HTMLFor`, `Attrs`), but the rendered semantics and
-variant choices must remain aligned.
+`CardClasses(...)` on a manual wrapper is the pattern every non-React port
+uses (Go today, future Svelte/Vue/PHP ports tomorrow); `asChild` + `Slot` is
+a React-only convenience because only React has `cloneElement`. React may
+also expose native React ergonomics (`htmlFor`, `onClick`, `ref`) where Templ
+uses Go field names (`HTMLFor`, `Attrs`), but the rendered semantics and
+variant choices must remain aligned across every port.
 
 ## Variants
 

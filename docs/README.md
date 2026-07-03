@@ -12,13 +12,15 @@ and [`learn/`](learn/) first.
 ## Guides
 
 - [`mental-model.md`](mental-model.md) — five core ideas: recipes, specs, layout
-  grammar, ui8kit boundary, and dual-stack contract.
-- [`architecture.md`](architecture.md) — dual-stack component contract for Go
-  Templ SSR and React TSX.
+  grammar, ui8kit boundary, and the shared runtime contract.
+- [`architecture.md`](architecture.md) — multi-runtime component contract,
+  shipped today as Go Templ SSR and React TSX.
 - [`aria.md`](aria.md) — static ARIA, behavior hooks, `@ui8kit/aria`, and the
   Sheet dialog contract.
 - [`coming-from-shadcn.md`](coming-from-shadcn.md) — onboarding notes for
   developers familiar with shadcn.
+- [`cheatsheet-react-to-templ.md`](cheatsheet-react-to-templ.md) — one-page
+  React ↔ Templ syntax and naming map.
 - [`learn/`](learn/) — split-view lessons (React ↔ Templ) for the examples scaffolds.
 - [`publishing.md`](publishing.md) — Go module vs future npm delivery model.
 

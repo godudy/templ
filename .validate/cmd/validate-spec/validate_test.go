@@ -51,6 +51,7 @@ func TestValidateAllSpecs(t *testing.T) {
 	allErrs = append(allErrs, validateComponentsJSON(repoRoot)...)
 	allErrs = append(allErrs, validateAllVariantJSON(repoRoot)...)
 	allErrs = append(allErrs, validateViteImportStyle(repoRoot)...)
+	allErrs = append(allErrs, validateSheetOpenContract(repoRoot)...)
 
 	if len(allErrs) > 0 {
 		var b strings.Builder

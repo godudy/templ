@@ -55,6 +55,7 @@ func main() {
 	allErrs = append(allErrs, validateComponentsJSON(repoRoot)...)
 	allErrs = append(allErrs, validateAllVariantJSON(repoRoot)...)
 	allErrs = append(allErrs, validateViteImportStyle(repoRoot)...)
+	allErrs = append(allErrs, validateSheetOpenContract(repoRoot)...)
 
 	if len(allErrs) > 0 {
 		fmt.Fprintf(os.Stderr, "validate-spec: %d error(s)\n", len(allErrs))

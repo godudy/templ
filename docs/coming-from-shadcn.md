@@ -1,8 +1,12 @@
 # Coming From shadcn
 
 The registry keeps the familiar shadcn ergonomics: props, variants, children,
-`cn`, and `asChild`. The differences exist to support both Go Templ SSR and
-React TSX from the same contract.
+`cn`, and `asChild`. The differences exist to support Go Templ SSR and React
+TSX from the same contract — the first 2 of several planned runtime ports
+(see [`architecture.md`](architecture.md)). This guide compares those two
+specifically because it targets developers coming from React/shadcn.
+
+For a one-page syntax map see [`cheatsheet-react-to-templ.md`](cheatsheet-react-to-templ.md).
 
 ## Main Differences
 
@@ -14,7 +18,7 @@ React TSX from the same contract.
 | Raw `<div>` layout is common | Use `Block`, `Box`, `Stack`, `Group` |
 | Client behavior often lives in React | APG behavior lives in `@ui8kit/aria` and is opt-in |
 
-## 5-Minute Example: Button on Two Stacks
+## 5-Minute Example: Button on Both Ports
 
 Open this section side by side with [`ui/button/button.tsx`](../ui/button/button.tsx)
 and [`ui/button/button.templ`](../ui/button/button.templ).
@@ -49,18 +53,20 @@ Open [`ui/button/button.tsx`](../ui/button/button.tsx) and
 [`ui/button/button.templ`](../ui/button/button.templ) in a split editor to see
 the full contract.
 
-## Why Two Stacks?
+## Why Go Templ And React First?
 
-The registry serves two audiences with one design contract:
+The registry serves multiple audiences with one design contract. The first
+two shipped ports are:
 
 - **Go Templ (SSR)** — server-rendered HTML for backends that want typed,
   compile-time components without a JavaScript bundle.
 - **React (SPA)** — client-rendered components for frontends that already use
   shadcn-style props, hooks, and Vite.
 
-Both stacks read the same `*.variants.json`, `*.spec.md`, and fixture
+Every port reads the same `*.variants.json`, `*.spec.md`, and fixture
 `*.data.json`. That prevents design drift: a `variant="outline"` button looks
-identical whether it ships from Go or React.
+identical whether it ships from Go, React, or a future port (Svelte, Vue,
+PHP/Blazor, ...) — see [`architecture.md`](architecture.md).
 
 Choose Templ when your app is Go-first and HTML arrives from the server. Choose
 React when you need client interactivity beyond what `@ui8kit/aria` provides, or
