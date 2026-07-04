@@ -1,0 +1,152 @@
+/**
+ * Toast composes a transient status message, reusing the APG Alert (live region)
+ * contract with a data-ui8kit="toast" marker for app-owned auto-dismiss timing.
+ */
+
+// Copy: components/ui/toast/toast.templ
+
+package toast
+
+import (
+	"strings"
+
+	"github.com/fastygo/templ/ui"
+	"github.com/fastygo/templ/utils"
+)
+
+// ToastProps configures the toast root.
+type ToastProps struct {
+	ID       string
+	Variant  string
+	Class    string
+	// Role — status or alert (defaults to status)
+	Role     string
+	AriaLive string
+	Open     bool
+	Behavior string
+	Attrs    templ.Attributes
+}
+
+// ToastTitleProps configures the toast title.
+type ToastTitleProps struct {
+	ID    string
+	Class string
+	Attrs templ.Attributes
+}
+
+// ToastDescriptionProps configures supporting toast copy.
+type ToastDescriptionProps struct {
+	ID    string
+	Class string
+	Attrs templ.Attributes
+}
+
+// ToastCloseProps configures a button that dismisses a toast.
+type ToastCloseProps struct {
+	PanelID   string
+	Class     string
+	Variant   string
+	Size      string
+	Behavior  string
+	AriaLabel string
+	Attrs     templ.Attributes
+}
+
+func ToastClasses(p ToastProps) string {
+	return uiutils.Compose(ToastVariants, map[string]string{
+		"variant": strings.TrimSpace(p.Variant),
+	}, strings.TrimSpace(p.Class))
+}
+
+func toastState(open bool) string {
+	if open {
+		return "open"
+	}
+	return "closed"
+}
+
+func toastBehavior(value string) string {
+	switch strings.TrimSpace(value) {
+	case "ui8kit":
+		return "ui8kit"
+	default:
+		return ""
+	}
+}
+
+func toastRootAttrs(p ToastProps) templ.Attributes {
+	role := strings.TrimSpace(p.Role)
+	if role != "status" && role != "alert" {
+		role = "status"
+	}
+	live := strings.TrimSpace(p.AriaLive)
+	if live == "" {
+		live = "polite"
+	}
+	attrs := uiutils.MergeAttrs(
+		templ.Attributes{"role": role},
+		uiutils.AriaLive(live),
+		p.Attrs,
+	)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["data-state"] = toastState(p.Open)
+	if toastBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "toast"
+	}
+	return attrs
+}
+
+func toastCloseAttrs(panelID, behavior string, attrs templ.Attributes) templ.Attributes {
+	out := uiutils.MergeAttrs(templ.Attributes{}, attrs)
+	if toastBehavior(behavior) == "ui8kit" {
+		out["data-ui8kit-dialog-close"] = true
+		if strings.TrimSpace(panelID) != "" {
+			out["data-ui8kit-dialog-target"] = panelID
+		}
+	}
+	return out
+}
+
+// Toast renders a transient status message.
+templ Toast(p ToastProps) {
+	<div class={ ToastClasses(p) } hidden?={ !p.Open } { toastRootAttrs(p)... }>
+		{ children... }
+	</div>
+}
+
+// ToastTitle renders a toast title.
+templ ToastTitle(p ToastTitleProps) {
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ uiutils.Cn("text-sm font-semibold", p.Class) }
+		{ p.Attrs... }
+	>{ children... }</div>
+}
+
+// ToastDescription renders supporting toast copy.
+templ ToastDescription(p ToastDescriptionProps) {
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ uiutils.Cn("text-sm text-muted-foreground", p.Class) }
+		{ p.Attrs... }
+	>{ children... }</div>
+}
+
+// ToastClose renders a button wired to dismiss a toast.
+templ ToastClose(p ToastCloseProps) {
+	@ui.Button(ui.ButtonProps{
+		Variant:   p.Variant,
+		Size:      p.Size,
+		Class:     p.Class,
+		AriaLabel: p.AriaLabel,
+		Attrs:     toastCloseAttrs(p.PanelID, p.Behavior, p.Attrs),
+	}) {
+		{ children... }
+	}
+}

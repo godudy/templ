@@ -17,7 +17,7 @@ var reDescribeSubject = regexp.MustCompile(`describe\(\s*["']([^"']+)["']`)
 // Contract:
 //  1. When a spec declares `targets.react.test: <path>`, derive the expected
 //     describe() subject from `id` by replacing every "." with "/"
-//     (ui.button -> "ui/button", components.card -> "components/card").
+//     (ui.button -> "ui/button", ui.card -> "ui/card").
 //  2. A spec MAY override the expected subject with
 //     `targets.react.describe: <string>` for non-standard test files (e.g.
 //     Sheet's dedicated contract test uses a descriptive sentence instead of

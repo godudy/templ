@@ -1,20 +1,20 @@
 ---
-id: components.iconbadge
+id: ui.iconbadge
 layer: composite
 kind: media
-package: github.com/fastygo/templ/components/iconbadge
-facade: github.com/fastygo/templ/components
+package: github.com/fastygo/templ/ui/iconbadge
+facade: github.com/fastygo/templ/ui
 templ: IconBadge
 targets:
   templ:
-    package: github.com/fastygo/templ/components/iconbadge
-    facade: github.com/fastygo/templ/components
+    package: github.com/fastygo/templ/ui/iconbadge
+    facade: github.com/fastygo/templ/ui
     component: IconBadge
   react:
-    package: '@fastygo/templ-react/components/iconbadge'
+    package: '@fastygo/templ-react/ui/iconbadge'
     facade: '@fastygo/templ-react'
     component: IconBadge
-    test: ../../examples/vite/tests/components.smoke.test.tsx
+    test: ../../examples/vite/tests/ui/iconbadge.smoke.test.tsx
 api:
   Variant:
     role: appearance
@@ -114,10 +114,10 @@ Pass the letter, glyph, or `<Icon/>` as children.
 ## Example variant.default
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.IconBadge(cmp.IconBadgeProps{Variant: "default", Size: "default"}) { BY }
+	@ui.IconBadge(ui.IconBadgeProps{Variant: "default", Size: "default"}) { BY }
 }
 ```
 
@@ -127,10 +127,9 @@ Pass an `Icon` as children to render an SVG pictogram:
 
 ```templ
 import "github.com/fastygo/templ/ui"
-import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
-	@cmp.IconBadge(cmp.IconBadgeProps{Variant: "accent", Size: "sm"}) {
+	@ui.IconBadge(ui.IconBadgeProps{Variant: "accent", Size: "sm"}) {
 		@ui.Icon(ui.IconProps{Name: "home"})
 	}
 }

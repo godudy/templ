@@ -1,5 +1,4 @@
-import { Block, Box, Button, Inline, Stack } from "@registry/ui";
-import { IconBadge } from "@registry/components";
+import { Block, Box, Button, IconBadge, Inline, Stack } from "@registry/ui";
 import type { HomePageProps } from "../../types/home";
 import { CatalogPrimaryNav } from "./catalog-nav";
 

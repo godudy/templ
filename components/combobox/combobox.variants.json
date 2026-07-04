@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/variants.schema.json",
+  "id": "components.combobox",
+  "base": "relative w-full",
+  "keys": ["variant"],
+  "defaults": {
+    "variant": "default"
+  },
+  "byKey": {
+    "variant": {
+      "default": "",
+      "outline": "rounded-md border border-border p-1"
+    }
+  }
+}

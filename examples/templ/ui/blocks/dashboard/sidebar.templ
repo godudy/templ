@@ -1,14 +1,13 @@
 package dashboard
 
 import (
-	cmp "github.com/fastygo/templ/components"
 	"github.com/fastygo/templ/ui"
 )
 
 templ DashboardSidebar(props PageProps) {
 	@ui.Block(ui.BlockProps{Tag: "aside", Class: "hidden w-64 shrink-0 border-r border-border bg-card md:flex md:flex-col"}) {
 		@ui.Box(ui.BoxProps{Class: "flex h-16 items-center gap-4 border-b border-border px-4"}) {
-			@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: "accent"}) { U8 }
+			@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: "accent"}) { U8 }
 			@ui.Stack(ui.StackProps{Class: "gap-0"}) {
 				@ui.Inline(ui.InlineProps{Class: "text-sm font-semibold tracking-tight"}) { { props.Brand } }
 				@ui.Inline(ui.InlineProps{Class: "text-xs text-muted-foreground"}) { { "Templ registry" } }

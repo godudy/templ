@@ -1,10 +1,10 @@
-# Lesson 07: Card composite
+# Lesson 07: Card primitive
 
-Compare the Card family on React and Go Templ. Card is a **composite**: named
-parts (`CardHeader`, `CardTitle`, …) compose inside a bordered surface, all
-driven by [`card.variants.json`](../../../components/card/card.variants.json).
+Compare the Card family on React and Go Templ. Card is a **static primitive**:
+named parts (`CardHeader`, `CardTitle`, …) compose inside a bordered surface,
+all driven by [`card.variants.json`](../../../ui/card/card.variants.json).
 
-**Level: Composite.** Read after [`05-button`](../05-button/) and
+**Level: Composite primitive.** Read after [`05-button`](../05-button/) and
 [`06-badge`](../06-badge/).
 
 ## What you'll learn
@@ -20,10 +20,10 @@ driven by [`card.variants.json`](../../../components/card/card.variants.json).
 
 | Artifact | Path |
 |----------|------|
-| Spec | [`components/card/card.spec.md`](../../../components/card/card.spec.md) |
-| Variant recipe | [`components/card/card.variants.json`](../../../components/card/card.variants.json) |
-| React | [`components/card/card.tsx`](../../../components/card/card.tsx) |
-| Go Templ | [`components/card/card.templ`](../../../components/card/card.templ) |
+| Spec | [`ui/card/card.spec.md`](../../../ui/card/card.spec.md) |
+| Variant recipe | [`ui/card/card.variants.json`](../../../ui/card/card.variants.json) |
+| React | [`ui/card/card.tsx`](../../../ui/card/card.tsx) |
+| Go Templ | [`ui/card/card.templ`](../../../ui/card/card.templ) |
 
 Open the React and Templ files in a split editor before reading the table below.
 
@@ -31,12 +31,12 @@ Open the React and Templ files in a split editor before reading the table below.
 
 | # | React (TSX) | Go Templ | Rule |
 |---|-------------|----------|------|
-| 1 | `<Card variant="default">` | `@cmp.Card(cmp.CardProps{Variant: "default"})` | Root variant from shared JSON. |
-| 2 | `<CardHeader>…</CardHeader>` | `@cmp.CardHeader(cmp.CardHeaderProps{})` | Named part; children in body. |
-| 3 | `<CardTitle as={2}>…</CardTitle>` | `@cmp.CardTitle(cmp.CardTitleProps{As: 2})` | Heading level 1–6; default h2. |
-| 4 | `<CardDescription>…</CardDescription>` | `@cmp.CardDescription(...)` | Renders `<p>` with muted styles. |
-| 5 | `<Card asChild><section>…</section></Card>` | `<section class={ cmp.CardClasses(p) }>…</section>` | React `asChild`+`Slot`; universal `*Classes()` wrapper. |
-| 6 | `import { Card, CardHeader, … }` | `import cmp "github.com/fastygo/templ/components"` | Facade import shape. |
+| 1 | `<Card variant="default">` | `@ui.Card(ui.CardProps{Variant: "default"})` | Root variant from shared JSON. |
+| 2 | `<CardHeader>…</CardHeader>` | `@ui.CardHeader(ui.CardHeaderProps{})` | Named part; children in body. |
+| 3 | `<CardTitle as={2}>…</CardTitle>` | `@ui.CardTitle(ui.CardTitleProps{As: 2})` | Heading level 1–6; default h2. |
+| 4 | `<CardDescription>…</CardDescription>` | `@ui.CardDescription(...)` | Renders `<p>` with muted styles. |
+| 5 | `<Card asChild><section>…</section></Card>` | `<section class={ ui.CardClasses(p) }>…</section>` | React `asChild`+`Slot`; universal `*Classes()` wrapper. |
+| 6 | `import { Card, CardHeader, … }` | `import "github.com/fastygo/templ/ui"` | Facade import shape. |
 
 ## Escape hatch: semantic root with `CardClasses`
 
@@ -54,12 +54,12 @@ Default `Card` renders `<div>`. For landmarks (`<section>`, `<article>`), do
 **Go / universal pattern (all non-React ports use this):**
 
 ```templ
-<section class={ cmp.CardClasses(cmp.CardProps{Variant: "default"}) } aria-labelledby="revenue-title">
-  @cmp.CardHeader(cmp.CardHeaderProps{}) { … }
+<section class={ ui.CardClasses(ui.CardProps{Variant: "default"}) } aria-labelledby="revenue-title">
+  @ui.CardHeader(ui.CardHeaderProps{}) { … }
 </section>
 ```
 
-The inner parts still use `@cmp.CardHeader`, `@cmp.CardContent`, etc. Only the
+The inner parts still use `@ui.CardHeader`, `@ui.CardContent`, etc. Only the
 **root surface classes** move to `CardClasses` on the semantic element.
 
 This is not a hack — it is the documented composition pattern for every runtime
@@ -74,7 +74,7 @@ See the current dashboard pair:
 
 `LayerTable` is the same escape hatch in production-shaped block code:
 React uses `<Card asChild><section>...`, while Go uses
-`<section class={ cmp.CardClasses(...) }>...`.
+`<section class={ ui.CardClasses(...) }>...`.
 Both are legitimate because the semantic wrapper still carries Card recipe
 classes and composes Card parts inside the surface.
 
@@ -82,19 +82,19 @@ classes and composes Card parts inside the surface.
 
 ### Exercise A — Compose a KPI card
 
-1. Read the `variant.kpi` example in [`card.spec.md`](../../../components/card/card.spec.md).
+1. Read the `variant.kpi` example in [`card.spec.md`](../../../ui/card/card.spec.md).
 2. Build the same structure in TSX using named exports.
-3. Build the same structure in templ using `@cmp.*` parts.
+3. Build the same structure in templ using `@ui.*` parts.
 
 ### Exercise B — Semantic section root
 
 1. Without `asChild`, write a Go templ block where the outer element is
-   `<section class={ cmp.CardClasses(...) }>`.
+   `<section class={ ui.CardClasses(...) }>`.
 2. Compare with the `composition.aschild-section` showcase in the spec.
 
 ### Exercise C — React to Templ
 
-1. Open [`card.tsx`](../../../components/card/card.tsx).
+1. Open [`card.tsx`](../../../ui/card/card.tsx).
 2. Translate `CardFooter` with a `Button` child to templ.
 
 ## Preview locally

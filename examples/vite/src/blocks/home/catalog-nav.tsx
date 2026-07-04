@@ -1,4 +1,5 @@
-import { Nav, NavItem, NavLink, NavList, IconBadge } from "@registry/components";
+import { Nav, NavItem, NavLink, NavList } from "@registry/components";
+import { IconBadge } from "@registry/ui";
 import { navIconLetter, navIconVariant } from "../../lib/helpers";
 import type { NavItem as NavItemData } from "../../types/home";
 

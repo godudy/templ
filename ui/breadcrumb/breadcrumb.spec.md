@@ -1,20 +1,20 @@
 ---
-id: components.breadcrumb
+id: ui.breadcrumb
 layer: composite
 kind: navigation
-package: github.com/fastygo/templ/components/breadcrumb
-facade: github.com/fastygo/templ/components
+package: github.com/fastygo/templ/ui/breadcrumb
+facade: github.com/fastygo/templ/ui
 templ: Breadcrumb
 targets:
   templ:
-    package: github.com/fastygo/templ/components/breadcrumb
-    facade: github.com/fastygo/templ/components
+    package: github.com/fastygo/templ/ui/breadcrumb
+    facade: github.com/fastygo/templ/ui
     component: Breadcrumb
   react:
-    package: '@fastygo/templ-react/components/breadcrumb'
+    package: '@fastygo/templ-react/ui/breadcrumb'
     facade: '@fastygo/templ-react'
     component: Breadcrumb
-    test: ../../examples/vite/tests/components.smoke.test.tsx
+    test: ../../examples/vite/tests/ui/breadcrumb.smoke.test.tsx
 api:
   Items:
     role: trail
@@ -92,12 +92,12 @@ Breadcrumb sets aria-current on the active item.
 ## Example layout.standard
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Breadcrumb(cmp.BreadcrumbProps{
+	@ui.Breadcrumb(ui.BreadcrumbProps{
 		AriaLabel: "Breadcrumb",
-		Items: []cmp.BreadcrumbItem{
+		Items: []ui.BreadcrumbItem{
 			{Label: "Home", Href: "/"},
 			{Label: "Docs", Href: "/docs"},
 			{Label: "Button", Current: true},
@@ -109,12 +109,12 @@ templ Example() {
 ## Example state.disabled
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Breadcrumb(cmp.BreadcrumbProps{
+	@ui.Breadcrumb(ui.BreadcrumbProps{
 		AriaLabel: "Breadcrumb",
-		Items: []cmp.BreadcrumbItem{
+		Items: []ui.BreadcrumbItem{
 			{Label: "Home", Href: "/"},
 			{Label: "Locked", Disabled: true},
 		},

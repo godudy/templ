@@ -50,8 +50,8 @@ ui/button/
 | Path | Role |
 |------|------|
 | [`utils/`](utils/) | **Only shared Go helpers** — CVA (`Compose`), `Cn`, attrs, ARIA, `tags.go`, form recipes |
-| [`ui/`](ui/) | Primitives: button, badge, input, form controls, layout, media, links, dialog, disclosure |
-| [`components/`](components/) | Composites: card, alert, breadcrumb, sheet, nav, icon badge |
+| [`ui/`](ui/) | Primitives: button, badge, input, form controls, layout, media, links, dialog, disclosure, card, alert, breadcrumb, icon badge |
+| [`components/`](components/) | Behavior-driven composites: sheet, nav, tabs, popover, combobox, menu, toast |
 | [`components.json`](components.json) | Registry manifest (shadcn-style) |
 | [`examples/`](examples/) | Optional local preview — [`templ/`](examples/templ/) (Go) and [`vite/`](examples/vite/) (React) share [`web/static/`](examples/web/static/) |
 | [`.validate/docs/component.spec.template.md`](.validate/docs/component.spec.template.md) | Spec template: `api` + `showcase` per brick |
@@ -83,7 +83,7 @@ Quick mapping:
 ## Copy into your app
 
 1. Copy [`utils/`](utils/) once (import `github.com/fastygo/templ/utils`, package `uiutils`).
-2. Copy folders from `ui/button/`, `ui/input/`, `components/card/`, etc.
+2. Copy folders from `ui/button/`, `ui/input/`, `ui/card/`, etc.
 3. Update the `uiutils` import path in each `.templ` file to match your module.
 4. Run `templ generate` and include `ui/**/*.templ` in your Tailwind `@source`.
 5. Install peer deps in your app runtime: `react`, `react-dom`, `clsx`, and `tailwind-merge`.
@@ -115,7 +115,10 @@ import cmp "github.com/fastygo/templ/components"
 @ui.Button(ui.ButtonProps{Variant: "outline", Size: "sm"}) {
   Save
 }
-@cmp.Card(cmp.CardProps{Variant: "default"}) {
+@ui.Card(ui.CardProps{Variant: "default"}) {
+  …
+}
+@cmp.Sheet(cmp.SheetProps{ID: "panel", Side: "right", Behavior: "ui8kit"}) {
   …
 }
 ```

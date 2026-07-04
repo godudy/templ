@@ -2,6 +2,7 @@ package dashboard
 
 import (
 	cmp "github.com/fastygo/templ/components"
+	"github.com/fastygo/templ/ui"
 )
 
 templ DashboardPrimaryNav(items []NavItem, class string) {
@@ -10,7 +11,7 @@ templ DashboardPrimaryNav(items []NavItem, class string) {
 			for index, item := range items {
 				@cmp.NavItem(cmp.NavItemProps{}) {
 					@cmp.NavLink(cmp.NavLinkProps{Href: item.Href, Active: index == 0, AriaLabel: item.Label}) {
-						@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: navIconVariant(index == 0)}) { navIconLetter(item.Icon) }
+						@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: navIconVariant(index == 0)}) { navIconLetter(item.Icon) }
 						{ item.Label }
 					}
 				}

@@ -12,14 +12,14 @@ On-disk index: [`README.md`](../../README.md), [`docs/README.md`](../../docs/REA
 
 ```
 utils/              # shared Go helpers — Cn, Compose, ARIA, tags, form recipes
-ui/                 # primitives — button/, stack/, form/, dialog/, …
+ui/                 # primitives — button/, stack/, form/, dialog/, card/, alert/, …
   <brick>/
     <brick>.spec.md
     <brick>.variants.json   # target layout (migrate inline Variants here)
     <brick>.data.json       # showcase fixtures (optional)
     <brick>.templ
     <brick>.tsx             # React port (optional)
-components/         # composites — card/, sheet/, nav/, alert/, …
+components/         # behavior-driven composites — sheet/, nav/, tabs/, popover/, combobox/, menu/, toast/
   <brick>/            # same file set as ui/
 components.json     # shadcn-style registry manifest
 examples/           # optional local preview — NOT copy-pasted with bricks
@@ -33,14 +33,30 @@ examples/           # optional local preview — NOT copy-pasted with bricks
 docs/               # long-lived architecture, ARIA, onboarding, publishing docs
 ```
 
+| Label | Path | Role |
+|--------|------|------|
+| `registry:layout` | `internal/ui/layout/` | App chrome, routes frame; **not** extracted to blocks. |
+| `registry:blocks` | `internal/ui/blocks/<group>/` | Section scaffolds + **in-package default copy** (shadcn-style). |
+| `registry:components` | `internal/ui/components/` | Pure UI; no HTTP/domain/fetch. |
+| `registry:variants` | `internal/ui/variants/` | Named, ui8px-safe utility presets. |
+| `registry:utils` | `internal/ui/utils/` | App-specific helpers; delegate generic logic to **templ/utils**. |
+
 | Path | Role |
 |------|------|
 | `utils/` | **Only** shared helpers — no brick markup |
-| `ui/` | Primitives — props, variants, children; framework-neutral by default |
-| `components/` | Composites — multi-part bricks (`parts[]` in spec) |
+| `ui/` | Primitives — static bricks that render solely from props/variants, no client-side behavior contract. Includes single-part bricks (Button, Input) **and** multi-part surfaces (Card, Table) as long as they stay static (`layer: composite` in spec is fine; `Behavior`/`data-ui8kit-*` is not) |
+| `components/` | Behavior-driven composites — bricks with a client-side behavior contract (`data-ui8kit-*` attributes, `@ui8kit/aria` hooks, open/close or selection state): Sheet, Nav, Tabs, Popover, Combobox, Menu, Toast |
 | `ui/*/facade.templ`, `components/facade.templ` | Re-export facades — prefer `@ui.*`, `@cmp.*` in examples |
 | `examples/` | Preview server, demo copy, block scaffolds — app-like but not shipped |
 | `examples/templ/ui/blocks/<name>/` | Wireframe scaffolds: `props.go`, `page.templ`, generated `page_gen.go` (fixture/variant JSON lives in `examples/data/`) |
+
+**Deciding `ui/` vs `components/`:** ask whether the brick needs a runtime
+behavior library (`@ui8kit/aria`) to function — open/close, focus trap,
+roving tabindex, live selection state. If yes, it belongs in `components/`
+even if it renders a static shell by default (e.g. `Sheet`, `Tabs`). If the
+brick only composes props into classes/attributes and never mutates its own
+DOM state, it belongs in `ui/` — even when it has multiple named parts
+(`Card` + `CardHeader` + `CardContent`, `Table` + `TableRow`).
 
 ## Per-brick contract
 

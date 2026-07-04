@@ -1,0 +1,167 @@
+/**
+ * Tabs composes a tablist with triggers and panels.
+ * Behavior hooks are opt-in through Behavior so markup stays framework-neutral by default.
+ */
+
+// Copy: components/ui/tabs/tabs.templ
+
+package tabs
+
+import (
+	"strconv"
+	"strings"
+
+	"github.com/fastygo/templ/utils"
+)
+
+// TabsProps configures the tabs root.
+type TabsProps struct {
+	ID      string
+	Variant string
+	Class   string
+	// Value — initially active tab value (matches TabsTrigger/TabsPanel Value)
+	Value    string
+	Behavior string
+	Attrs    templ.Attributes
+}
+
+// TabsListProps configures the tablist row.
+type TabsListProps struct {
+	Class     string
+	AriaLabel string
+	Attrs     templ.Attributes
+}
+
+// TabsTriggerProps configures a single tab button.
+type TabsTriggerProps struct {
+	ID    string
+	Value string
+	// PanelID links this trigger to its panel via aria-controls.
+	PanelID  string
+	Active   bool
+	Disabled bool
+	Class    string
+	Attrs    templ.Attributes
+}
+
+// TabsPanelProps configures a single tab panel.
+type TabsPanelProps struct {
+	ID    string
+	Value string
+	// LabelledBy links this panel to its trigger via aria-labelledby.
+	LabelledBy string
+	Active     bool
+	Class      string
+	Attrs      templ.Attributes
+}
+
+func TabsClasses(p TabsProps) string {
+	return uiutils.Compose(TabsVariants, map[string]string{
+		"variant": strings.TrimSpace(p.Variant),
+	}, strings.TrimSpace(p.Class))
+}
+
+func tabsBehavior(value string) string {
+	switch strings.TrimSpace(value) {
+	case "ui8kit":
+		return "ui8kit"
+	default:
+		return ""
+	}
+}
+
+func tabsRootAttrs(p TabsProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	if tabsBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "tabs"
+		if strings.TrimSpace(p.Value) != "" {
+			attrs["data-tabs-value"] = p.Value
+		}
+	}
+	return attrs
+}
+
+func tabsTriggerAttrs(p TabsTriggerProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "tab"
+	attrs["aria-selected"] = strconv.FormatBool(p.Active)
+	if p.Disabled {
+		attrs["aria-disabled"] = "true"
+		attrs["tabindex"] = "-1"
+	} else if p.Active {
+		attrs["tabindex"] = "0"
+	} else {
+		attrs["tabindex"] = "-1"
+	}
+	if strings.TrimSpace(p.PanelID) != "" {
+		attrs["aria-controls"] = p.PanelID
+	}
+	if strings.TrimSpace(p.Value) != "" {
+		attrs["data-tabs-trigger"] = true
+		attrs["data-tabs-value"] = p.Value
+	}
+	return attrs
+}
+
+func tabsPanelAttrs(p TabsPanelProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "tabpanel"
+	if strings.TrimSpace(p.LabelledBy) != "" {
+		attrs["aria-labelledby"] = p.LabelledBy
+	}
+	if strings.TrimSpace(p.Value) != "" {
+		attrs["data-tabs-panel"] = true
+		attrs["data-tabs-value"] = p.Value
+	}
+	return attrs
+}
+
+// Tabs renders the composite root.
+templ Tabs(p TabsProps) {
+	<div class={ TabsClasses(p) } { tabsRootAttrs(p)... }>
+		{ children... }
+	</div>
+}
+
+// TabsList renders the tablist row.
+templ TabsList(p TabsListProps) {
+	<div
+		role="tablist"
+		class={ uiutils.Cn("inline-flex items-center gap-1 rounded-md bg-muted p-1", p.Class) }
+		{ uiutils.MergeAttrs(uiutils.AriaLabel(p.AriaLabel), p.Attrs)... }
+	>
+		{ children... }
+	</div>
+}
+
+// TabsTrigger renders a single tab button.
+templ TabsTrigger(p TabsTriggerProps) {
+	<button
+		type="button"
+		disabled?={ p.Disabled }
+		class={ uiutils.Cn("inline-flex items-center rounded-sm px-3 py-1.5 text-sm font-medium transition-colors aria-selected:bg-background aria-selected:shadow-sm disabled:pointer-events-none disabled:opacity-50", p.Class) }
+		{ tabsTriggerAttrs(p)... }
+	>
+		{ children... }
+	</button>
+}
+
+// TabsPanel renders a single tab panel; hidden when not active.
+templ TabsPanel(p TabsPanelProps) {
+	<div
+		hidden?={ !p.Active }
+		class={ uiutils.Cn("mt-2", p.Class) }
+		{ tabsPanelAttrs(p)... }
+	>
+		{ children... }
+	</div>
+}

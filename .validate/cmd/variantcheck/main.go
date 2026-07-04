@@ -177,7 +177,7 @@ func idPathMismatch(rel, id string) string {
 		return ""
 	}
 	// ui/button/button.variants.json -> ui.button
-	// components/alert/alert.variants.json -> components.alert
+	// ui/alert/alert.variants.json -> ui.alert
 	// ui/form/legend.variants.json -> ui.form.legend (multi-recipe folder)
 	dir := parts[len(parts)-2]
 	expected := strings.Join(parts[:len(parts)-1], ".")

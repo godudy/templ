@@ -39,9 +39,9 @@
             "Tone": "default"
           },
           {
-            "Value": "6",
+            "Value": "2",
             "Title": "Composites",
-            "Description": "Card, nav, sheet, alert — composed from primitives.",
+            "Description": "Nav, sheet — behavior-driven, composed from primitives.",
             "Meta": "components",
             "Icon": "CP",
             "Tone": "default"
@@ -70,9 +70,9 @@
             "Status": "primitive"
           },
           {
-            "Name": "components.card",
-            "Description": "Surface recipe from components/card/card.variants.json.",
-            "Status": "composite"
+            "Name": "ui.card",
+            "Description": "Surface recipe from ui/card/card.variants.json.",
+            "Status": "primitive"
           },
           {
             "Name": "components.sheet",

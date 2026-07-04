@@ -2,15 +2,17 @@ import {
   Badge,
   Box,
   Button,
+  Card,
+  CardContent,
   Grid,
   GridCol,
   Group,
   H2,
   H3,
+  IconBadge,
   Stack,
   Text,
 } from "@registry/ui";
-import { Card, CardContent, IconBadge } from "@registry/components";
 import { showcaseIconLetter } from "../../lib/helpers";
 import type { ShowcaseItem, ShowcaseProps } from "../../types/home";
 

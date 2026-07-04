@@ -5,7 +5,7 @@
 // When you edit one, update every twin and the associated *_test.tsx/*_test.go
 // if present.
 
-import type { IconBadgeVariant } from "../../../../components/iconbadge/iconbadge";
+import type { IconBadgeVariant } from "../../../../ui/iconbadge/iconbadge";
 
 export function navIconLetter(icon?: string): string {
   const trimmed = (icon ?? "").trim();

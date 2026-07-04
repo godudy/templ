@@ -11,7 +11,7 @@ a real scaffold.
 ## What you'll learn
 
 - `ShowcaseGrid` vs `ShowcaseCardView` — section header vs repeated card item.
-- React `Card asChild` + `<article>` vs Go `<article class={ cmp.CardClasses(...) }>`.
+- React `Card asChild` + `<article>` vs Go `<article class={ ui.CardClasses(...) }>`.
 - React `Button asChild` + `<a>` vs Go `<a class={ ui.ButtonClasses(...) }>`.
 - `Grid` / `GridCol` for a responsive card grid.
 - Twin helper `showcaseIconLetter` in `helpers.ts` / `helpers.go`.
@@ -33,7 +33,7 @@ Open both files in a split editor before reading the table below.
 | 2 | `<H2>…</H2>` | `@ui.Title(ui.TitleProps{As: 2, …})` | Heading level 2. |
 | 3 | `<Button asChild><a href="#templates">…</a></Button>` | `<a href="#templates" class={ ui.ButtonClasses(...) }>…</a>` | [Escape hatch](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes) for link-as-button. |
 | 4 | `<Grid className="gap-4 md:grid-cols-2 xl:grid-cols-3">` | `@ui.Grid(ui.GridProps{Class: "gap-4 md:grid-cols-2 xl:grid-cols-3"})` | Responsive grid; prefer `Class` over legacy grid maps. |
-| 5 | `<Card asChild variant="raised"><article>…</article></Card>` | `<article class={ cmp.CardClasses(cmp.CardProps{Variant: "raised", …}) }>` | Semantic card root via `CardClasses`. |
+| 5 | `<Card asChild variant="raised"><article>…</article></Card>` | `<article class={ ui.CardClasses(ui.CardProps{Variant: "raised", …}) }>` | Semantic card root via `CardClasses`. |
 | 6 | `showcaseIconLetter(item.Name)` | `showcaseIconLetter(item.Name)` | Twin helper — edit both `helpers.ts` and `helpers.go`. |
 | 7 | `{item.Capabilities.map(...)}` | `for _, capability := range item.Capabilities { … }` | List rendering. |
 

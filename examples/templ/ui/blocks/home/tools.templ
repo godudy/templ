@@ -1,7 +1,6 @@
 package home
 
 import (
-	cmp "github.com/fastygo/templ/components"
 	"github.com/fastygo/templ/ui"
 )
 
@@ -9,10 +8,10 @@ templ ToolCards(items []ToolCard) {
 	@ui.Grid(ui.GridProps{Class: "gap-4 md:grid-cols-2 xl:grid-cols-3"}) {
 		for _, item := range items {
 			@ui.GridCol(ui.GridColProps{}) {
-				<article class={ cmp.CardClasses(cmp.CardProps{Variant: "default", Class: "h-full hover:bg-muted/20"}) }>
-					@cmp.CardContent(cmp.CardContentProps{Class: "p-6"}) {
+				<article class={ ui.CardClasses(ui.CardProps{Variant: "default", Class: "h-full hover:bg-muted/20"}) }>
+					@ui.CardContent(ui.CardContentProps{Class: "p-6"}) {
 						@ui.Group(ui.GroupProps{Class: "items-start gap-4"}) {
-							@cmp.IconBadge(cmp.IconBadgeProps{Size: "default", Variant: BlockVariant("toolTone", item.Tone)}) { toolIconLetter(item.Icon) }
+							@ui.IconBadge(ui.IconBadgeProps{Size: "default", Variant: BlockVariant("toolTone", item.Tone)}) { toolIconLetter(item.Icon) }
 							@ui.Stack(ui.StackProps{Class: "gap-2"}) {
 								@ui.Text(ui.TextProps{Class: "text-sm font-semibold"}) { { item.Title } }
 								@ui.Text(ui.TextProps{Class: "text-xs leading-relaxed text-muted-foreground"}) { { item.Description } }

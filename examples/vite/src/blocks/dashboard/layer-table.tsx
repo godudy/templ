@@ -1,5 +1,14 @@
-import { Badge, Group, Stack, Text } from "@registry/ui";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@registry/components";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Group,
+  Stack,
+  Text,
+} from "@registry/ui";
 import type { LayerItem } from "../../types/dashboard";
 
 function LayerStatusBadge({ status }: { status: string }) {

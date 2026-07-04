@@ -1,5 +1,4 @@
-import { Stack, Text } from "@registry/ui";
-import { Alert } from "@registry/components";
+import { Alert, Stack, Text } from "@registry/ui";
 import type { NoticeProps } from "../../types/dashboard";
 
 export function DashboardNotice({ notice }: { notice: NoticeProps }) {

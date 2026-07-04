@@ -7,7 +7,13 @@
   "patterns": [
     "alert",
     "dialog",
-    "sheet"
+    "sheet",
+    "tabs",
+    "combobox",
+    "menu",
+    "menubutton",
+    "popover",
+    "toast"
   ],
   "hooks": {
     "dialog": [
@@ -22,6 +28,36 @@
       "data-ui8kit-dialog-open",
       "data-ui8kit-dialog-close",
       "data-ui8kit-dialog-target"
+    ],
+    "tabs": [
+      "data-ui8kit",
+      "data-tabs-trigger",
+      "data-tabs-panel",
+      "data-tabs-value"
+    ],
+    "combobox": [
+      "data-ui8kit",
+      "data-combobox-toggle",
+      "data-combobox-option",
+      "data-combobox-value"
+    ],
+    "menu": [
+      "data-ui8kit",
+      "data-menu-item"
+    ],
+    "menubutton": [
+      "data-ui8kit",
+      "data-menubutton-target"
+    ],
+    "popover": [
+      "data-ui8kit",
+      "data-ui8kit-dialog",
+      "data-ui8kit-dialog-open",
+      "data-ui8kit-dialog-close",
+      "data-ui8kit-dialog-target"
+    ],
+    "toast": [
+      "data-ui8kit"
     ]
   }
 }

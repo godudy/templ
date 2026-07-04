@@ -1,19 +1,19 @@
 ---
-id: components.card
+id: ui.card
 layer: composite
 kind: surface
-package: github.com/fastygo/templ/components/card
-facade: github.com/fastygo/templ/components
+package: github.com/fastygo/templ/ui/card
+facade: github.com/fastygo/templ/ui
 targets:
   templ:
-    package: github.com/fastygo/templ/components/card
-    facade: github.com/fastygo/templ/components
+    package: github.com/fastygo/templ/ui/card
+    facade: github.com/fastygo/templ/ui
     component: Card
   react:
-    package: '@fastygo/templ-react/components/card'
+    package: '@fastygo/templ-react/ui/card'
     facade: '@fastygo/templ-react'
     component: Card
-    test: ../../examples/vite/tests/components.smoke.test.tsx
+    test: ../../examples/vite/tests/ui/card.smoke.test.tsx
 parts:
   - templ: Card
     props: [Class, Variant, Attrs]
@@ -116,18 +116,17 @@ For semantic root elements (section, article), use `asChild` (React) or `CardCla
 
 ```templ
 import "github.com/fastygo/templ/ui"
-import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "default"}) {
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 2}) { { "Card title" } }
-			@cmp.CardDescription(cmp.CardDescriptionProps{}) { { "Short supporting text." } }
+	@ui.Card(ui.CardProps{Variant: "default"}) {
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 2}) { { "Card title" } }
+			@ui.CardDescription(ui.CardDescriptionProps{}) { { "Short supporting text." } }
 		}
-		@cmp.CardContent(cmp.CardContentProps{}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			@ui.Text(ui.TextProps{}) { { "Main card body." } }
 		}
-		@cmp.CardFooter(cmp.CardFooterProps{}) {
+		@ui.CardFooter(ui.CardFooterProps{}) {
 			@ui.Button(ui.ButtonProps{Variant: "outline", Size: "sm"}) {
 				Action
 			}
@@ -139,11 +138,11 @@ templ Example() {
 ## Example variant.raised
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "raised"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "raised"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Raised surface
 		}
 	}
@@ -153,14 +152,14 @@ templ Example() {
 ## Example variant.kpi
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "kpi"}) {
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 2}) { { "Revenue" } }
+	@ui.Card(ui.CardProps{Variant: "kpi"}) {
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 2}) { { "Revenue" } }
 		}
-		@cmp.CardContent(cmp.CardContentProps{}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			$12,450
 		}
 	}
@@ -170,11 +169,11 @@ templ Example() {
 ## Example variant.muted
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "muted"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "muted"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Muted surface
 		}
 	}
@@ -184,11 +183,11 @@ templ Example() {
 ## Example variant.ghost
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "ghost"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "ghost"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Ghost dashed border
 		}
 	}
@@ -198,11 +197,11 @@ templ Example() {
 ## Example variant.compact
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "compact"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "compact"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Compact padding
 		}
 	}
@@ -212,11 +211,11 @@ templ Example() {
 ## Example variant.flat
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "flat"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "flat"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Flat no shadow
 		}
 	}
@@ -226,11 +225,11 @@ templ Example() {
 ## Example variant.accent
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{Variant: "accent"}) {
-		@cmp.CardContent(cmp.CardContentProps{}) {
+	@ui.Card(ui.CardProps{Variant: "accent"}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Accent highlight
 		}
 	}
@@ -240,12 +239,12 @@ templ Example() {
 ## Example layout.header-only
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{}) {
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 2}) { { "Title only" } }
+	@ui.Card(ui.CardProps{}) {
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 2}) { { "Title only" } }
 		}
 	}
 }
@@ -254,12 +253,12 @@ templ Example() {
 ## Example title.as-h3
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Card(cmp.CardProps{}) {
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 3}) { { "Nested section title" } }
+	@ui.Card(ui.CardProps{}) {
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 3}) { { "Nested section title" } }
 		}
 	}
 }
@@ -270,7 +269,7 @@ templ Example() {
 React only — `asChild` merges Card classes onto the child section:
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@registry/components";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@registry/ui";
 
 export function Example() {
   return (
@@ -290,14 +289,14 @@ export function Example() {
 Go equivalent — use `CardClasses` on a manual wrapper:
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	<section class={ cmp.CardClasses(cmp.CardProps{Variant: "default"}) }>
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 2}) { { "Section card" } }
+	<section class={ ui.CardClasses(ui.CardProps{Variant: "default"}) }>
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 2}) { { "Section card" } }
 		}
-		@cmp.CardContent(cmp.CardContentProps{}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			Body
 		}
 	</section>

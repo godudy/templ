@@ -1,7 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import alertRecipeJson from "./alert.variants.json";
 import { composeRecipe, defineRecipe } from "../../utils";
-import { Slot } from "../../ui/slot/slot";
+import { Slot } from "../slot/slot";
 
 const { recipe: alertRecipe, keys: alertKeys } = defineRecipe(alertRecipeJson);
 

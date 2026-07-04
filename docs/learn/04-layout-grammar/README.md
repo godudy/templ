@@ -93,7 +93,7 @@ via `Stack`, horizontal row via `Group`:
 ```templ
 @ui.Block(ui.BlockProps{Tag: "aside", Class: "hidden w-64 md:flex md:flex-col"}) {
   @ui.Box(ui.BoxProps{Class: "flex h-16 items-center gap-4 border-b"}) {
-    @cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: "accent"}) { BY }
+    @ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: "accent"}) { BY }
     @ui.Stack(ui.StackProps{Class: "gap-0"}) {
       @ui.Text(ui.TextProps{Class: "text-sm font-semibold"}) { Brand }
       @ui.Text(ui.TextProps{Class: "text-xs text-muted-foreground"}) { Subtitle }

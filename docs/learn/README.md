@@ -16,7 +16,7 @@ All ten lessons below are written and ready (✓). None are placeholders.
 | [04](04-layout-grammar/) | Layout grammar | `Block`, `Box`, `Stack`, `Group` | `Block`, `Box`, `Stack`, `Group` | Concept | ✓ done |
 | [05](05-button/) | Button brick | [`ui/button/button.tsx`](../../ui/button/button.tsx) | [`ui/button/button.templ`](../../ui/button/button.templ) | Primitive | ✓ done |
 | [06](06-badge/) | Badge brick | [`ui/badge/badge.tsx`](../../ui/badge/badge.tsx) | [`ui/badge/badge.templ`](../../ui/badge/badge.templ) | Primitive | ✓ done |
-| [07](07-card/) | Card composite | [`components/card/card.tsx`](../../components/card/card.tsx) | [`components/card/card.templ`](../../components/card/card.templ) | Composite | ✓ done |
+| [07](07-card/) | Card primitive | [`ui/card/card.tsx`](../../ui/card/card.tsx) | [`ui/card/card.templ`](../../ui/card/card.templ) | Primitive | ✓ done |
 | [08](08-showcase/) | Showcase grid | [`examples/vite/src/blocks/home/showcase.tsx`](../../examples/vite/src/blocks/home/showcase.tsx) | [`examples/templ/ui/blocks/home/showcase.templ`](../../examples/templ/ui/blocks/home/showcase.templ) | Block | ✓ done |
 | [09](09-tools/) | Tool cards | [`examples/vite/src/blocks/home/tools.tsx`](../../examples/vite/src/blocks/home/tools.tsx) | [`examples/templ/ui/blocks/home/tools.templ`](../../examples/templ/ui/blocks/home/tools.templ) | Block | ✓ done |
 | [10](10-notice/) | Prototype notice | [`examples/vite/src/blocks/home/notice.tsx`](../../examples/vite/src/blocks/home/notice.tsx) | [`examples/templ/ui/blocks/home/notice.templ`](../../examples/templ/ui/blocks/home/notice.templ) | Block | ✓ done |
@@ -32,7 +32,7 @@ real scaffolds:
 4. ✓ [`01-hero`](01-hero/) — first real home scaffold.
 5. ✓ [`02-sidebar`](02-sidebar/) — second real home scaffold, layout-grammar-heavy.
 6. ✓ [`03-sheet`](03-sheet/) — composite + `@ui8kit/aria` behavior hooks.
-7. ✓ [`07-card`](07-card/) — composite parts and the `CardClasses` escape hatch.
+7. ✓ [`07-card`](07-card/) — primitive parts and the `CardClasses` escape hatch.
 8. ✓ [`08-showcase`](08-showcase/) — home grid with `CardClasses` + action links.
 9. ✓ [`09-tools`](09-tools/) — tone-driven tool cards.
 10. ✓ [`10-notice`](10-notice/) — `Alert` banner with live-region semantics.

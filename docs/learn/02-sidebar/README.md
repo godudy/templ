@@ -29,7 +29,7 @@ Open both files in a split editor before reading the table below.
 |---|-------------|----------|------|
 | 1 | `<Block tag="aside" className="hidden w-64 ...">` | `@ui.Block(ui.BlockProps{Tag: "aside", Class: "hidden w-64 ..."})` | `Block` opens the file exactly once and carries the landmark tag. See [`04-layout-grammar`](../04-layout-grammar/). |
 | 2 | `<Box className="flex h-16 items-center gap-4 border-b ...">` | `@ui.Box(ui.BoxProps{Class: "flex h-16 items-center gap-4 border-b ..."})` | `Box` is the inner container for the brand header row — never a landmark tag. |
-| 3 | `<IconBadge size="sm" variant="accent">BY</IconBadge>` | `@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: "accent"}) { BY }` | Composite import from `@registry/components` / `cmp` facade, not a raw `<span>`. |
+| 3 | `<IconBadge size="sm" variant="accent">BY</IconBadge>` | `@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: "accent"}) { BY }` | Primitive import from `@registry/ui` / `ui` facade, not a raw `<span>`. |
 | 4 | `<Stack className="gap-0">` wraps brand + subtitle | `@ui.Stack(ui.StackProps{Class: "gap-0"})` wraps the same two lines | `Stack` for vertical rhythm — brand name over subtitle, no explicit direction needed. |
 | 5 | `<Inline className="text-sm font-semibold ...">{props.Brand}</Inline>` | `@ui.Inline(ui.InlineProps{Class: "text-sm font-semibold ..."}) { { props.Brand } }` | `Inline` renders a `<span>`; data comes from the shared fixture (`props.Brand` / `{props.Brand}`). |
 | 6 | `<Box className="flex-1 py-2">` wraps `<CatalogPrimaryNav items={props.Sidebar} />` | `@ui.Box(...)` wraps `@CatalogPrimaryNav(props.Sidebar, "")` | Second `Box` — a sibling section, not nested inside the first. Delegates to a sub-brick instead of inlining nav markup. |

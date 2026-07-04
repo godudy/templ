@@ -1,0 +1,138 @@
+/**
+ * Popover composes a non-modal floating panel with trigger and content parts.
+ * Behavior hooks are opt-in through Behavior so markup stays framework-neutral by default.
+ */
+
+// Copy: components/ui/popover/popover.templ
+
+package popover
+
+import (
+	"strconv"
+	"strings"
+
+	"github.com/fastygo/templ/ui"
+	"github.com/fastygo/templ/utils"
+)
+
+// PopoverProps configures the floating panel root.
+type PopoverProps struct {
+	ID             string
+	Variant        string
+	Class          string
+	Open           bool
+	AriaLabel      string
+	AriaLabelledBy string
+	Behavior       string
+	Attrs          templ.Attributes
+}
+
+// PopoverTriggerProps configures a button that opens a popover.
+type PopoverTriggerProps struct {
+	ID        string
+	PanelID   string
+	Class     string
+	Variant   string
+	Size      string
+	Open      bool
+	Behavior  string
+	AriaLabel string
+	Attrs     templ.Attributes
+}
+
+// PopoverContentProps configures the inner content wrapper.
+type PopoverContentProps struct {
+	ID    string
+	Class string
+	Attrs templ.Attributes
+}
+
+func PopoverClasses(p PopoverProps) string {
+	return uiutils.Compose(PopoverVariants, map[string]string{
+		"variant": strings.TrimSpace(p.Variant),
+	}, strings.TrimSpace(p.Class))
+}
+
+func popoverState(open bool) string {
+	if open {
+		return "open"
+	}
+	return "closed"
+}
+
+func popoverBehavior(value string) string {
+	switch strings.TrimSpace(value) {
+	case "ui8kit":
+		return "ui8kit"
+	default:
+		return ""
+	}
+}
+
+func popoverRootAttrs(p PopoverProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "dialog"
+	attrs["data-state"] = popoverState(p.Open)
+	if strings.TrimSpace(p.AriaLabel) != "" {
+		attrs["aria-label"] = p.AriaLabel
+	}
+	if strings.TrimSpace(p.AriaLabelledBy) != "" {
+		attrs["aria-labelledby"] = p.AriaLabelledBy
+	}
+	if popoverBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "popover"
+		attrs["data-ui8kit-dialog"] = true
+	}
+	return attrs
+}
+
+func popoverTriggerAttrs(p PopoverTriggerProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.PanelID) != "" {
+		attrs["aria-controls"] = p.PanelID
+	}
+	attrs["aria-haspopup"] = "dialog"
+	attrs["aria-expanded"] = strconv.FormatBool(p.Open)
+	if popoverBehavior(p.Behavior) == "ui8kit" && strings.TrimSpace(p.PanelID) != "" {
+		attrs["data-ui8kit-dialog-open"] = true
+		attrs["data-ui8kit-dialog-target"] = p.PanelID
+	}
+	return attrs
+}
+
+// Popover renders the floating panel root.
+templ Popover(p PopoverProps) {
+	<div class={ PopoverClasses(p) } hidden?={ !p.Open } { popoverRootAttrs(p)... }>
+		{ children... }
+	</div>
+}
+
+// PopoverTrigger renders a button wired to a popover.
+templ PopoverTrigger(p PopoverTriggerProps) {
+	@ui.Button(ui.ButtonProps{
+		ID:        p.ID,
+		Variant:   p.Variant,
+		Size:      p.Size,
+		Class:     p.Class,
+		AriaLabel: p.AriaLabel,
+		Attrs:     popoverTriggerAttrs(p),
+	}) {
+		{ children... }
+	}
+}
+
+// PopoverContent renders the content wrapper.
+templ PopoverContent(p PopoverContentProps) {
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ uiutils.Cn("flex flex-col gap-1 p-4", p.Class) }
+		{ p.Attrs... }
+	>
+		{ children... }
+	</div>
+}

@@ -1,9 +1,9 @@
 ---
-id: components.alert
+id: ui.alert
 layer: composite
 kind: feedback
-package: github.com/fastygo/templ/components/alert
-facade: github.com/fastygo/templ/components
+package: github.com/fastygo/templ/ui/alert
+facade: github.com/fastygo/templ/ui
 templ: Alert
 api:
   Variant:
@@ -53,14 +53,14 @@ semantics:
   behavior: static
 targets:
   templ:
-    package: github.com/fastygo/templ/components/alert
-    facade: github.com/fastygo/templ/components
+    package: github.com/fastygo/templ/ui/alert
+    facade: github.com/fastygo/templ/ui
     component: Alert
   react:
-    package: '@fastygo/templ-react/components/alert'
+    package: '@fastygo/templ-react/ui/alert'
     facade: '@fastygo/templ-react'
     component: Alert
-    test: ../../examples/vite/tests/components.smoke.test.tsx
+    test: ../../examples/vite/tests/ui/alert.smoke.test.tsx
 ---
 
 ## Summary
@@ -85,10 +85,9 @@ Alert uses role status and aria-live polite.
 
 ```templ
 import "github.com/fastygo/templ/ui"
-import cmp "github.com/fastygo/templ/components"
 
 templ Example() {
-	@cmp.Alert(cmp.AlertProps{Variant: "default"}) {
+	@ui.Alert(ui.AlertProps{Variant: "default"}) {
 		@ui.Text(ui.TextProps{Class: "text-sm"}) { { "Static alert with role status." } }
 	}
 }
@@ -97,10 +96,10 @@ templ Example() {
 ## Example variant.destructive
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Alert(cmp.AlertProps{Variant: "destructive"}) {
+	@ui.Alert(ui.AlertProps{Variant: "destructive"}) {
 		Something went wrong.
 	}
 }
@@ -109,10 +108,10 @@ templ Example() {
 ## Example variant.success
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Alert(cmp.AlertProps{Variant: "success"}) {
+	@ui.Alert(ui.AlertProps{Variant: "success"}) {
 		Changes saved.
 	}
 }
@@ -121,10 +120,10 @@ templ Example() {
 ## Example variant.warning
 
 ```templ
-import cmp "github.com/fastygo/templ/components"
+import "github.com/fastygo/templ/ui"
 
 templ Example() {
-	@cmp.Alert(cmp.AlertProps{Variant: "warning"}) {
+	@ui.Alert(ui.AlertProps{Variant: "warning"}) {
 		Review settings before you continue.
 	}
 }

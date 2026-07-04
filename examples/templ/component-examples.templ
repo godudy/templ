@@ -61,13 +61,13 @@ templ ComponentExamples() {
 			@ui.GridCol(ui.GridColProps{}) {
 				@GalleryPanel("Feedback", "Alerts and progress") {
 					@ui.Stack(ui.StackProps{Class: "gap-2"}) {
-						@cmp.Alert(cmp.AlertProps{Variant: "success", Role: "status", AriaLive: "polite"}) {
+						@ui.Alert(ui.AlertProps{Variant: "success", Role: "status", AriaLive: "polite"}) {
 							@ui.Text(ui.TextProps{Class: "text-sm"}) { { "Success — deployment ready." } }
 						}
-						@cmp.Alert(cmp.AlertProps{Variant: "warning", Role: "status", AriaLive: "polite"}) {
+						@ui.Alert(ui.AlertProps{Variant: "warning", Role: "status", AriaLive: "polite"}) {
 							@ui.Text(ui.TextProps{Class: "text-sm"}) { { "Warning — review token mapping." } }
 						}
-						@cmp.Alert(cmp.AlertProps{Variant: "destructive", Role: "alert", AriaLive: "assertive"}) {
+						@ui.Alert(ui.AlertProps{Variant: "destructive", Role: "alert", AriaLive: "assertive"}) {
 							@ui.Text(ui.TextProps{Class: "text-sm"}) { { "Error — validation failed." } }
 						}
 						@ui.Progress(ui.ProgressProps{Value: "68", Max: "100", Variant: "default"})
@@ -81,21 +81,21 @@ templ ComponentExamples() {
 							@cmp.NavList(cmp.NavListProps{Orientation: "horizontal"}) {
 								@cmp.NavItem(cmp.NavItemProps{}) {
 									@cmp.NavLink(cmp.NavLinkProps{Href: "/", Active: true}) {
-										@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: "accent"}) { H }
+										@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: "accent"}) { H }
 										Home
 									}
 								}
 								@cmp.NavItem(cmp.NavItemProps{}) {
 									@cmp.NavLink(cmp.NavLinkProps{Href: "/docs"}) {
-										@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: "secondary"}) { D }
+										@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: "secondary"}) { D }
 										Docs
 									}
 								}
 							}
 						}
 						@ui.Group(ui.GroupProps{Class: "flex flex-wrap gap-2"}) {
-							@cmp.IconBadge(cmp.IconBadgeProps{Size: "default", Variant: "accent"}) { ★ }
-							@cmp.IconBadge(cmp.IconBadgeProps{Size: "default", Variant: "destructive"}) { ! }
+							@ui.IconBadge(ui.IconBadgeProps{Size: "default", Variant: "accent"}) { ★ }
+							@ui.IconBadge(ui.IconBadgeProps{Size: "default", Variant: "destructive"}) { ! }
 							@cmp.SheetTrigger(cmp.SheetTriggerProps{
 								ID:        demoSheetTriggerID,
 								PanelID:   demoSheetID,
@@ -125,9 +125,9 @@ templ ComponentExamples() {
 								@cmp.SheetDescription(cmp.SheetDescriptionProps{}) { { "Sheet with ui8kit open/close hooks." } }
 							}
 						}
-						@cmp.Breadcrumb(cmp.BreadcrumbProps{
+						@ui.Breadcrumb(ui.BreadcrumbProps{
 							AriaLabel: "Breadcrumb",
-							Items: []cmp.BreadcrumbItem{
+							Items: []ui.BreadcrumbItem{
 								{Label: "Registry", Href: "/"},
 								{Label: "Gallery", Current: true},
 							},

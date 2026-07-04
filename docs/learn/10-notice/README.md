@@ -4,12 +4,12 @@ Compare the home-page prototype-mode notice banner on React and Go Templ. Both
 files render an `Alert` with status copy and a single outline action link from
 the same `home.data.json` fixture.
 
-**Level: Block.** Shortest home-block lesson — one composite (`Alert`), one
+**Level: Block.** Shortest home-block lesson — one primitive (`Alert`), one
 escape-hatch link, and live-region semantics.
 
 ## What you'll learn
 
-- `Alert` as a composite wrapper (not a layout primitive).
+- `Alert` as a static surface primitive (not a layout primitive).
 - `role="status"` + `aria-live="polite"` for non-blocking announcements.
 - React `Button asChild` vs Go `ButtonClasses` on the action link.
 - `Group` + `flex-wrap` for a responsive title/action row.
@@ -28,7 +28,7 @@ Open both files in a split editor before reading the table below.
 | # | React (TSX) | Go Templ | Rule |
 |---|-------------|----------|------|
 | 1 | `PrototypeNotice({ notice })` | `templ PrototypeNotice(props NoticeProps)` | Single-purpose banner block. |
-| 2 | `<Alert variant="default" role="status" aria-live="polite">` | `@cmp.Alert(cmp.AlertProps{Variant: "default", Role: "status", AriaLive: "polite"})` | Live region on the alert root. |
+| 2 | `<Alert variant="default" role="status" aria-live="polite">` | `@ui.Alert(ui.AlertProps{Variant: "default", Role: "status", AriaLive: "polite"})` | Live region on the alert root. |
 | 3 | `<Group className="items-center justify-between gap-4 flex-wrap">` | `@ui.Group(ui.GroupProps{Class: "items-center justify-between gap-4 flex-wrap"})` | Horizontal row that wraps on narrow viewports. |
 | 4 | `<Button asChild variant="outline" size="sm"><a href="#prototype-mode">…</a></Button>` | `<a href="#prototype-mode" class={ ui.ButtonClasses(ui.ButtonProps{Variant: "outline", Size: "sm"}) }>…</a>` | Same [escape hatch](../../coming-from-shadcn.md#escape-hatch-aschild-vs-classes) as sidebar and showcase. |
 

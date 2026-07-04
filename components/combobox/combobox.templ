@@ -1,0 +1,218 @@
+/**
+ * Combobox composes an editable text input with a toggle and a listbox of options.
+ * Behavior hooks are opt-in through Behavior so markup stays framework-neutral by default.
+ */
+
+// Copy: components/ui/combobox/combobox.templ
+
+package combobox
+
+import (
+	"strconv"
+	"strings"
+
+	"github.com/fastygo/templ/utils"
+)
+
+// ComboboxProps configures the combobox root wrapper.
+type ComboboxProps struct {
+	ID       string
+	Variant  string
+	Class    string
+	Open     bool
+	Behavior string
+	Attrs    templ.Attributes
+}
+
+// ComboboxInputProps configures the editable text field.
+type ComboboxInputProps struct {
+	ID          string
+	ListID      string
+	Class       string
+	Value       string
+	Placeholder string
+	Disabled    bool
+	Open        bool
+	AriaLabel   string
+	Attrs       templ.Attributes
+}
+
+// ComboboxToggleProps configures the dropdown toggle button.
+type ComboboxToggleProps struct {
+	ID        string
+	InputID   string
+	ListID    string
+	Class     string
+	Open      bool
+	Behavior  string
+	AriaLabel string
+	Attrs     templ.Attributes
+}
+
+// ComboboxListProps configures the options listbox.
+type ComboboxListProps struct {
+	ID    string
+	Class string
+	Open  bool
+	Attrs templ.Attributes
+}
+
+// ComboboxOptionProps configures a single option.
+type ComboboxOptionProps struct {
+	ID       string
+	Value    string
+	Selected bool
+	Disabled bool
+	Class    string
+	Attrs    templ.Attributes
+}
+
+func ComboboxClasses(p ComboboxProps) string {
+	return uiutils.Compose(ComboboxVariants, map[string]string{
+		"variant": strings.TrimSpace(p.Variant),
+	}, strings.TrimSpace(p.Class))
+}
+
+func comboboxState(open bool) string {
+	if open {
+		return "open"
+	}
+	return "closed"
+}
+
+func comboboxBehavior(value string) string {
+	switch strings.TrimSpace(value) {
+	case "ui8kit":
+		return "ui8kit"
+	default:
+		return ""
+	}
+}
+
+func comboboxRootAttrs(p ComboboxProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["data-state"] = comboboxState(p.Open)
+	if comboboxBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "combobox"
+	}
+	return attrs
+}
+
+func comboboxInputAttrs(p ComboboxInputProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "combobox"
+	attrs["aria-expanded"] = strconv.FormatBool(p.Open)
+	attrs["aria-autocomplete"] = "list"
+	if strings.TrimSpace(p.ListID) != "" {
+		attrs["aria-controls"] = p.ListID
+	}
+	if strings.TrimSpace(p.AriaLabel) != "" {
+		attrs["aria-label"] = p.AriaLabel
+	}
+	return attrs
+}
+
+func comboboxToggleAttrs(p ComboboxToggleProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["tabindex"] = "-1"
+	attrs["aria-expanded"] = strconv.FormatBool(p.Open)
+	if strings.TrimSpace(p.ListID) != "" {
+		attrs["aria-controls"] = p.ListID
+	}
+	if strings.TrimSpace(p.AriaLabel) != "" {
+		attrs["aria-label"] = p.AriaLabel
+	}
+	if comboboxBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-combobox-toggle"] = true
+		if strings.TrimSpace(p.InputID) != "" {
+			attrs["data-ui8kit-dialog-target"] = p.InputID
+		}
+	}
+	return attrs
+}
+
+func comboboxListAttrs(p ComboboxListProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "listbox"
+	return attrs
+}
+
+func comboboxOptionAttrs(p ComboboxOptionProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "option"
+	attrs["aria-selected"] = strconv.FormatBool(p.Selected)
+	if p.Disabled {
+		attrs["aria-disabled"] = "true"
+	}
+	attrs["data-combobox-option"] = true
+	if strings.TrimSpace(p.Value) != "" {
+		attrs["data-combobox-value"] = p.Value
+	}
+	return attrs
+}
+
+// Combobox renders the root wrapper.
+templ Combobox(p ComboboxProps) {
+	<div class={ ComboboxClasses(p) } { comboboxRootAttrs(p)... }>
+		{ children... }
+	</div>
+}
+
+// ComboboxInput renders the editable text field.
+templ ComboboxInput(p ComboboxInputProps) {
+	<input
+		type="text"
+		value={ p.Value }
+		placeholder={ p.Placeholder }
+		disabled?={ p.Disabled }
+		class={ uiutils.Cn("w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring", p.Class) }
+		{ comboboxInputAttrs(p)... }
+	/>
+}
+
+// ComboboxToggle renders the dropdown toggle button.
+templ ComboboxToggle(p ComboboxToggleProps) {
+	<button
+		type="button"
+		class={ uiutils.Cn("inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground", p.Class) }
+		{ comboboxToggleAttrs(p)... }
+	>
+		{ children... }
+	</button>
+}
+
+// ComboboxList renders the options listbox.
+templ ComboboxList(p ComboboxListProps) {
+	<ul
+		hidden?={ !p.Open }
+		class={ uiutils.Cn("absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-border bg-popover p-1 shadow-md", p.Class) }
+		{ comboboxListAttrs(p)... }
+	>
+		{ children... }
+	</ul>
+}
+
+// ComboboxOption renders a single selectable option.
+templ ComboboxOption(p ComboboxOptionProps) {
+	<li
+		class={ uiutils.Cn("cursor-pointer rounded-sm px-2 py-1.5 text-sm aria-selected:bg-accent aria-selected:text-accent-foreground", p.Class) }
+		{ comboboxOptionAttrs(p)... }
+	>
+		{ children... }
+	</li>
+}

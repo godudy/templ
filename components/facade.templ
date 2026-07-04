@@ -1,64 +1,19 @@
 /**
  * Package components re-exports composite registry bricks.
- * Import cmp "github.com/fastygo/templ/components" and use @cmp.Card, @cmp.Alert.
+ * Import cmp "github.com/fastygo/templ/components" and use @cmp.Sheet, @cmp.Nav.
  */
 
 package components
 
 import (
-	"github.com/fastygo/templ/components/alert"
-	"github.com/fastygo/templ/components/breadcrumb"
-	"github.com/fastygo/templ/components/card"
-	"github.com/fastygo/templ/components/iconbadge"
+	"github.com/fastygo/templ/components/combobox"
+	"github.com/fastygo/templ/components/menu"
 	"github.com/fastygo/templ/components/nav"
+	"github.com/fastygo/templ/components/popover"
 	"github.com/fastygo/templ/components/sheet"
+	"github.com/fastygo/templ/components/tabs"
+	"github.com/fastygo/templ/components/toast"
 )
-
-templ Card(p CardProps) {
-	@card.Card(p) {
-		{ children... }
-	}
-}
-
-templ CardHeader(p CardHeaderProps) {
-	@card.CardHeader(p) {
-		{ children... }
-	}
-}
-
-templ CardTitle(p CardTitleProps) {
-	@card.CardTitle(p) {
-		{ children... }
-	}
-}
-
-templ CardDescription(p CardDescriptionProps) {
-	@card.CardDescription(p) {
-		{ children... }
-	}
-}
-
-templ CardContent(p CardContentProps) {
-	@card.CardContent(p) {
-		{ children... }
-	}
-}
-
-templ CardFooter(p CardFooterProps) {
-	@card.CardFooter(p) {
-		{ children... }
-	}
-}
-
-templ Alert(p AlertProps) {
-	@alert.Alert(p) {
-		{ children... }
-	}
-}
-
-templ Breadcrumb(p BreadcrumbProps) {
-	@breadcrumb.Breadcrumb(p)
-}
 
 templ Sheet(p SheetProps) {
 	@sheet.Sheet(p) {
@@ -130,6 +85,114 @@ templ NavLink(p NavLinkProps) {
 	}
 }
 
-templ IconBadge(p IconBadgeProps) {
-	@iconbadge.IconBadge(p)
+templ Tabs(p TabsProps) {
+	@tabs.Tabs(p) {
+		{ children... }
+	}
+}
+
+templ TabsList(p TabsListProps) {
+	@tabs.TabsList(p) {
+		{ children... }
+	}
+}
+
+templ TabsTrigger(p TabsTriggerProps) {
+	@tabs.TabsTrigger(p) {
+		{ children... }
+	}
+}
+
+templ TabsPanel(p TabsPanelProps) {
+	@tabs.TabsPanel(p) {
+		{ children... }
+	}
+}
+
+templ Popover(p PopoverProps) {
+	@popover.Popover(p) {
+		{ children... }
+	}
+}
+
+templ PopoverTrigger(p PopoverTriggerProps) {
+	@popover.PopoverTrigger(p) {
+		{ children... }
+	}
+}
+
+templ PopoverContent(p PopoverContentProps) {
+	@popover.PopoverContent(p) {
+		{ children... }
+	}
+}
+
+templ Combobox(p ComboboxProps) {
+	@combobox.Combobox(p) {
+		{ children... }
+	}
+}
+
+templ ComboboxInput(p ComboboxInputProps) {
+	@combobox.ComboboxInput(p)
+}
+
+templ ComboboxToggle(p ComboboxToggleProps) {
+	@combobox.ComboboxToggle(p) {
+		{ children... }
+	}
+}
+
+templ ComboboxList(p ComboboxListProps) {
+	@combobox.ComboboxList(p) {
+		{ children... }
+	}
+}
+
+templ ComboboxOption(p ComboboxOptionProps) {
+	@combobox.ComboboxOption(p) {
+		{ children... }
+	}
+}
+
+templ MenuButton(p MenuButtonProps) {
+	@menu.MenuButton(p) {
+		{ children... }
+	}
+}
+
+templ Menu(p MenuProps) {
+	@menu.Menu(p) {
+		{ children... }
+	}
+}
+
+templ MenuItem(p MenuItemProps) {
+	@menu.MenuItem(p) {
+		{ children... }
+	}
+}
+
+templ Toast(p ToastProps) {
+	@toast.Toast(p) {
+		{ children... }
+	}
+}
+
+templ ToastTitle(p ToastTitleProps) {
+	@toast.ToastTitle(p) {
+		{ children... }
+	}
+}
+
+templ ToastDescription(p ToastDescriptionProps) {
+	@toast.ToastDescription(p) {
+		{ children... }
+	}
+}
+
+templ ToastClose(p ToastCloseProps) {
+	@toast.ToastClose(p) {
+		{ children... }
+	}
 }

@@ -89,5 +89,6 @@ Reference implementations:
 
 - `ui/button/button.spec.md`
 - `ui/block/block.spec.md`
-- `components/card/card.spec.md`
+- `ui/card/card.spec.md`
+- `components/sheet/sheet.spec.md`
 - `examples/templ/ui/blocks/home/home.spec.md`

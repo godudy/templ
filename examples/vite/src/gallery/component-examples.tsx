@@ -1,9 +1,5 @@
 import { type ReactNode } from "react";
-import { Block, Box, Group, Grid, GridCol, Stack, Text } from "@registry/ui";
 import {
-  Alert,
-  Breadcrumb,
-  IconBadge,
   Nav,
   NavItem,
   NavLink,
@@ -18,14 +14,23 @@ import {
   SheetTrigger,
 } from "@registry/components";
 import {
+  Alert,
   Badge,
+  Block,
+  Box,
+  Breadcrumb,
   Button,
   FormDescription,
   FormItem,
+  Grid,
+  GridCol,
+  Group,
+  IconBadge,
   Input,
   Label,
   Progress,
-  Text as UiText,
+  Stack,
+  Text,
 } from "@registry/ui";
 
 const demoSheetID = "demo-sheet-panel";
@@ -87,13 +92,13 @@ export function ComponentExamples() {
           <GalleryPanel title="Feedback" description="Alerts and progress">
             <Stack className="gap-2">
               <Alert variant="success" role="status" aria-live="polite">
-                <UiText className="text-sm">Success — deployment ready.</UiText>
+                <Text className="text-sm">Success — deployment ready.</Text>
               </Alert>
               <Alert variant="warning" role="status" aria-live="polite">
-                <UiText className="text-sm">Warning — review token mapping.</UiText>
+                <Text className="text-sm">Warning — review token mapping.</Text>
               </Alert>
               <Alert variant="destructive" role="alert" aria-live="assertive">
-                <UiText className="text-sm">Error — validation failed.</UiText>
+                <Text className="text-sm">Error — validation failed.</Text>
               </Alert>
               <Progress value="68" max="100" variant="default" />
             </Stack>

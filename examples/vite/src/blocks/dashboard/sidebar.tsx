@@ -1,5 +1,4 @@
-import { Block, Box, Button, Inline, Stack } from "@registry/ui";
-import { IconBadge } from "@registry/components";
+import { Block, Box, Button, IconBadge, Inline, Stack } from "@registry/ui";
 import type { DashboardPageProps } from "../../types/dashboard";
 import { DashboardPrimaryNav } from "./nav";
 

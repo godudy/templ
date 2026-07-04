@@ -38,7 +38,7 @@ bun run validate:aria
 | Prop | Scope | Effect |
 |------|-------|--------|
 | `DataUI8Kit` | primitives/composites with generic hooks | emits `data-ui8kit="..."` when non-empty |
-| `Behavior: "ui8kit"` | Sheet family | emits dialog/sheet open/close hooks |
+| `Behavior: "ui8kit"` | Sheet, Tabs, Popover, Combobox, Menu, Toast families | emits pattern-specific `data-ui8kit-*` hooks |
 
 Default values emit no behavior attributes unless a brick's spec explicitly
 documents otherwise.
@@ -103,6 +103,136 @@ framework hook wired directly to the `Open` prop, described as owning it
 across re-renders) and fails the build if found, unless the guidance is
 explicitly negative (e.g. "do not ..."). See
 [`.validate/cmd/validate-spec/sheet_contract_validate.go`](../.validate/cmd/validate-spec/sheet_contract_validate.go).
+
+## Tabs Contract
+
+`Tabs` follows the APG Tabs pattern directly — `@ui8kit/aria` owns tab
+activation, `hidden` toggling on panels, and arrow-key roving focus.
+
+Root and trigger/panel contract:
+
+```html
+<div id="demo-tabs" data-ui8kit="tabs" data-tabs-value="account">
+  <div role="tablist">
+    <button role="tab" data-tabs-trigger data-tabs-value="account" aria-selected="true" aria-controls="panel-account">
+      Account
+    </button>
+    <button role="tab" data-tabs-trigger data-tabs-value="billing" aria-selected="false" aria-controls="panel-billing">
+      Billing
+    </button>
+  </div>
+  <div id="panel-account" role="tabpanel" data-tabs-panel data-tabs-value="account">Account settings</div>
+  <div id="panel-billing" role="tabpanel" data-tabs-panel data-tabs-value="billing" hidden>Billing settings</div>
+</div>
+```
+
+When `behavior="ui8kit"` is active, `Value` is an initial SSR selection only;
+`@ui8kit/aria` owns activation, `aria-selected`, `tabindex`, and panel
+`hidden` state after mount.
+
+## Popover Contract
+
+APG has no dedicated "popover" pattern. `Popover` reuses the `dialog`
+non-modal contract (same hook set as Sheet, minus `aria-modal` and focus
+trapping) with a `data-ui8kit="popover"` marker.
+
+Root contract:
+
+```html
+<div
+  id="panel-id"
+  role="dialog"
+  data-ui8kit="popover"
+  data-ui8kit-dialog="true"
+  data-state="closed"
+  hidden
+>
+  ...
+</div>
+```
+
+Trigger contract:
+
+```html
+<button
+  data-ui8kit-dialog-open="true"
+  data-ui8kit-dialog-target="panel-id"
+  aria-controls="panel-id"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+>
+  Open
+</button>
+```
+
+## Combobox Contract
+
+`Combobox` follows the APG Combobox pattern — `@ui8kit/aria` owns filtering,
+open/close, and arrow-key option navigation.
+
+```html
+<div id="demo-combobox" data-ui8kit="combobox" data-state="closed">
+  <input
+    id="demo-combobox-input"
+    role="combobox"
+    aria-expanded="false"
+    aria-autocomplete="list"
+    aria-controls="demo-combobox-list"
+  />
+  <button data-combobox-toggle data-ui8kit-dialog-target="demo-combobox-input" aria-controls="demo-combobox-list">
+    ▾
+  </button>
+  <ul id="demo-combobox-list" role="listbox" hidden>
+    <li role="option" data-combobox-option data-combobox-value="apple" aria-selected="true">Apple</li>
+    <li role="option" data-combobox-option data-combobox-value="banana" aria-selected="false">Banana</li>
+  </ul>
+</div>
+```
+
+When `behavior="ui8kit"` is active, `Open` is an initial SSR state only;
+`@ui8kit/aria` owns list visibility, filtering, and selection.
+
+## Menu Contract
+
+`Menu` combines the APG Menu Button (trigger) and Menu (list) patterns.
+`@ui8kit/aria` owns open/close and roving-tabindex arrow-key navigation.
+
+```html
+<button
+  id="trigger"
+  data-ui8kit="menubutton"
+  data-menubutton-target="menu"
+  aria-haspopup="menu"
+  aria-controls="menu"
+  aria-expanded="false"
+>
+  Actions
+</button>
+<div id="menu" role="menu" data-ui8kit="menu" data-state="closed" hidden>
+  <div role="menuitem" data-menu-item tabindex="-1">Edit</div>
+  <div role="menuitem" data-menu-item tabindex="-1" aria-disabled="true">Delete</div>
+</div>
+```
+
+When `behavior="ui8kit"` is active, `Open` is an initial SSR state only;
+`@ui8kit/aria` owns visibility, focus, and `aria-expanded` after mount.
+
+## Toast Contract
+
+APG has no dedicated "toast" pattern; it classifies toasts under Alert (live
+region). `Toast` reuses the `alert` contract with a `data-ui8kit="toast"`
+marker so the application (not `@ui8kit/aria`) owns auto-dismiss timing.
+
+```html
+<div id="demo-toast" role="status" aria-live="polite" data-ui8kit="toast" data-state="open">
+  <div>Saved</div>
+  <div>Your changes have been saved.</div>
+  <button data-ui8kit-dialog-close="true" data-ui8kit-dialog-target="demo-toast">×</button>
+</div>
+```
+
+Use `role="alert"` and `aria-live="assertive"` for urgent, interruptive
+messages instead of the polite `status` default.
 
 ## CSS-Only Scroll Lock
 

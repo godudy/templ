@@ -1,0 +1,149 @@
+/**
+ * Menu composes a button-triggered action menu (APG Menu Button pattern).
+ * Behavior hooks are opt-in through Behavior so markup stays framework-neutral by default.
+ */
+
+// Copy: components/ui/menu/menu.templ
+
+package menu
+
+import (
+	"strconv"
+	"strings"
+
+	"github.com/fastygo/templ/ui"
+	"github.com/fastygo/templ/utils"
+)
+
+// MenuButtonProps configures the trigger that opens a menu.
+type MenuButtonProps struct {
+	ID        string
+	MenuID    string
+	Class     string
+	Variant   string
+	Size      string
+	Open      bool
+	Behavior  string
+	AriaLabel string
+	Attrs     templ.Attributes
+}
+
+// MenuProps configures the menu root.
+type MenuProps struct {
+	ID       string
+	Variant  string
+	Class    string
+	Open     bool
+	Behavior string
+	Attrs    templ.Attributes
+}
+
+// MenuItemProps configures a single actionable menu entry.
+type MenuItemProps struct {
+	ID       string
+	Disabled bool
+	Class    string
+	Attrs    templ.Attributes
+}
+
+func MenuClasses(p MenuProps) string {
+	return uiutils.Compose(MenuVariants, map[string]string{
+		"variant": strings.TrimSpace(p.Variant),
+	}, strings.TrimSpace(p.Class))
+}
+
+func menuState(open bool) string {
+	if open {
+		return "open"
+	}
+	return "closed"
+}
+
+func menuBehavior(value string) string {
+	switch strings.TrimSpace(value) {
+	case "ui8kit":
+		return "ui8kit"
+	default:
+		return ""
+	}
+}
+
+func menuButtonAttrs(p MenuButtonProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.MenuID) != "" {
+		attrs["aria-controls"] = p.MenuID
+	}
+	attrs["aria-haspopup"] = "menu"
+	attrs["aria-expanded"] = strconv.FormatBool(p.Open)
+	if menuBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "menubutton"
+		if strings.TrimSpace(p.MenuID) != "" {
+			attrs["data-menubutton-target"] = p.MenuID
+		}
+	}
+	return attrs
+}
+
+func menuRootAttrs(p MenuProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "menu"
+	attrs["data-state"] = menuState(p.Open)
+	if menuBehavior(p.Behavior) == "ui8kit" {
+		attrs["data-ui8kit"] = "menu"
+	}
+	return attrs
+}
+
+func menuItemAttrs(p MenuItemProps) templ.Attributes {
+	attrs := uiutils.MergeAttrs(templ.Attributes{}, p.Attrs)
+	if strings.TrimSpace(p.ID) != "" {
+		attrs["id"] = p.ID
+	}
+	attrs["role"] = "menuitem"
+	if p.Disabled {
+		attrs["aria-disabled"] = "true"
+		attrs["tabindex"] = "-1"
+	} else {
+		attrs["tabindex"] = "-1"
+	}
+	attrs["data-menu-item"] = true
+	return attrs
+}
+
+// MenuButton renders a button that opens the menu it controls.
+templ MenuButton(p MenuButtonProps) {
+	@ui.Button(ui.ButtonProps{
+		ID:        p.ID,
+		Variant:   p.Variant,
+		Size:      p.Size,
+		Class:     p.Class,
+		AriaLabel: p.AriaLabel,
+		Attrs:     menuButtonAttrs(p),
+	}) {
+		{ children... }
+	}
+}
+
+// Menu renders the menu root list.
+templ Menu(p MenuProps) {
+	<div
+		hidden?={ !p.Open }
+		class={ MenuClasses(p) }
+		{ menuRootAttrs(p)... }
+	>
+		{ children... }
+	</div>
+}
+
+// MenuItem renders a single actionable menu entry.
+templ MenuItem(p MenuItemProps) {
+	<div
+		class={ uiutils.Cn("cursor-pointer select-none rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-disabled:pointer-events-none aria-disabled:opacity-50", p.Class) }
+		{ menuItemAttrs(p)... }
+	>
+		{ children... }
+	</div>
+}

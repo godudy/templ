@@ -2,7 +2,7 @@ import { forwardRef, type ElementType, type HTMLAttributes, type ReactNode } fro
 import cardRecipeJson from "./card.variants.json";
 import { cn, composeRecipe, defineRecipe } from "../../utils";
 import { titleTag, type HeadingLevel } from "../../utils/attrs";
-import { Slot } from "../../ui/slot/slot";
+import { Slot } from "../slot/slot";
 
 const { recipe: cardRecipe, keys: cardKeys } = defineRecipe(cardRecipeJson);
 

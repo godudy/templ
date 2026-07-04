@@ -37,8 +37,13 @@ Default bricks emit **SSR-safe** HTML without a client runtime.
 
 | Prop | Bricks | When set |
 |------|--------|----------|
-| `DataUI8Kit` | `Dialog`, `Nav`, `Breadcrumb`, … | emits `data-ui8kit="…"` |
+| `DataUI8Kit` | `Dialog`, `Nav`, … | emits `data-ui8kit="…"` |
 | `Behavior: "ui8kit"` | `Sheet` family | emits `data-ui8kit-dialog*` hooks |
+| `Behavior: "ui8kit"` | `Tabs` family | emits `data-ui8kit="tabs"` + `data-tabs-trigger`/`data-tabs-panel`/`data-tabs-value` |
+| `Behavior: "ui8kit"` | `Popover` family | emits `data-ui8kit="popover"` + `data-ui8kit-dialog*` (non-modal dialog contract) |
+| `Behavior: "ui8kit"` | `Combobox` family | emits `data-ui8kit="combobox"` + `data-combobox-toggle`/`data-combobox-option` |
+| `Behavior: "ui8kit"` | `Menu`/`MenuButton` family | emits `data-ui8kit="menu"`/`"menubutton"` + `data-menu-item`/`data-menubutton-target` |
+| `Behavior: "ui8kit"` | `Toast` family | emits `data-ui8kit="toast"` (reuses the alert live-region contract) |
 
 When empty / default: **no** behavior attributes. Library stays framework-neutral.
 
@@ -59,13 +64,28 @@ register the needed APG pattern in the consuming app through `@ui8kit/aria`.
 
 Native centered `Dialog` remains separate and may use native `<dialog>`.
 
+## New composites (Tabs, Popover, Combobox, Menu, Toast)
+
+Five behavior-driven composites live in `components/` alongside `Sheet`/`Nav`.
+Each reuses a real `@ui8kit/aria` APG pattern — see
+[`docs/aria.md`](../../docs/aria.md) for full DOM contracts:
+
+- `Tabs` → `tabs` pattern directly.
+- `Combobox` → `combobox` pattern directly.
+- `Menu` (`Menu`/`MenuButton`/`MenuItem`) → `menu` + `menubutton` patterns together.
+- `Popover` → no APG "popover" pattern exists; reuses the non-modal `dialog`
+  contract (same hooks as Sheet, minus `aria-modal`) with `data-ui8kit="popover"`.
+- `Toast` → no APG "toast" pattern exists; APG classifies toasts under Alert
+  (live region), so it reuses the `alert` contract with `data-ui8kit="toast"`
+  for app-owned auto-dismiss timing.
+
 ## Examples preview only
 
-`examples/` loads a **dialog-only** `@ui8kit/aria` bundle so Sheet demos work in the browser:
+`examples/` loads a `@ui8kit/aria` bundle so Sheet/Tabs/Popover/Combobox/Menu/Toast demos work in the browser:
 
 | File | Role |
 |------|------|
-| `examples/scripts/ui8kit-entry.mjs` | Registers `dialog` pattern |
+| `examples/scripts/ui8kit-entry.mjs` | Registers `dialog`, `tabs`, `combobox`, `menu`, `menubutton`, `alert` patterns |
 | `examples/web/static/js/ui8kit.js` | Built bundle (`bun run build:js`) |
 | `examples/web/static/js/manifest.json` | Pattern manifest |
 

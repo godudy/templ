@@ -7,11 +7,11 @@ import {
   Grid,
   GridCol,
   H1,
+  IconBadge,
   Stack,
   Text,
   Textarea,
 } from "@registry/ui";
-import { IconBadge } from "@registry/components";
 import { workflowStepLabel, workflowStepVariant } from "../../lib/helpers";
 import type { HeroProps } from "../../types/home";
 

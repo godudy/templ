@@ -1,12 +1,11 @@
 package dashboard
 
 import (
-	cmp "github.com/fastygo/templ/components"
 	"github.com/fastygo/templ/ui"
 )
 
 templ DashboardNotice(props NoticeProps) {
-	@cmp.Alert(cmp.AlertProps{Variant: "warning", Role: "status", AriaLive: "polite"}) {
+	@ui.Alert(ui.AlertProps{Variant: "warning", Role: "status", AriaLive: "polite"}) {
 		@ui.Stack(ui.StackProps{Class: "gap-2"}) {
 			@ui.Text(ui.TextProps{Class: "text-sm font-semibold"}) { { props.Title } }
 			@ui.Text(ui.TextProps{Class: "text-sm"}) { { props.Description } }

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/variants.schema.json",
+  "id": "components.popover",
+  "base": "absolute z-50 min-w-[8rem] rounded-md border border-border bg-popover text-popover-foreground shadow-md outline-none",
+  "keys": ["variant"],
+  "defaults": {
+    "variant": "default"
+  },
+  "byKey": {
+    "variant": {
+      "default": "",
+      "card": "bg-card text-card-foreground"
+    }
+  }
+}

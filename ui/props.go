@@ -12,10 +12,13 @@
 package ui
 
 import (
+	"github.com/fastygo/templ/ui/alert"
 	"github.com/fastygo/templ/ui/badge"
 	"github.com/fastygo/templ/ui/block"
 	"github.com/fastygo/templ/ui/box"
+	"github.com/fastygo/templ/ui/breadcrumb"
 	"github.com/fastygo/templ/ui/button"
+	"github.com/fastygo/templ/ui/card"
 	"github.com/fastygo/templ/ui/checkbox"
 	"github.com/fastygo/templ/ui/container"
 	"github.com/fastygo/templ/ui/dialog"
@@ -24,6 +27,7 @@ import (
 	"github.com/fastygo/templ/ui/grid"
 	"github.com/fastygo/templ/ui/group"
 	"github.com/fastygo/templ/ui/icon"
+	"github.com/fastygo/templ/ui/iconbadge"
 	"github.com/fastygo/templ/ui/image"
 	"github.com/fastygo/templ/ui/inline"
 	"github.com/fastygo/templ/ui/input"
@@ -46,6 +50,16 @@ import (
 type (
 	BlockProps           = block.BlockProps
 	BoxProps             = box.BoxProps
+	CardProps            = card.CardProps
+	CardHeaderProps      = card.CardHeaderProps
+	CardTitleProps       = card.CardTitleProps
+	CardDescriptionProps = card.CardDescriptionProps
+	CardContentProps     = card.CardContentProps
+	CardFooterProps      = card.CardFooterProps
+	AlertProps           = alert.AlertProps
+	IconBadgeProps       = iconbadge.IconBadgeProps
+	BreadcrumbProps      = breadcrumb.BreadcrumbProps
+	BreadcrumbItem       = breadcrumb.BreadcrumbItem
 	ContainerProps       = container.ContainerProps
 	StackProps           = stack.StackProps
 	GroupProps           = group.GroupProps
@@ -126,3 +140,6 @@ func FieldsetClasses(p FieldsetProps) string { return form.FieldsetClasses(p) }
 func LegendClasses(p LegendProps) string     { return form.LegendClasses(p) }
 func MeterClasses(p MeterProps) string       { return form.MeterClasses(p) }
 func ProgressClasses(p ProgressProps) string { return form.ProgressClasses(p) }
+func CardClasses(p CardProps) string           { return card.CardClasses(p) }
+func AlertClasses(p AlertProps) string         { return alert.AlertClasses(p) }
+func IconBadgeClasses(p IconBadgeProps) string { return iconbadge.IconBadgeClasses(p) }

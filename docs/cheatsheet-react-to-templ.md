@@ -29,7 +29,7 @@ split-view lessons see [`learn/`](learn/).
 | React | Go Templ |
 |-------|----------|
 | `<Button variant="outline">Save</Button>` | `@ui.Button(ui.ButtonProps{Variant: "outline"}) { Save }` |
-| `<Card><CardHeader>…</CardHeader></Card>` | `@cmp.Card(cmp.CardProps{}) { @cmp.CardHeader(...) { … } }` |
+| `<Card><CardHeader>…</CardHeader></Card>` | `@ui.Card(ui.CardProps{}) { @ui.CardHeader(...) { … } }` |
 | `import { Button } from "@registry/ui"` | `import "github.com/fastygo/templ/ui"` then `@ui.Button` |
 
 ## Children and lists
@@ -59,7 +59,7 @@ After JSON edits: `bun run generate` (Go codegen) + `bash .validate/scripts/vali
 | Need | React | Universal (Go, Svelte, Vue, PHP, …) |
 |------|-------|--------------------------------------|
 | Button-styled link | `<Button asChild><a href="…">` | `<a class={ ui.ButtonClasses(p) }>` |
-| Card on `<section>` | `<Card asChild><section>` | `<section class={ cmp.CardClasses(p) }>` |
+| Card on `<section>` | `<Card asChild><section>` | `<section class={ ui.CardClasses(p) }>` |
 
 `asChild` + `Slot` is **React-only** (requires `cloneElement`). Other ports use
 `*Classes()` on a manual semantic wrapper — not a missing feature.

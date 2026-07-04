@@ -16,12 +16,17 @@
     "lint:ui8px:vite": "cd examples/vite && bun run build && cd ../.. && ui8px lint examples/vite/dist/static/css/app.css",
     "test:home-snapshot": "bun test examples/vite/tests/home-page.snapshot.test.tsx",
     "test:sheet-contract": "bun test examples/vite/tests/sheet-ui8kit-contract.test.tsx",
+    "test:tabs-contract": "bun test examples/vite/tests/tabs-ui8kit-contract.test.tsx",
+    "test:popover-contract": "bun test examples/vite/tests/popover-ui8kit-contract.test.tsx",
+    "test:combobox-contract": "bun test examples/vite/tests/combobox-ui8kit-contract.test.tsx",
+    "test:menu-contract": "bun test examples/vite/tests/menu-ui8kit-contract.test.tsx",
+    "test:toast-contract": "bun test examples/vite/tests/toast-ui8kit-contract.test.tsx",
     "test:compose": "bun test examples/vite/tests/compose-invariants.test.ts",
     "test:layout-primitives": "bun test examples/vite/tests/layout-primitives.test.tsx",
     "test:primitives-smoke": "bun test examples/vite/tests/ui",
     "test:components-smoke": "bun test examples/vite/tests/components.smoke.test.tsx",
     "validate:aria": "ui8px validate aria examples --manifest examples/web/static/js/manifest.json",
-    "verify": "go run ./.validate/cmd/variantcheck && go run ./.validate/cmd/blockonce && bash .validate/scripts/validate-spec.sh --with-tests && bun run typecheck:react && bun run lint:ui8px && bun run validate:aria && bun run test:home-snapshot && bun run test:sheet-contract && bun run test:compose && bun run test:layout-primitives && bun run test:primitives-smoke && bun run test:components-smoke && go test ./...",
+    "verify": "go run ./.validate/cmd/variantcheck && go run ./.validate/cmd/blockonce && bash .validate/scripts/validate-spec.sh --with-tests && bun run typecheck:react && bun run lint:ui8px && bun run validate:aria && bun run test:home-snapshot && bun run test:sheet-contract && bun run test:tabs-contract && bun run test:popover-contract && bun run test:combobox-contract && bun run test:menu-contract && bun run test:toast-contract && bun run test:compose && bun run test:layout-primitives && bun run test:primitives-smoke && bun run test:components-smoke && go test ./...",
     "typecheck:react": "tsc -p tsconfig.react.json"
   },
   "devDependencies": {

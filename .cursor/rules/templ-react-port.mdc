@@ -100,4 +100,4 @@ parity. Verify this contract manually whenever porting or refactoring a brick.
 }
 ```
 
-Do not use `@ui.Text(p, "literal")` or `@cmp.CardTitle(p, "Title")`.
+Do not use `@ui.Text(p, "literal")` or `@ui.CardTitle(p, "Title")`.

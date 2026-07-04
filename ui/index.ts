@@ -1,4 +1,21 @@
 export { Block, type BlockProps } from "./block/block";
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  type CardProps,
+  type CardHeaderProps,
+  type CardTitleProps,
+  type CardDescriptionProps,
+  type CardContentProps,
+  type CardFooterProps,
+} from "./card/card";
+export { Alert, type AlertProps } from "./alert/alert";
+export { IconBadge, type IconBadgeProps } from "./iconbadge/iconbadge";
+export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from "./breadcrumb/breadcrumb";
 export { Box, type BoxProps } from "./box/box";
 export { Container, type ContainerProps } from "./container/container";
 export { Stack, type StackProps } from "./stack/stack";

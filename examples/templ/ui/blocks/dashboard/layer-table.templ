@@ -1,17 +1,16 @@
 package dashboard
 
 import (
-	cmp "github.com/fastygo/templ/components"
 	"github.com/fastygo/templ/ui"
 )
 
 templ LayerTable(items []LayerItem) {
-	<section class={ cmp.CardClasses(cmp.CardProps{Variant: "default"}) }>
-		@cmp.CardHeader(cmp.CardHeaderProps{}) {
-			@cmp.CardTitle(cmp.CardTitleProps{As: 2}) { { "Registry inventory" } }
-			@cmp.CardDescription(cmp.CardDescriptionProps{}) { { "Public bricks included in this preview and how they layer together." } }
+	<section class={ ui.CardClasses(ui.CardProps{Variant: "default"}) }>
+		@ui.CardHeader(ui.CardHeaderProps{}) {
+			@ui.CardTitle(ui.CardTitleProps{As: 2}) { { "Registry inventory" } }
+			@ui.CardDescription(ui.CardDescriptionProps{}) { { "Public bricks included in this preview and how they layer together." } }
 		}
-		@cmp.CardContent(cmp.CardContentProps{}) {
+		@ui.CardContent(ui.CardContentProps{}) {
 			@ui.Stack(ui.StackProps{Class: "gap-2"}) {
 				for _, item := range items {
 					@ui.Group(ui.GroupProps{Class: "items-center justify-between gap-4 rounded-md border border-border bg-muted/20 px-4 py-4"}) {

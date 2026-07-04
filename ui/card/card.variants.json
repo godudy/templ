@@ -1,6 +1,6 @@
 {
   "$schema": "../../schemas/variants.schema.json",
-  "id": "components.card",
+  "id": "ui.card",
   "base": "rounded-md border border-border bg-card text-card-foreground shadow-sm",
   "keys": ["variant"],
   "defaults": {

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/variants.schema.json",
+  "id": "components.tabs",
+  "base": "w-full",
+  "keys": ["variant"],
+  "defaults": {
+    "variant": "default"
+  },
+  "byKey": {
+    "variant": {
+      "default": "",
+      "card": "rounded-lg border border-border bg-card p-4"
+    }
+  }
+}

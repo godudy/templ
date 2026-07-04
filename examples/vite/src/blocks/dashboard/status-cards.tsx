@@ -1,6 +1,5 @@
 import dashboardVariants from "@blocks/dashboard-variants";
-import { Badge, Grid, GridCol, Group, Stack, Text } from "@registry/ui";
-import { Card, CardContent, IconBadge } from "@registry/components";
+import { Badge, Card, CardContent, Grid, GridCol, Group, IconBadge, Stack, Text } from "@registry/ui";
 import { blockVariant } from "../../lib/block-variant";
 import type { StatusCard } from "../../types/dashboard";
 

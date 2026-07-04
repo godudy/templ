@@ -1,7 +1,6 @@
 package home
 
 import (
-	cmp "github.com/fastygo/templ/components"
 	"github.com/fastygo/templ/ui"
 )
 
@@ -55,7 +54,7 @@ templ HeroChat(props HeroProps) {
 						@ui.Text(ui.TextProps{Class: "text-xs font-semibold uppercase tracking-wide text-muted-foreground"}) { { "Workflow" } }
 						for index, step := range props.Workflow {
 							@ui.Group(ui.GroupProps{Class: "items-center gap-4 rounded-md border border-border bg-card px-4 py-4 shadow-sm"}) {
-								@cmp.IconBadge(cmp.IconBadgeProps{Size: "sm", Variant: workflowStepVariant(index)}) { workflowStepLabel(index) }
+								@ui.IconBadge(ui.IconBadgeProps{Size: "sm", Variant: workflowStepVariant(index)}) { workflowStepLabel(index) }
 								@ui.Text(ui.TextProps{Class: "text-sm font-medium"}) { { step.Label } }
 							}
 						}

@@ -146,9 +146,9 @@ stateful per-item semantics (`Current`, `Disabled`, `Href`) and
 
 References:
 
-- [`components/breadcrumb/breadcrumb.spec.md`](../components/breadcrumb/breadcrumb.spec.md)
-- [`components/breadcrumb/breadcrumb.tsx`](../components/breadcrumb/breadcrumb.tsx)
-- [`components/breadcrumb/breadcrumb.templ`](../components/breadcrumb/breadcrumb.templ)
+- [`ui/breadcrumb/breadcrumb.spec.md`](../ui/breadcrumb/breadcrumb.spec.md)
+- [`ui/breadcrumb/breadcrumb.tsx`](../ui/breadcrumb/breadcrumb.tsx)
+- [`ui/breadcrumb/breadcrumb.templ`](../ui/breadcrumb/breadcrumb.templ)
 
 ## Where Fixtures Live
 
@@ -235,7 +235,7 @@ Pick the semantic tag you need → apply *Classes(props) on it → compose inner
 | Need | React (React-only sugar) | Universal pattern (all ports) |
 |------|--------------------------|-------------------------------|
 | Link styled as button | `<Button asChild><a href="…">…</a></Button>` | `<a href="…" class={ ui.ButtonClasses(p) }>…</a>` |
-| Card as `<article>` landmark | `<Card asChild><article>…</article></Card>` | `<article class={ cmp.CardClasses(p) }>…</article>` |
+| Card as `<article>` landmark | `<Card asChild><article>…</article></Card>` | `<article class={ ui.CardClasses(p) }>…</article>` |
 | Sheet trigger on custom control | `<SheetTrigger asChild panelId="…"><button>…</button></SheetTrigger>` | Emit trigger markup with `data-ui8kit-*` hooks + `panelId`/`PanelID`; apply trigger classes via `SheetTriggerClasses(p)` on the chosen element |
 
 `*Classes()` helpers are generated next to every brick that supports root
